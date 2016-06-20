@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "react application",
   "scripts": {
-    "build": "browserify ./src/app.jsx -o ./public/app.js -t babelify",
-    "watch": "watchify ./src/app.jsx -o ./public/app.js -t babelify -v"
+    "build": "../../node_modules/.bin/browserify ./src/app.jsx -o ./public/app.js -t babelify",
+    "watch": "../../node_modules/.bin/watchify ./src/app.jsx -o ./public/app.js -t babelify -v"
   }
 }
