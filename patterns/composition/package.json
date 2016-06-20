@@ -1,0 +1,9 @@
+{
+  "name": "react-app",
+  "version": "1.0.0",
+  "description": "react application",
+  "scripts": {
+    "build": "browserify ./src/app.jsx -o ./public/app.js -t babelify",
+    "watch": "watchify ./src/app.jsx -o ./public/app.js -t babelify -v"
+  }
+}

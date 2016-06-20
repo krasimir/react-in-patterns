@@ -1,0 +1,28 @@
+{
+  "name": "react-in-patterns",
+  "version": "0.1.0",
+  "description": "Learn the most (and not only) design pattern used while developing with React",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krasimir/react-in-patterns.git"
+  },
+  "keywords": [
+    "react",
+    "patterns"
+  ],
+  "author": "Krasimir Tsonev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/krasimir/react-in-patterns/issues"
+  },
+  "homepage": "https://github.com/krasimir/react-in-patterns#readme",
+  "dependencies": {
+    "babel-preset-es2015": "6.9.0",
+    "babel-preset-react": "6.5.0",
+    "babelify": "7.3.0",
+    "browserify": "13.0.1",
+    "react": "15.1.0",
+    "react-dom": "15.1.0",
+    "watchify": "3.7.0"
+  }
+}
