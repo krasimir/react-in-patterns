@@ -5,6 +5,7 @@ Learn the most (and not only) common design pattern used while developing with R
 ---
 
 * [Composition](./patterns/composition/README.md)
+* [Higher-order components](./patterns/high-order-components/README.md)
 
 ---
 
