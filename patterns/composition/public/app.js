@@ -19736,6 +19736,8 @@ var Header = function (_React$Component) {
           'Logo'
         ),
         _react2.default.createElement('hr', null),
+        this.props.title,
+        _react2.default.createElement('hr', null),
         this.props.children
       );
     }
@@ -19870,9 +19872,15 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'render',
     value: function render() {
+      var title = _react2.default.createElement(
+        'h1',
+        null,
+        'Hello there!'
+      );
+
       return _react2.default.createElement(
         _Header2.default,
-        { track: this._track },
+        { track: this._track, title: title },
         _react2.default.createElement(_Navigation2.default, { track: this._track })
       );
     }

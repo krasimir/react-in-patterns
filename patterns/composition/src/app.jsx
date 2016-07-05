@@ -6,8 +6,10 @@ import Navigation from './Navigation.jsx';
 
 class App extends React.Component {
   render() {
+    var title = <h1>Hello there!</h1>;
+
     return (
-      <Header track={ this._track } >
+      <Header track={ this._track } title={ title }>
         <Navigation track={ this._track } />
       </Header>
     );

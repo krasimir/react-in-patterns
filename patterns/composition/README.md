@@ -71,3 +71,36 @@ export default class Header extends React.Component {
 ```
 
 It's also easy to test because we may render the `Header` with an empty `<div>`. This will isolate the component and will let us focus on only one piece of our application.
+
+### Passing a child as a property
+
+Every React component receive props. It's nice that these props may contain all kind of data. Even other components.
+
+```
+// App.jsx
+class App extends React.Component {
+  render() {
+    var title = <h1>Hello there!</h1>;
+
+    return (
+      <Header title={ title }>
+        <Navigation />
+      </Header>
+    );
+  }
+};
+
+// Header.jsx
+export default class Header extends React.Component {
+  render() {
+    return (
+      <header>
+        { this.props.title }
+        <hr />
+        { this.props.children }
+      </header>
+    );
+  }
+};
+
+```

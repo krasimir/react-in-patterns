@@ -9,6 +9,8 @@ export default class Header extends React.Component {
           Logo
         </a>
         <hr />
+        { this.props.title }
+        <hr />
         { this.props.children }
       </header>
     );
