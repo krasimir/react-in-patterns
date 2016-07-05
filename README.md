@@ -1,6 +1,6 @@
 # React in patterns
 
-Learn the most (and not only) design pattern used while developing with React
+Learn the most (and not only) common design pattern used while developing with React
 
 ---
 
@@ -8,7 +8,7 @@ Learn the most (and not only) design pattern used while developing with React
 
 ---
 
-## Running the example
+## Running the examples
 
 * Run `npm i`
 * Go to the folder of the example
