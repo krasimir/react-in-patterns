@@ -19715,31 +19715,17 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Content = function (_React$Component) {
-  _inherits(Content, _React$Component);
+var Content = function Content(props) {
+  return _react2.default.createElement(
+    'p',
+    null,
+    'I am ',
+    props.name
+  );
+};
 
-  function Content() {
-    _classCallCheck(this, Content);
-
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Content).apply(this, arguments));
-  }
-
-  _createClass(Content, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'p',
-        null,
-        'I am content'
-      );
-    }
-  }]);
-
-  return Content;
-}(_react2.default.Component);
-
-var App = function (_React$Component2) {
-  _inherits(App, _React$Component2);
+var App = function (_React$Component) {
+  _inherits(App, _React$Component);
 
   function App() {
     _classCallCheck(this, App);
@@ -19752,7 +19738,7 @@ var App = function (_React$Component2) {
     value: function render() {
       var EnhancedContent = (0, _enhanceComponent2.default)(Content);
 
-      return _react2.default.createElement(EnhancedContent, null);
+      return _react2.default.createElement(EnhancedContent, { name: 'Content component' });
     }
   }]);
 
@@ -19769,6 +19755,8 @@ _reactDom2.default.render(_react2.default.createElement(App, null), document.que
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -19805,7 +19793,7 @@ var enhanceComponent = function enhanceComponent(Component) {
             null,
             'I\'m high-order component'
           ),
-          _react2.default.createElement(Component, null)
+          _react2.default.createElement(Component, _extends({}, this.state, this.props))
         );
       }
     }]);

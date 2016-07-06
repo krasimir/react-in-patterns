@@ -1,4 +1,4 @@
-## [React in patterns](../../README.md) / Composition
+## [React in patterns](../../) / Composition
 
 One of the biggest benefits of [React](http://krasimirtsonev.com/blog/article/The-bare-minimum-to-work-with-React) is composability. I personally don't know a framework that offers such an easy way to create and combine components. In this section we will explore few composition techniques which proved to work well.
 
