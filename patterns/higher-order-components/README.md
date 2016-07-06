@@ -1,4 +1,4 @@
-## [React in patterns](../../) / Higher-order components
+## [React in patterns](../../README.md) / Higher-order components
 
 Higher-order components look really similar to the [decorator design pattern](http://robdodson.me/javascript-design-patterns-decorator/). It's basically wrapping a component and attaching some new functionalities to it or modifying it.
 

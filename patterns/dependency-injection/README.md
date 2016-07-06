@@ -1,1 +1,1 @@
-## [React in patterns](../../) / Dependency injection
+## [React in patterns](../../README.md) / Dependency injection
