@@ -59,4 +59,4 @@ The knowledge for the configuration is hidden into the higher-order component an
 var OriginalComponent  = (props) => <p>{ props.title }</p>;
 ```
 
-Higher-order components are in the center of another useful pattern - [../dependency-injection](dependency injection).
+Higher-order components are in the center of another useful pattern - [dependency injection](../dependency-injection).
