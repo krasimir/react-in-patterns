@@ -5,7 +5,7 @@ Learn the most (and not only) common design pattern used while developing with R
 ---
 
 * [Composition](./patterns/composition/)
-* [Higherer-order components](./patterns/higher-order-components/)
+* [Higher-order components](./patterns/higher-order-components/)
 * [Dependency injection](./patterns/dependency-injection)
 
 ---
