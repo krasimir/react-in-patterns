@@ -53,7 +53,7 @@ var enhanceComponent = (Component) =>
   };
 ```
 
-The knowledge for the configuration is hidden into the higher-order component and all `OriginalComponent` knows is that it receives a `prop` called `title`. Where it comes from is not important. That's a huge advantage because it helps us testing the component in isolation and provide nice mechanism for mocking. Here is how the `title` may be used:
+The knowledge for the configuration is hidden into the higher-order component and all `OriginalComponent` knows is that it receives a `prop` called `title`. Where it comes it is not important. That's a huge advantage because it helps us testing the component in isolation and provides nice mechanism for mocking. Here is how the `title` may be used:
 
 ```
 var OriginalComponent  = (props) => <p>{ props.title }</p>;
