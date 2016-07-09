@@ -6,7 +6,7 @@ Higher-order components look really similar to the [decorator design pattern](ht
 
 Here is a function that returns a higher-order component:
 
-```
+```js
 var enhanceComponent = (Component) =>
   class Enhance extends React.Component {
     render() {
@@ -24,7 +24,7 @@ export default enhanceComponent;
 
 Very often we expose a factory function that accepts our original component and when called returns the enhanced/wrapped version of it. For example:
 
-```
+```js
 var OriginalComponent = () => <p>Hello world.</p>;
 
 class App extends React.Component {
@@ -38,7 +38,7 @@ The very first thing that the higher-order component does is to render the origi
 
 The higher-order component gives us control on the input. The data that we want to send as a property to our component. Let's say that we have a configuration setting that `OriginalComponent` needs:
 
-```
+```js
 var config = require('path/to/configuration');
 
 var enhanceComponent = (Component) =>
@@ -57,7 +57,7 @@ var enhanceComponent = (Component) =>
 
 The knowledge for the configuration is hidden into the higher-order component. `OriginalComponent` knows only that it receives a `prop` called `title`. Where it comes it is not important. That's a huge advantage because it helps us testing the component in isolation and provides nice mechanism for mocking. Here is how the `title` may be used:
 
-```
+```js
 var OriginalComponent  = (props) => <p>{ props.title }</p>;
 ```
 

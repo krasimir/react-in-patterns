@@ -6,7 +6,7 @@ One of the biggest benefits of [React](http://krasimirtsonev.com/blog/article/Th
 
 Let's get a simple example. Let's say that we have an application with a header and we want to place a navigation inside. We have three React components - App, Header and Navigation. They have to be nested into each other so we end up with the following markup:
 
-```
+```js
 <App>
   <Header>
     <Navigation> ... </Navigation>
@@ -16,7 +16,7 @@ Let's get a simple example. Let's say that we have an application with a header 
 
 The trivial approach for combining these components is to reference them in the places where we need them.
 
-```
+```js
 // app.jsx
 import Header from './Header.jsx';
 
@@ -52,7 +52,7 @@ However, following this pattern we introduce several problems:
 
 In React we have the handy [`this.props.children`](https://facebook.github.io/react/docs/multiple-components.html#children). That's how the parent may read/access its children. This API will make our Header agnostic and basically dependency-free:
 
-```
+```js
 // App.jsx
 export default class App extends React.Component {
   render() {
@@ -78,7 +78,7 @@ It's also easy to test because we may render the `Header` with an empty `<div>`.
 
 Every React component receive props. It's nice that these props may contain all kind of data. Even other components.
 
-```
+```js
 // App.jsx
 class App extends React.Component {
   render() {
