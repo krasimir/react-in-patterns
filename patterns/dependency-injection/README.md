@@ -6,7 +6,7 @@ Big part of the modules/components that we write have dependencies. A proper man
 
 In React the need of dependency injector is easily visible. Let's consider the following application tree:
 
-```
+```js
 // Title.jsx
 export default function Title(props) {
   return <h1>{ props.title }</h1>;
@@ -39,7 +39,7 @@ The string "React in patterns" should somehow reach the `Title` component. The d
 
 We already saw how the [higher-order component](https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components) may be used to inject data.
 
-```
+```js
 // enhance.jsx
 var title = 'React in patterns';
 var enhanceComponent = (Component) =>
@@ -73,7 +73,7 @@ The `title` is hidden in a middle layer (higher-order component) where we pass i
 
 React has the concept of a [*context*](https://facebook.github.io/react/docs/context.html). The *context* is something that every component may have access to. It's something like an [event bus](https://github.com/krasimir/EventBus) but for data only. A single model which we can access from everywhere.
 
-```
+```js
 // a place where we'll define the context
 var context = { title: 'React in patterns' };
 class App extends React.Component {
@@ -100,7 +100,7 @@ Inject.contextTypes = {
 
 Notice that we have to specify the exact signature of the context object. With `childContextTypes` and `contextTypes`. If those are not specified then the `context` object will be empty. That may be a little bit frustrating because we may have lots of stuff to put there. That's why it is a good practice that our `context` is not just a plain object but it has an interface that allows us to store and retrieve data. For example:
 
-```
+```js
 // dependencies.js
 export default {
   data: {},
@@ -114,7 +114,7 @@ export default {
 ```
 Then, if we go back to our example, the very top `App` component may look like that:
 
-```
+```js
 import dependencies from './dependencies';
 
 dependencies.register('title', 'React in patterns');
@@ -136,7 +136,7 @@ App.childContextTypes = {
 
 And our `Title` component gets it's data through the context:
 
-```
+```js
 // Title.jsx
 export default class Title extends React.Component {
   render() {
@@ -152,7 +152,7 @@ Title.contextTypes = {
 
 Ideally we don't want to specify the `contextTypes` every time when we need an access to the context. This detail may be wrapped in a higher-order component. And even more, we may write an utility function that is more descriptive and helps us declare the exact wiring. I.e instead of accessing the context directly with `this.context.get('title')` we ask the higher-order component to get what we need and to pass it as a prop to our component. For example:
 
-```
+```js
 // Title.jsx
 import wire from './wire';
 
@@ -169,7 +169,7 @@ The `wire` function accepts first a React component, then an array with all the 
 
 Here is how the `wire` function looks like:
 
-```
+```js
 export default function wire(Component, dependencies, mapper) {
   class Inject extends React.Component {
     render() {
