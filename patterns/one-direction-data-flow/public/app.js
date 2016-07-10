@@ -19711,23 +19711,68 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var App = function (_React$Component) {
-  _inherits(App, _React$Component);
+var Store = {
+  _handlers: [],
+  _data: '',
+  onChange: function onChange(handler) {
+    this._handlers.push(handler);
+  },
+  set: function set(value) {
+    this._data = value;
+    this._handlers.forEach(function (handler) {
+      return handler();
+    });
+  },
+  get: function get() {
+    return this._data;
+  }
+};
 
-  function App() {
+var Input = function (_React$Component) {
+  _inherits(Input, _React$Component);
+
+  function Input(props) {
+    _classCallCheck(this, Input);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
+
+    _this._onInputChange = function (e) {
+      return Store.set(e.target.value);
+    };
+    return _this;
+  }
+
+  _createClass(Input, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement('input', { value: this.props.value, onChange: this._onInputChange });
+    }
+  }]);
+
+  return Input;
+}(_react2.default.Component);
+
+var App = function (_React$Component2) {
+  _inherits(App, _React$Component2);
+
+  function App(props) {
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
+    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
+
+    _this2.state = {
+      value: ''
+    };
+    Store.onChange(function () {
+      _this2.setState({ value: Store.get() });
+    });
+    return _this2;
   }
 
   _createClass(App, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'h1',
-        null,
-        'Hello world'
-      );
+      return _react2.default.createElement(Input, { value: this.state.value });
     }
   }]);
 
