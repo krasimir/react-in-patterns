@@ -19,25 +19,30 @@ var Store = {
 class Input extends React.Component {
   constructor(props) {
     super(props);
-    this._onInputChange = e => Store.set(e.target.value);
+    this._onInputChange = e => this.props.onChange(e.target.value);
   }
   render() {
     return <input value={ this.props.value } onChange={ this._onInputChange } />;
   }
-}
+};
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      value: ''
-    }
+    this.state = { value: '' };
     Store.onChange(() => {
       this.setState({ value: Store.get() })
     });
   }
   render() {
-    return <Input value={ this.state.value }/>;
+    return (
+      <div>
+        <Input
+          value={ this.state.value }
+          onChange={ Store.set.bind(Store) } />
+        <p>{ Store.get() }</p>
+      </div>
+    );
   }
 };
 

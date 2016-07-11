@@ -19737,7 +19737,7 @@ var Input = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
 
     _this._onInputChange = function (e) {
-      return Store.set(e.target.value);
+      return _this.props.onChange(e.target.value);
     };
     return _this;
   }
@@ -19752,6 +19752,8 @@ var Input = function (_React$Component) {
   return Input;
 }(_react2.default.Component);
 
+;
+
 var App = function (_React$Component2) {
   _inherits(App, _React$Component2);
 
@@ -19760,9 +19762,7 @@ var App = function (_React$Component2) {
 
     var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
 
-    _this2.state = {
-      value: ''
-    };
+    _this2.state = { value: '' };
     Store.onChange(function () {
       _this2.setState({ value: Store.get() });
     });
@@ -19772,7 +19772,18 @@ var App = function (_React$Component2) {
   _createClass(App, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(Input, { value: this.state.value });
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(Input, {
+          value: this.state.value,
+          onChange: Store.set.bind(Store) }),
+        _react2.default.createElement(
+          'p',
+          null,
+          Store.get()
+        )
+      );
     }
   }]);
 
