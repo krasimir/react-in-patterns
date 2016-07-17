@@ -19713,43 +19713,47 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var Store = {
   _handlers: [],
-  _data: '',
+  _flag: '',
   onChange: function onChange(handler) {
     this._handlers.push(handler);
   },
   set: function set(value) {
-    this._data = value;
+    this._flag = value;
     this._handlers.forEach(function (handler) {
       return handler();
     });
   },
   get: function get() {
-    return this._data;
+    return this._flag;
   }
 };
 
-var Input = function (_React$Component) {
-  _inherits(Input, _React$Component);
+var Switcher = function (_React$Component) {
+  _inherits(Switcher, _React$Component);
 
-  function Input(props) {
-    _classCallCheck(this, Input);
+  function Switcher(props) {
+    _classCallCheck(this, Switcher);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Switcher).call(this, props));
 
-    _this._onInputChange = function (e) {
-      return _this.props.onChange(e.target.value);
+    _this._onButtonClick = function (e) {
+      _this.props.onChange(!_this.props.value);
     };
     return _this;
   }
 
-  _createClass(Input, [{
+  _createClass(Switcher, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('input', { value: this.props.value, onChange: this._onInputChange });
+      return _react2.default.createElement(
+        'button',
+        { onClick: this._onButtonClick },
+        this.props.value ? 'lights on' : 'lights off'
+      );
     }
   }]);
 
-  return Input;
+  return Switcher;
 }(_react2.default.Component);
 
 ;
@@ -19762,10 +19766,7 @@ var App = function (_React$Component2) {
 
     var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
 
-    _this2.state = { value: '' };
-    Store.onChange(function () {
-      _this2.setState({ value: Store.get() });
-    });
+    Store.onChange(_this2.forceUpdate.bind(_this2));
     return _this2;
   }
 
@@ -19775,14 +19776,9 @@ var App = function (_React$Component2) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(Input, {
-          value: this.state.value,
-          onChange: Store.set.bind(Store) }),
-        _react2.default.createElement(
-          'p',
-          null,
-          Store.get()
-        )
+        _react2.default.createElement(Switcher, {
+          value: Store.get(),
+          onChange: Store.set.bind(Store) })
       );
     }
   }]);

@@ -3,44 +3,46 @@ import ReactDOM from 'react-dom';
 
 var Store = {
   _handlers: [],
-  _data: '',
+  _flag: '',
   onChange: function(handler) {
     this._handlers.push(handler);
   },
   set: function(value) {
-    this._data = value;
+    this._flag = value;
     this._handlers.forEach(handler => handler())
   },
   get: function() {
-    return this._data;
+    return this._flag;
   }
 };
 
-class Input extends React.Component {
+class Switcher extends React.Component {
   constructor(props) {
     super(props);
-    this._onInputChange = e => this.props.onChange(e.target.value);
+    this._onButtonClick = e => {
+      this.props.onChange(!this.props.value);
+    }
   }
   render() {
-    return <input value={ this.props.value } onChange={ this._onInputChange } />;
+    return (
+      <button onClick={ this._onButtonClick }>
+        { this.props.value ? 'lights on' : 'lights off' }
+      </button>
+    );
   }
 };
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: '' };
-    Store.onChange(() => {
-      this.setState({ value: Store.get() })
-    });
+    Store.onChange(this.forceUpdate.bind(this));
   }
   render() {
     return (
       <div>
-        <Input
-          value={ this.state.value }
+        <Switcher
+          value={ Store.get() }
           onChange={ Store.set.bind(Store) } />
-        <p>{ Store.get() }</p>
       </div>
     );
   }
