@@ -149,7 +149,7 @@ class App extends React.Component {
 
 *(Notice that we are using [`forceUpdate`](https://facebook.github.io/react/docs/component-api.html#forceupdate) which is not really recommended. Normally a [high-order component](https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components) is used to enable the re-rendering. We use `forceUpdate` so we keep the example simple.)*
 
-Because of this change the `Switcher` becomes really simple. We don't need the state inside:
+Because of this change the `Switcher` becomes really simple. We don't need the internal state inside:
 
 ```js
 class Switcher extends React.Component {
@@ -169,7 +169,7 @@ class Switcher extends React.Component {
 };
 ```
 
-The benefit that comes with this pattern is that our components become dummy representation of the `Store`'s data. It's really easy to think about as views (renderers). We write our application in a declarative way and deal with the complexity in only one place.
+The benefit that comes with this pattern is that our components become dummy representation of the `Store`'s data. It's really easy to think about them as views (renderers). We write our application in a declarative way and deal with the complexity in only one place.
 
 The diagram of the application changes to:
 
