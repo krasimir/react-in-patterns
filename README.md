@@ -1,6 +1,6 @@
 # React in patterns
 
-Learn the most (and not only) common design pattern used while developing with React
+List of design patterns used while developing with [React](https://facebook.github.io/react/)
 
 ---
 
