@@ -1,6 +1,6 @@
 ## [React in patterns](../../README.md) / Communication
 
-How is the communication between components looks like? Building with React for a couple of months and you'll realize that every React component is like a small system that operates on its own. It has its own state, input and output.
+Building with React for a couple of months and you'll realize that every React component is like a small system that operates on its own. It has its own state, input and output.
 
 ### Input
 
@@ -28,10 +28,10 @@ class App extends React.Component {
 };
 ```
 
-The `Title` component has only one input - `text`. The parent component (`App`) should provide it as an attribute while using the `<Title>` tag. There are two additional settings that we see above.
+The `Title` component has only one input - `text`. The parent component (`App`) should provide it as an attribute while using the `<Title>` tag. There are two additional settings that we see above:
 
 * `propTypes` - defines the type of the props. This helps React telling us when a provided prop is not what we expect.
-* `defaultProps` - defines the default values of the props. We may the existence of certain props but for the rest is good practice to set a default value.
+* `defaultProps` - defines the default values of the props. We may require the existence of certain props but for the rest is good practice to set a default value.
 
 There is also `props.children` property that gives us an access to the child components passed by the owner of the component. For example:
 
@@ -64,7 +64,7 @@ An indirect input to a component may be also the so called `context`. The whole 
 
 ### Output
 
-The obvious output is the rendered HTML. Visually that's what we get from a React component. Of course some of the components contain logic that probably sends out transformed data or trigger an action/event in our system. To achieve that we again use component's props:
+The obvious output is the rendered HTML. Visually that's what we get from a React component. Of course some of the components contain logic that probably sends out transformed data or triggers an action/event in our system. To achieve that we again use component's props:
 
 ```js
 class Title extends React.Component {
@@ -91,4 +91,4 @@ class App extends React.Component {
 
 We pass a callback which is invoked from within the component. The `logoClicked` function above may accept data which is how we transfer information back from the child to parent component.
 
-We should mention that there is no API that allow us accessing child's state. Or in other words we can't use `this.props.children[0].state` or something like that. The proper way of retrieving information from the children is by using props (passing callbacks). And that's a good thing. This approach force us defining clear APIs and encourage the [one-way direction data flow](https://github.com/krasimir/react-in-patterns/tree/master/patterns/one-direction-data-flow).
+We should mention that there is no API that allow us accessing child's state. Or in other words we can't use `this.props.children[0].state` or something like that. The proper way of retrieving information from the children is by using props (passing callbacks). And that's a good thing. This approach forces us defining clear APIs and encourage the [one-way direction data flow](https://github.com/krasimir/react-in-patterns/tree/master/patterns/one-direction-data-flow).
