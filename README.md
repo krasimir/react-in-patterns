@@ -4,8 +4,8 @@ List of design patterns used while developing with [React](https://facebook.gith
 
 ---
 
-* [Composition](./patterns/composition/)
 * [Communication](./patterns/communication/)
+* [Composition](./patterns/composition/)
 * [Higher-order components](./patterns/higher-order-components/)
 * [Dependency injection](./patterns/dependency-injection)
 * [One direction data flow](./patterns/one-direction-data-flow)
