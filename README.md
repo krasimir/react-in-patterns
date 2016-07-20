@@ -1,6 +1,6 @@
 # React in patterns
 
-List of design patterns used while developing with [React](https://facebook.github.io/react/).
+:mans_shoe: List of design patterns/techniques used while developing with [React](https://facebook.github.io/react/).
 
 ---
 
