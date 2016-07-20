@@ -2,7 +2,7 @@
 
 > [Source code](https://github.com/krasimir/react-in-patterns/tree/master/patterns/one-direction-data-flow/src)
 
-One-way direction data flow is a pattern that works nicely with React. It is around the idea that the components do not modify the data that they receive. They only register a change and provide the new value but they do not update the actual data store. This update happens following another mechanism and the component just gets rendered with the new value.
+One-way direction data flow is a pattern that works nicely with React. It is around the idea that the components do not modify the data that they receive. They only listen for changes in this data and maybe provide the new value but they do not update the actual data store. This update happens following another mechanism in another place and the component just gets rendered with the new value.
 
 Let's for example get a simple `Switcher` component that contains a button. We click it to enable a flag in the system.
 
@@ -34,7 +34,7 @@ At this moment we have the data inside our component. Or in other words, `Switch
 
 ```js
 var Store = {
-  _flag: '',
+  _flag: false,
   set: function(value) {
     this._flag = value;
   },
@@ -69,7 +69,7 @@ class App extends React.Component {
 };
 ```
 
-Our `Store` object is a simple [singleton](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript) where we have helpers for setting and getting the value of the `_flag`. Passing the getter to the component we are able to update the data externally. More or less our application workflow looks like that:
+Our `Store` object is a simple [singleton](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript) where we have helpers for setting and getting the value of the `_flag` property. By passing the getter to the component we are able to update the data externally. More or less our application workflow looks like that:
 
 ```
 User's input
@@ -77,7 +77,7 @@ User's input
   Switcher -------> Store
 ```
 
-Let's assume that we are saving the flag value to a backend service via the `Store`. When the user comes back we have to set a proper initial state. If the user left the flag truthy we have to show *"lights on"* and not the default *"lights off"*. Now it gets tricky because we have the data knowledge in two places. The UI has its own internal state same as the `Store` object. We have to communicate in the other direction too `Store ---> Switcher` and not only `Switcher ---> Store`.
+Let's assume that we are saving the flag value to a backend service via the `Store`. When the user comes back we have to set a proper initial state. If the user left the flag truthy we have to show *"lights on"* and not the default *"lights off"*. Now it gets tricky because we have the data knowledge in two places. The UI and the `Store` have their own states. We have to communicate in both directions `Store ---> Switcher` and `Switcher ---> Store`.
 
 ```js
 // ... in App component
@@ -106,7 +106,7 @@ User's input
     with our backend
 ```
 
-All this leads to managing two states instead of one. There are number of cases where we may increase the complexity of our app. What if the `Store` changes its value based on other actions in the system. We have to propagate that change to the `Switcher`.
+All this leads to managing two states instead of one. What if the `Store` changes its value based on other actions in the system. We have to propagate that change to the `Switcher` and we increase the complexity of our app.
 
 One-way direction data flow solves this problem. It eliminates the multiple states and deals with only one which is usually inside the store. To achieve that we have to tweak our `Store` object a little bit. We need logic that allows us to subscribe for changes:
 
@@ -147,9 +147,9 @@ class App extends React.Component {
 };
 ```
 
-*(Notice that we are using [`forceUpdate`](https://facebook.github.io/react/docs/component-api.html#forceupdate) which is not really recommended. Normally a [high-order component](https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components) is used to enable the re-rendering. We use `forceUpdate` so we keep the example simple.)*
+*(Notice that we are using [`forceUpdate`](https://facebook.github.io/react/docs/component-api.html#forceupdate) which is not really recommended. Normally a [high-order component](https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components) is used to enable the re-rendering. We used `forceUpdate` just to keep the example simple.)*
 
-Because of this change the `Switcher` becomes really simple. We don't need the internal state inside:
+Because of this change the `Switcher` becomes really simple. We don't need the internal state:
 
 ```js
 class Switcher extends React.Component {
@@ -169,13 +169,14 @@ class Switcher extends React.Component {
 };
 ```
 
-The benefit that comes with this pattern is that our components become dummy representation of the `Store`'s data. It's really easy to think about them as views (renderers). We write our application in a declarative way and deal with the complexity in only one place.
+The benefit that comes with this pattern is that our components become dummy representation of the `Store`'s data. It's really easy to think about the React components as views (renderers). We write our application in a declarative way and deal with the complexity in only one place.
 
 The diagram of the application changes to:
 
 ```
 Service communicating
 with our backend
+    ^
     |
     v
   Store <-----
@@ -188,4 +189,4 @@ Switcher ---->
 User input
 ```
 
-As we can see the data flows in only one direction and there is no need to sync two (or more) parts of our system.
+As we can see the data flows in only one direction and there is no need to sync two (or more) parts of our system. One-way direction data flow is not only about React based apps. Proved many times that makes the applications easy to reason about. It may need a little bit more wiring but it definitely worth it.
