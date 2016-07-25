@@ -9,7 +9,7 @@
 * [Higher-order components](./patterns/higher-order-components/)
 * [Dependency injection](./patterns/dependency-injection)
 * [One direction data flow](./patterns/one-direction-data-flow)
-* Flux (TBD)
+* [Flux](./patterns/flux)
 
 ---
 
