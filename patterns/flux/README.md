@@ -2,7 +2,7 @@
 
 > [Source code](https://github.com/krasimir/fluxiny)
 
-*The Flux implementation discussed in this article is available here [github.com/krasimir/fluxiny](https://github.com/krasimir/fluxiny). Feel free to use it in a browser [directly](https://github.com/krasimir/fluxiny/tree/master/lib) or as a [npm dependency](https://www.npmjs.com/package/fluxiny).*
+*The Flux implementation discussed in this section is available here [github.com/krasimir/fluxiny](https://github.com/krasimir/fluxiny). Feel free to use it in a browser [directly](https://github.com/krasimir/fluxiny/tree/master/lib) or as a [npm dependency](https://www.npmjs.com/package/fluxiny).*
 
 I'm obsessed by making my code simpler. I didn't say *smaller* because having less code doesn't mean that is simple and easy to work with. I believe that big part of the problems in the software industry come from the unnecessary complexity. Complexity which is a result of our own abstractions. You know, we (the programmers) like to abstract. We like placing things in black boxes and hope that these boxes work together.
 
