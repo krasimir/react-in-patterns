@@ -2,20 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class Title extends React.Component {
-  render() {
-    return (
-      <h1>
-        <a onClick={ this.props.logoClicked }>
-          <img src='path/to/logo.png' />
-        </a>
-        { this.props.text }
-        { this.props.children }
-        <a onClick={ this._clickHandler.bind(this) }>click me</a>
-      </h1>
-    );
+  constructor(props) {
+    super(props);
+    this._clickHandler = this._clickHandler.bind(this);
   }
   _clickHandler() {
     console.log(this.props.children);
+  }
+  render() {
+    return (
+      <h1>
+        <a onClick={this.props.logoClicked}>
+          <img src='path/to/logo.png' />
+        </a>
+        {this.props.text}
+        {this.props.children}
+        <a onClick={this._clickHandler}>click me</a>
+      </h1>
+    );
   }
 };
 
@@ -25,21 +29,21 @@ class SomethingElse extends React.Component {
     this.state = { answer: 42 };
   }
   render() {
-    return <div>The answer is { this.state.answer }</div>;
+    return <div>The answer is {this.state.answer}</div>;
   }
 }
 
 class App extends React.Component {
+  logoClicked() {
+    console.log('logo clicked');
+  }
   render() {
     return (
-      <Title text='Hello React' logoClicked={ this.logoClicked }>
-        <span> community</span>
+      <Title text='Hello React' logoClicked={this.logoClicked}>
+        <span>community</span>
         <SomethingElse />
       </Title>
     );
-  }
-  logoClicked() {
-    console.log('logo clicked');
   }
 };
 
