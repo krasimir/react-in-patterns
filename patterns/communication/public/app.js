@@ -51,7 +51,7 @@ function drainQueue() {
     if (draining) {
         return;
     }
-    var timeout = cachedSetTimeout(cleanUpNextTick);
+    var timeout = cachedSetTimeout.call(null, cleanUpNextTick);
     draining = true;
 
     var len = queue.length;
@@ -68,7 +68,7 @@ function drainQueue() {
     }
     currentQueue = null;
     draining = false;
-    cachedClearTimeout(timeout);
+    cachedClearTimeout.call(null, timeout);
 }
 
 process.nextTick = function (fun) {
@@ -80,7 +80,7 @@ process.nextTick = function (fun) {
     }
     queue.push(new Item(fun, args));
     if (queue.length === 1 && !draining) {
-        cachedSetTimeout(drainQueue, 0);
+        cachedSetTimeout.call(null, drainQueue, 0);
     }
 };
 
@@ -19714,13 +19714,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Title = function (_React$Component) {
   _inherits(Title, _React$Component);
 
-  function Title() {
+  function Title(props) {
     _classCallCheck(this, Title);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Title).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Title).call(this, props));
+
+    _this._clickHandler = _this._clickHandler.bind(_this);
+    return _this;
   }
 
   _createClass(Title, [{
+    key: '_clickHandler',
+    value: function _clickHandler() {
+      console.log(this.props.children);
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -19735,15 +19743,10 @@ var Title = function (_React$Component) {
         this.props.children,
         _react2.default.createElement(
           'a',
-          { onClick: this._clickHandler.bind(this) },
+          { onClick: this._clickHandler },
           'click me'
         )
       );
-    }
-  }, {
-    key: '_clickHandler',
-    value: function _clickHandler() {
-      console.log(this.props.children);
     }
   }]);
 
@@ -19789,6 +19792,11 @@ var App = function (_React$Component3) {
   }
 
   _createClass(App, [{
+    key: 'logoClicked',
+    value: function logoClicked() {
+      console.log('logo clicked');
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -19797,15 +19805,10 @@ var App = function (_React$Component3) {
         _react2.default.createElement(
           'span',
           null,
-          ' community'
+          'community'
         ),
         _react2.default.createElement(SomethingElse, null)
       );
-    }
-  }, {
-    key: 'logoClicked',
-    value: function logoClicked() {
-      console.log('logo clicked');
     }
   }]);
 
