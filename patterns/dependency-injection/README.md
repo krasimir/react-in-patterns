@@ -199,7 +199,7 @@ The [answer](https://twitter.com/mweststrate/status/750267384926208000) was the 
 
 > Dependency injection like InversifyJS also works nicely
 
-[InversifyJS](https://github.com/inversify/InversifyJS) is an IoC container. We can use an IoC container to inject a value into React components without passing it explicitly through each component. 
+[InversifyJS](https://github.com/inversify/InversifyJS) is an IoC container. We can use an IoC container to inject a value into React components without passing it explicitly through each component and without using the context.
 
 In this demostration we are going to use InversifyJS and [TypeScript](https://github.com/Microsoft/TypeScript). We are using InversifyJS because it works in both Node.js and web browsers. This is an important feature because some React applications use server-side rendering. We are also using TypeScript because it is the recommended by InversifyJS.
 
