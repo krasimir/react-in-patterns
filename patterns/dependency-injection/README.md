@@ -235,7 +235,7 @@ The generated `pInject` decorator allow us to flag the properties of a class tha
 
 ```ts
 import { pInject } from "./utils/di";
-import { UserStore } from "./store/user";"
+import { UserStore } from "./store/user";
 
 class User extends React.Component<any, any> {
 
