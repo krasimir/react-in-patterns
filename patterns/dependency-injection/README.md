@@ -265,9 +265,13 @@ Most applications will never need to use context. Especially if you are just get
 
 The main advantage of using an IoC container like InversifyJS is that **we are not using the context**!
 
-You can find some real use cases of InversifyJS with React [here](https://github.com/Mercateo/dwatch/blob/master/app/src/components/site/LocaleSwitcher.tsx#L12) and [here](https://github.com/Mercateo/dwatch/blob/master/app/src/components/site/Header.tsx#L14).
+InversifyJS is also great for testing because you can declare a new binding to inject a mock or stub instead of a real value:
 
-You can learn more about InversifyJS [here](https://github.com/inversify/InversifyJS).
+```ts
+kernel.bind<UserStore>(UserStore).toConstantValue({ pageTitle: "Some text for testing..." });
+```
+
+You can find some real use cases of InversifyJS with React [here](https://github.com/Mercateo/dwatch/blob/master/app/src/components/site/LocaleSwitcher.tsx#L12) and [here](https://github.com/Mercateo/dwatch/blob/master/app/src/components/site/Header.tsx#L14). You can learn more about InversifyJS [here](https://github.com/inversify/InversifyJS).
 
 ### Final thoughts
 
