@@ -34,7 +34,7 @@ In most of the cases we need a single dispatcher. Because it acts as a glue for 
 
 That's what I started with:
 
-```
+```js
 var Dispatcher = function () {
   return {
     _stores: [],
@@ -54,7 +54,7 @@ var Dispatcher = function () {
 
 The first thing that we notice is that we *expect* to see an `update` method in the passed stores. It will be nice to throw an error if such method is missing:
 
-```
+```js
 register: function (store) {
   if (!store || !store.update) {
     throw new Error('You should provide a store that has an `update` method.');
@@ -75,7 +75,7 @@ The next logical step is to connect our views to the stores so we rerender when 
 
 Some of the flux implementations available provide a helper function that does the job. For example:
 
-```
+```js
 Framework.attachToStore(view, store);
 ```
 
@@ -85,7 +85,7 @@ However, I don't quite like this approach. To make `attachStore` works we expect
 
 What if we use React's [mixins](https://facebook.github.io/react/docs/reusable-components.html#mixins).
 
-```
+```js
 var View = React.createClass({
   mixins: [Framework.attachToStore(store)]
   ...
@@ -106,7 +106,7 @@ I see similarity with the mixins here. The context is defined somewhere at the t
 
 Higher-Order components pattern is [introduced](https://gist.github.com/sebmarkbage/ef0bf1f338a7182b6775) by Sebastian Markb&#229;ge and it's about creating a wrapper component that returns ours. However, while doing it it has the opportunity to send properties or apply additional logic. For example:
 
-```
+```js
 function attachToStore(Component, store, consumer) {
   const Wrapper = React.createClass({
     getInitialState() {
@@ -133,14 +133,14 @@ function attachToStore(Component, store, consumer) {
 
 `Component` is the view that we want attached to the `store`. The `consumer` function says what part of the store's state should be fetched and send to the view. A simple usage of the above function could be:
 
-```
+```js
 class MyView extends React.Component {
   ...
 }
 
 ProfilePage = connectToStores(MyView, store, (props, store) => ({
   data: store.get('key')
-});
+}));
 
 ```
 
@@ -152,7 +152,7 @@ The last option above, higher-order components, is really close to what I'm sear
 
 So far our implementation interacts with the store only in the `register` method.
 
-```
+```js
 register: function (store) {
   if (!store || !store.update) {
     throw new Error('You should provide a store that has an `update` method.');
@@ -170,7 +170,7 @@ I decided to send the whole store to the consumer function and not the data that
 
 Here is how the register method looks like after the changes:
 
-```
+```js
 register: function (store) {
   if (!store || !store.update) {
     throw new Error('You should provide a store that has an `update` method.');
@@ -191,7 +191,7 @@ The last bit in the story is how the store says that its internal state is chang
 
 According to the basic principles of the flux architecture the stores change their state in response of actions. In the `update` method we send the `action` but we could also send a function `change`. Calling that function should trigger the consumers:
 
-```
+```js
 register: function (store) {
   if (!store || !store.update) {
     throw new Error('You should provide a store that has an `update` method.');
@@ -224,7 +224,7 @@ dispatch: function (action) {
 
 A common use case is to render the view with the initial state of the store. In the context of our implementation this means firing all the consumers at least once when they land in the library. This could be easily done in the `subscribe` method:
 
-```
+```js
 var subscribe = function (consumer, noInit) {
   consumers.push(consumer);
   !noInit ? consumer(store) : null;
@@ -233,7 +233,7 @@ var subscribe = function (consumer, noInit) {
 
 Of course sometimes this is not needed so we add a flag which is by default falsy. Here is the final version of our dispatcher:
 
-```
+```js
 var Dispatcher = function () {
   return {
     _stores: [],
@@ -272,7 +272,7 @@ var Dispatcher = function () {
 
 You probably noticed that we didn't talk about the actions. What are they? My opinion is that they should be simple objects having two properties - `type` and `payload`:
 
-```
+```js
 {
   type: 'USER_LOGIN_REQUEST',
   payload: {
@@ -286,7 +286,7 @@ The `type` says what exactly the action is all about and the `payload` contains 
 
 It's interesting that the `type` is well known in the beginning. We know what type of actions should be floating in our app, who is dispatching them and which of the stores is interested. Thus, we can apply [partial application](http://krasimirtsonev.com/blog/article/a-story-about-currying-bind) and avoid passing the action object here and there. For example:
 
-```
+```js
 var createAction = function (type) {
   if (!type) {
     throw new Error('Please, provide action\'s type.');
@@ -311,7 +311,7 @@ This approach for creating actions is actually really popular and functions like
 
 In the section above we successfully hid the dispatcher while submitting actions. We may do it again for the store's registration:
 
-```
+```js
 var createSubscriber = function (store) {
   return dispatcher.register(store);
 }
@@ -320,7 +320,7 @@ var createSubscriber = function (store) {
 And instead of exporting the dispatcher we may export only these two functions `createAction` and `createSubscriber`. Here is how the final code looks like:
 
 
-```
+```js
 var Dispatcher = function () {
   return {
     _stores: [],
@@ -387,7 +387,7 @@ We have a module that provides two helpers for building a Flux project. Let's wr
 
 We'll need some UI to interact with it so:
 
-```
+```html
 <div id="counter">
   <span></span>
   <button>increase</button>
@@ -399,7 +399,7 @@ The `span` will be used for displaying the current value of our counter. The but
 
 ### The view
 
-```
+```js
 const View = function (subscribeToStore, increase, decrease) {
   var value = null;
   var el = document.querySelector('#counter');
@@ -427,14 +427,14 @@ The last bit is calling the action functions when we press the buttons.
 Every action has a type. It's a good practice to create constants for these types so we don't deal with raw strings.
 
 
-```
+```js
 const INCREASE = 'INCREASE';
 const DECREASE = 'DECREASE';
 ```
 
 Very often we have only one instance of every store. For the sake of simplicity we'll create ours as a singleton.
 
-```
+```js
 const CounterStore = {
   _data: { value: 0 },
   getValue: function () {
@@ -457,7 +457,7 @@ const CounterStore = {
 
 So, we have the store waiting for actions from the dispatcher. We have the view defined. Let's create the store subscriber, the actions and run everything.
 
-```
+```js
 const { createAction, createSubscriber } = Fluxiny.create();
 const counterStoreSubscriber = createSubscriber(CounterStore);
 const actions = {
