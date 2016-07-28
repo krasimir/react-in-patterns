@@ -16,6 +16,6 @@
 ## Running the examples
 
 * Run `npm i`
-* Go to the folder of the example
-* Run `npm run build` (or `npm run watch` if you want to make changes)
+* Run `npm run build` for building the examples
+* Run `npm run watch` if you plan making changes
 * Open the content of the `public` folder in a browser
