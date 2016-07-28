@@ -1,6 +1,6 @@
 {
   "name": "react-in-patterns",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Learn the most (and not only) design pattern used while developing with React",
   "repository": {
     "type": "git",
@@ -21,8 +21,17 @@
     "babel-preset-react": "6.5.0",
     "babelify": "7.3.0",
     "browserify": "13.0.1",
+    "gulp": "3.9.1",
+    "gulp-duration": "0.0.0",
+    "gulp-sourcemaps": "1.6.0",
+    "gulp-util": "3.0.7",
     "react": "15.1.0",
     "react-dom": "15.1.0",
-    "watchify": "3.7.0"
+    "vinyl-buffer": "1.0.0",
+    "vinyl-source-stream": "1.1.0"
+  },
+  "scripts": {
+    "build": "gulp",
+    "watch": "gulp watch"
   }
 }
