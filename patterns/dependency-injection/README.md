@@ -191,6 +191,90 @@ export default function wire(Component, dependencies, mapper) {
 
 `Inject` is a higher-order component that gets access to the context and retrieves all the items listed under `dependencies` array. The `mapper` is a function receiving the `context` data and transforms it to props for our component.
 
+### Dependency injection powered by an IoC container
+Not long ago an user in Twitter asked [Michel Weststrate](https://twitter.com/mweststrate)(the author of [MobX](https://github.com/mobxjs/mobx)) the following:
+
+> How safe is it to use mobx-react <Provider>? Or are there any other options for connecting stores to components without passing them explicitly through each component?
+
+The [answer](https://twitter.com/mweststrate/status/750267384926208000) was the following:
+
+> Dependency injection like InversifyJS also works nicely
+
+[InversifyJS](https://github.com/inversify/InversifyJS) is an IoC container. We can use an IoC container to inject a value into React components without passing it explicitly through each component and without using the context.
+
+In this demostration we are going to use InversifyJS and [TypeScript](https://github.com/Microsoft/TypeScript). We are using InversifyJS because it works in both Node.js and web browsers. This is an important feature because some React applications use server-side rendering. We are also using TypeScript because it is the recommended by InversifyJS.
+
+InversifyJS supports two kinds of injections:
+
+- Constructor injection
+- Property injection
+
+In order to use "constructor injection" the IoC container needs to be able to create the instances of the classes. In React the components sometimes are just functions (not classes) and we can't delegate the creation of the instances of the components to the IoC container. This means that **constructor injection powered by IoC containers don't play nicely with React**
+
+However, **property injection works nicely** if what we want is to pass dependencies to components without passing them explicitly through each component.
+
+Let's take a look to a basic example.
+
+We need to start by configuring the IoC container. In InversifyJs we need to create a dictionary that maps a type identifier with a type. The dictionary entries are known as "type bindings". 
+
+In this case, we a binding to map the identifier `UserStore` to the class `UserStore`. This time the identifier is the Class but InversifyJS also allow you to use `Symbols` or string literals as identifiers. Symbols or string literalsare required when we use interfaces.
+
+```ts
+import { Kernel, makePropertyInjectDecorator } from "inversify";
+import { UserStore } from "./store/user";
+import "reflect-metadata";
+
+let kernel = new Kernel();
+kernel.bind<UserStore>(UserStore).to(UserStore);
+
+let pInject = makePropertyInjectDecorator(kernel);
+export { kernel, pInject };
+```
+
+We also need to generate a decorator using the function `makePropertyInjectDecorator`. 
+
+The generated `pInject` decorator allow us to flag the properties of a class that we want to be injected:
+
+```ts
+import { pInject } from "./utils/di";
+import { UserStore } from "./store/user";
+
+class User extends React.Component<any, any> {
+
+    @pInject(UserStore)
+    private userStore: UserStore;
+    
+    public render() {
+        return (
+            <h1>{this.userStore.pageTitle}</h1>
+        );
+    }
+}
+```
+
+Injected properties are lazy evaluated. This means that the value of the `userStore` property is only set after we try to access it for the first time.
+
+Based on the [React docs](https://facebook.github.io/react/docs/context.html) we should try to avoid using context:
+
+> **Note:**
+> 
+> Context is an advanced and experimental feature. The API is likely to change in future releases.
+Most applications will never need to use context. Especially if you are just getting started with React, you likely do not want to use context. Using context will make your code harder to understand because it makes the data flow less clear. It is similar to using global variables to pass state through your application.
+> 
+> **If you have to use context, use it sparingly.**
+> 
+> Regardless of whether you're building an application or a library, try to isolate your use of context to a small area and avoid using the context API directly when possible so that it's easier to upgrade when the API changes.
+
+The main advantage of using an IoC container like InversifyJS is that **we are not using the context**!
+
+InversifyJS is also great for testing because you can declare a new binding to inject a mock or stub instead of a real value:
+
+```ts
+kernel.bind<UserStore>(UserStore).toConstantValue({ pageTitle: "Some text for testing..." });
+```
+
+You can find some real use cases of InversifyJS with React [here](https://github.com/Mercateo/dwatch/blob/master/app/src/components/site/LocaleSwitcher.tsx#L12) and [here](https://github.com/Mercateo/dwatch/blob/master/app/src/components/site/Header.tsx#L14). You can learn more about InversifyJS [here](https://github.com/inversify/InversifyJS).
+
 ### Final thoughts
 
 Most of the solutions for dependency injection in React components are based on context. I think that it's good to know what happens under the hood. As the time of this writing one of the most popular ways for building React apps involves [Redux](https://github.com/reactjs/react-redux). The *famous* `connect` function and the `Provider` there use the `context`.
