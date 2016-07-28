@@ -54,6 +54,7 @@ var enhanceComponent = (Component) =>
       )
     }
   };
+export default enhanceComponent;
 
 // Header.jsx
 import enhance from './enhance.jsx';
