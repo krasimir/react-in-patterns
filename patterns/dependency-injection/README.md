@@ -219,8 +219,9 @@ We need to start by configuring the IoC container. In InversifyJs we need to cre
 In this case, we a binding to map the identifier `UserStore` to the class `UserStore`. This time the identifier is the Class but InversifyJS also allow you to use `Symbols` or string literals as identifiers. Symbols or string literalsare required when we use interfaces.
 
 ```ts
-import { Kernel } from "inversify";
+import { Kernel, makePropertyInjectDecorator } from "inversify";
 import { UserStore } from "./store/user";
+import "reflect-metadata";
 
 let kernel = new Kernel();
 kernel.bind<UserStore>(UserStore).to(UserStore);
