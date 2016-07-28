@@ -13,7 +13,7 @@
 
 ---
 
-## Running the examples
+## Building the examples
 
 * Run `npm i`
 * Run `npm run build` for building the examples
