@@ -19,3 +19,7 @@
 * Run `npm run build` for building the examples
 * Run `npm run watch` if you plan making changes
 * Open the content of the `public` folder in a browser
+
+## Linting
+
+* Run `npm run lint`
