@@ -6,4 +6,4 @@ export default {
   register(key, value) {
     this.data[key] = value;
   }
-}
+};

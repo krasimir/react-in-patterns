@@ -15,12 +15,17 @@ class Title extends React.Component {
         <a onClick={this.props.logoClicked}>
           <img src='path/to/logo.png' />
         </a>
-        {this.props.text}
-        {this.props.children}
+        { this.props.text }
+        { this.props.children }
         <a onClick={this._clickHandler}>click me</a>
       </h1>
     );
   }
+};
+Title.propTypes = {
+  logoClicked: React.PropTypes.func,
+  text: React.PropTypes.string,
+  children: React.PropTypes.any
 };
 
 class SomethingElse extends React.Component {

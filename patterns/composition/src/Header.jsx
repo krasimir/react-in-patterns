@@ -1,11 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 export default class Header extends React.Component {
   render() {
     return (
       <header>
-        <a class="button" onClick={ this._logoClicked.bind(this) }>
+        <a className='button' onClick={ this._logoClicked.bind(this) }>
           Logo
         </a>
         <hr />
@@ -18,4 +17,10 @@ export default class Header extends React.Component {
   _logoClicked() {
     this.props.track && this.props.track('logo-clicked');
   }
+};
+
+Header.propTypes = {
+  title: React.PropTypes.any,
+  track: React.PropTypes.func,
+  children: React.PropTypes.any
 };

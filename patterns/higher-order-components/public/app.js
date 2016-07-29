@@ -19791,6 +19791,10 @@ var Content = function Content(props) {
   );
 };
 
+Content.propTypes = {
+  name: _react2.default.PropTypes.string
+};
+
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
 
@@ -19868,6 +19872,7 @@ var enhanceComponent = function enhanceComponent(Component) {
     return Enhance;
   }(_react2.default.Component);
 };
+
 exports.default = enhanceComponent;
 
 },{"react":167}]},{},[168])

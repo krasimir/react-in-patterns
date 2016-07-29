@@ -19824,6 +19824,10 @@ var Switcher = function (_React$Component) {
 }(_react2.default.Component);
 
 ;
+Switcher.propTypes = {
+  value: _react2.default.PropTypes.bool,
+  onChange: _react2.default.PropTypes.func
+};
 
 var App = function (_React$Component2) {
   _inherits(App, _React$Component2);
@@ -19844,7 +19848,7 @@ var App = function (_React$Component2) {
         'div',
         null,
         _react2.default.createElement(Switcher, {
-          value: Store.get(),
+          value: !!Store.get(),
           onChange: Store.set.bind(Store) })
       );
     }

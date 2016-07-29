@@ -19806,6 +19806,10 @@ var Title = function Title(props) {
   );
 };
 
+Title.propTypes = {
+  title: _react2.default.PropTypes.string
+};
+
 exports.default = (0, _di.wire)(Title, ['my-awesome-title'], function (title) {
   return { title: title };
 });

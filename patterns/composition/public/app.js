@@ -19770,10 +19770,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = require('react-dom');
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19799,7 +19795,7 @@ var Header = function (_React$Component) {
         null,
         _react2.default.createElement(
           'a',
-          { 'class': 'button', onClick: this._logoClicked.bind(this) },
+          { className: 'button', onClick: this._logoClicked.bind(this) },
           'Logo'
         ),
         _react2.default.createElement('hr', null),
@@ -19821,7 +19817,13 @@ var Header = function (_React$Component) {
 exports.default = Header;
 ;
 
-},{"react":167,"react-dom":2}],169:[function(require,module,exports){
+Header.propTypes = {
+  title: _react2.default.PropTypes.any,
+  track: _react2.default.PropTypes.func,
+  children: _react2.default.PropTypes.any
+};
+
+},{"react":167}],169:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -19833,10 +19835,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = require('react-dom');
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19898,7 +19896,11 @@ var Navigation = function (_React$Component) {
 exports.default = Navigation;
 ;
 
-},{"react":167,"react-dom":2}],170:[function(require,module,exports){
+Navigation.propTypes = {
+  track: _react2.default.PropTypes.func
+};
+
+},{"react":167}],170:[function(require,module,exports){
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();

@@ -19821,6 +19821,11 @@ var Title = function (_React$Component) {
 }(_react2.default.Component);
 
 ;
+Title.propTypes = {
+  logoClicked: _react2.default.PropTypes.func,
+  text: _react2.default.PropTypes.string,
+  children: _react2.default.PropTypes.any
+};
 
 var SomethingElse = function (_React$Component2) {
   _inherits(SomethingElse, _React$Component2);

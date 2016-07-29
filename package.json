@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/krasimir/react-in-patterns#readme",
   "dependencies": {
+    "babel-eslint": "4.1.8",
     "babel-preset-es2015": "6.9.0",
     "babel-preset-react": "6.5.0",
     "babelify": "7.3.0",
@@ -28,10 +29,14 @@
     "react": "15.1.0",
     "react-dom": "15.1.0",
     "vinyl-buffer": "1.0.0",
-    "vinyl-source-stream": "1.1.0"
+    "vinyl-source-stream": "1.1.0",
+    "eslint": "~1.10.3",
+    "eslint-plugin-react": "3.16.1",
+    "gulp-eslint": "1.1.1"
   },
   "scripts": {
     "build": "gulp",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "lint": "gulp lint"
   }
 }

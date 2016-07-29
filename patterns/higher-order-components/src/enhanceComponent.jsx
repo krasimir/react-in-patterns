@@ -11,7 +11,8 @@ var enhanceComponent = (Component) =>
             {...this.props}
           />
         </section>
-      )
+      );
     }
   };
+
 export default enhanceComponent;

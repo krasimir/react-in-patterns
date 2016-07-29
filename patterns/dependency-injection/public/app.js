@@ -19807,6 +19807,9 @@ function Title(props) {
     props.title
   );
 }
+Title.propTypes = {
+  title: _react2.default.PropTypes.string
+};
 
 exports.default = (0, _wire2.default)(Title, ['config'], function (config) {
   return { title: config.name };

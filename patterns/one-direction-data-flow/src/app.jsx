@@ -4,14 +4,14 @@ import ReactDOM from 'react-dom';
 var Store = {
   _handlers: [],
   _flag: '',
-  onChange: function(handler) {
+  onChange: function (handler) {
     this._handlers.push(handler);
   },
-  set: function(value) {
+  set: function (value) {
     this._flag = value;
-    this._handlers.forEach(handler => handler())
+    this._handlers.forEach(handler => handler());
   },
-  get: function() {
+  get: function () {
     return this._flag;
   }
 };
@@ -21,7 +21,7 @@ class Switcher extends React.Component {
     super(props);
     this._onButtonClick = e => {
       this.props.onChange(!this.props.value);
-    }
+    };
   }
   render() {
     return (
@@ -30,6 +30,10 @@ class Switcher extends React.Component {
       </button>
     );
   }
+};
+Switcher.propTypes = {
+  value: React.PropTypes.bool,
+  onChange: React.PropTypes.func
 };
 
 class App extends React.Component {
@@ -41,7 +45,7 @@ class App extends React.Component {
     return (
       <div>
         <Switcher
-          value={ Store.get() }
+          value={ !!Store.get() }
           onChange={ Store.set.bind(Store) } />
       </div>
     );

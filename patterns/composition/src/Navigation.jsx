@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 export default class Navigation extends React.Component {
   constructor(props) {
@@ -7,7 +6,7 @@ export default class Navigation extends React.Component {
 
     this.links = [
       'About', 'Products', 'Contacts'
-    ]
+    ];
   }
   render() {
     return (
@@ -28,9 +27,13 @@ export default class Navigation extends React.Component {
           ) }
         </ul>
       </nav>
-    )
+    );
   }
   _onLinkClicked(index) {
     this.props.track && this.props.track(`${ this.links[index] }-clicked`);
   }
+};
+
+Navigation.propTypes = {
+  track: React.PropTypes.func
 };

@@ -7,6 +7,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var babelify = require('babelify');
 var fs = require('fs');
 var duration = require('gulp-duration');
+var eslint = require('gulp-eslint');
 
 var createBundler = function(folder) {
   return browserify({
@@ -56,6 +57,13 @@ gulp.task('build-watch', ['build'], function () {
       build(folder);
     });
   });
+});
+
+gulp.task('lint', function () {
+  return gulp.src(['**/*.js','!node_modules/**'])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
 });
 
 gulp.task('default', ['build']);
