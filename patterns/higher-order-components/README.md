@@ -1,6 +1,8 @@
 ## [React in patterns](../../README.md) / Higher-order components
 
-> [Source code](https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components/src)
+* [Source code](https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components/src)
+
+---
 
 Higher-order components look really similar to the [decorator design pattern](http://robdodson.me/javascript-design-patterns-decorator/). It is wrapping a component and attaching some new functionalities or props to it.
 

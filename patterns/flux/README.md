@@ -1,6 +1,8 @@
 ## [React in patterns](../../README.md) / Flux
 
-> [Source code](https://github.com/krasimir/fluxiny)
+* [Source code](https://github.com/krasimir/fluxiny)
+
+--- 
 
 *The Flux implementation discussed in this section is available here [github.com/krasimir/fluxiny](https://github.com/krasimir/fluxiny). Feel free to use it in a browser [directly](https://github.com/krasimir/fluxiny/tree/master/lib) or as a [npm dependency](https://www.npmjs.com/package/fluxiny).*
 

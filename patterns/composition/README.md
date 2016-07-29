@@ -1,6 +1,8 @@
 ## [React in patterns](../../README.md) / Composition
 
-> [Source code](https://github.com/krasimir/react-in-patterns/tree/master/patterns/composition/src)
+* [Source code](https://github.com/krasimir/react-in-patterns/tree/master/patterns/composition/src)
+
+---
 
 One of the biggest benefits of [React](http://krasimirtsonev.com/blog/article/The-bare-minimum-to-work-with-React) is composability. I personally don't know a framework that offers such an easy way to create and combine components. In this section we will explore few composition techniques which proved to work well.
 

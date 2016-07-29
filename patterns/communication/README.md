@@ -1,5 +1,9 @@
 ## [React in patterns](../../README.md) / Communication
 
+* [Source code](https://github.com/krasimir/react-in-patterns/tree/master/patterns/communication/src)
+
+---
+
 Building with React for a couple of months and you'll realize that every React component is like a small system that operates on its own. It has its own state, input and output.
 
 ### Input

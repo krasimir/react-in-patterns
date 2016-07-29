@@ -19798,13 +19798,15 @@ var _di = require('./di.jsx');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = (0, _di.wire)(function Title(props) {
+var Title = function Title(props) {
   return _react2.default.createElement(
     'h1',
     null,
     props.title
   );
-}, ['my-awesome-title'], function (title) {
+};
+
+exports.default = (0, _di.wire)(Title, ['my-awesome-title'], function (title) {
   return { title: title };
 });
 

@@ -1,6 +1,8 @@
 ## [React in patterns](../../README.md) / One-way direction data flow
 
-> [Source code](https://github.com/krasimir/react-in-patterns/tree/master/patterns/one-direction-data-flow/src)
+* [Source code](https://github.com/krasimir/react-in-patterns/tree/master/patterns/one-direction-data-flow/src)
+
+---
 
 One-way direction data flow is a pattern that works nicely with React. It is around the idea that the components do not modify the data that they receive. They only listen for changes in this data and maybe provide the new value but they do not update the actual data store. This update happens following another mechanism in another place and the component just gets rendered with the new value.
 

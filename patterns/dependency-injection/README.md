@@ -1,8 +1,9 @@
 ## [React in patterns](../../README.md) / Dependency injection
 
-> [Source code using React's context](https://github.com/krasimir/react-in-patterns/tree/master/patterns/dependency-injection/src)
+* [Source code using React's context](https://github.com/krasimir/react-in-patterns/tree/master/patterns/dependency-injection/src)
+* [Source code using module system](https://github.com/krasimir/react-in-patterns/tree/master/patterns/dependency-injection-module-system/src)
 
-> [Source code using module system](https://github.com/krasimir/react-in-patterns/tree/master/patterns/dependency-injection-module-system/src)
+---
 
 Big part of the modules/components that we write have dependencies. A proper management of these dependencies is critical for the success of the project. There is a technique (some people consider it as a *pattern*) called [*dependency injection*](http://krasimirtsonev.com/blog/article/Dependency-injection-in-JavaScript) that helps solving the problem.
 
@@ -14,6 +15,7 @@ export default function Title(props) {
   return <h1>{ props.title }</h1>;
 }
 
+// -----------------------------------
 // Header.jsx
 import Title from './Title.jsx';
 export default function Header() {
@@ -24,6 +26,7 @@ export default function Header() {
   );
 }
 
+// -----------------------------------
 // App.jsx
 import Header from './Header.jsx';
 class App extends React.Component {
@@ -58,6 +61,7 @@ export default function inject(Component) {
   };
 }
 
+// -----------------------------------
 // Header.jsx
 import inject from './inject.jsx';
 import Title from './Title.jsx';
@@ -207,15 +211,13 @@ At the end of this section we should mention that the usage of `context` is not 
 
 ## Using the module system
 
-If we don't want to use the context there are a couple of other ways to achieve the injection. They are not exactly React specific but worths mentioning. One of them is by using the module system.
+If we don't want to use the context there are a couple of other ways to achieve the injection. They are not exactly React specific but worth mentioning. One of them is using the module system.
 
 As we know the typical module system in JavaScript has a caching mechanism. It's nicely noted in the [Node's documentation](https://nodejs.org/api/modules.html#modules_caching):
 
 > Modules are cached after the first time they are loaded. This means (among other things) that every call to require('foo') will get exactly the same object returned, if it would resolve to the same file.
 
 > Multiple calls to require('foo') may not cause the module code to be executed multiple times. This is an important feature. With it, "partially done" objects can be returned, thus allowing transitive dependencies to be loaded even when they would cause cycles.
-
-> If you want to have a module execute code multiple times, then export a function, and call that function.
 
 How's that helping for our injection? Well, if we export an object we are actually exporting a [singleton](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript) and every other module that imports the file will get the same object. This allows us to `register` our dependencies and later `fetch` them in another file.
 
@@ -262,15 +264,17 @@ import Header from './Header.jsx';
 import { register } from './di.jsx';
 
 register('my-awesome-title', 'React in patterns');
+
 class App extends React.Component {
   render() {
     return <Header />;
   }
 };
 
-
+// -----------------------------------
 // Header.jsx
 import Title from './Title.jsx';
+
 export default function Header() {
   return (
     <header>
@@ -279,17 +283,18 @@ export default function Header() {
   );
 }
 
+// -----------------------------------
 // Title.jsx
 import { wire } from './di.jsx';
 
-export default wire(
-  function Title(props) {
-    return <h1>{ props.title }</h1>;
-  },
-  ['my-awesome-title'],
-  title => ({ title })
-);
+var Title = function(props) {
+  return <h1>{ props.title }</h1>;
+};
+
+export default wire(Title, ['my-awesome-title'], title => ({ title }));
 ```
+
+If we look at the `Title.jsx` file we'll see that the actual component and the wiring may live in different files. That way the component and the mapper function become easily unit testable.
 
 ## Injecting at build time
 
