@@ -1,6 +1,7 @@
 ## [React in patterns](../../README.md) / Dependency injection
 
 > [Source code using React's context](https://github.com/krasimir/react-in-patterns/tree/master/patterns/dependency-injection/src)
+
 > [Source code using module system](https://github.com/krasimir/react-in-patterns/tree/master/patterns/dependency-injection-module-system/src)
 
 Big part of the modules/components that we write have dependencies. A proper management of these dependencies is critical for the success of the project. There is a technique (some people consider it as a *pattern*) called [*dependency injection*](http://krasimirtsonev.com/blog/article/Dependency-injection-in-JavaScript) that helps solving the problem.
