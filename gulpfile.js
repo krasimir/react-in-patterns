@@ -20,6 +20,7 @@ var createBundler = function(folder) {
 
 var build = function (folder, callback) {
   folder.bundler.bundle()
+    .on('error', gutil.log)
     .pipe(source('app.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({ loadMaps: true })).on('error', gutil.log)
