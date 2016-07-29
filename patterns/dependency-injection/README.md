@@ -296,7 +296,7 @@ export default wire(Title, ['my-awesome-title'], title => ({ title }));
 
 If we look at the `Title.jsx` file we'll see that the actual component and the wiring may live in different files. That way the component and the mapper function become easily unit testable.
 
-## Injecting at build time
+## Injecting with the help of a build process
 
 We are all processing our JavaScript before shipping it to the browser. This biggest benefit of having an intermediate process is the ability to add features which are normally not there. Like for example the support of [ES6 destructuring](http://krasimirtsonev.com/blog/article/constructive-destructuring-es6-assignment) with [Babel](http://babeljs.io/) or static type checking with [Flow](https://flowtype.org/). There are tools for dependency injection too. [InversifyJS](https://github.com/inversify/InversifyJS) is one of them and in the next section we will see how it works with React components.
 
