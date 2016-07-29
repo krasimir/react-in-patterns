@@ -205,7 +205,7 @@ At the end of this section we should mention that the usage of `context` is not 
 
 > Regardless of whether you're building an application or a library, try to isolate your use of context to a small area and avoid using the context API directly when possible so that it's easier to upgrade when the API changes.
 
-### Using the module system
+## Using the module system
 
 If we don't want to use the context there are a couple of other ways to achieve the injection. They are not exactly React specific but worths mentioning. One of them is by using the module system.
 
@@ -291,11 +291,11 @@ export default wire(
 );
 ```
 
-### Injecting at build time
+## Injecting at build time
 
 We are all processing our JavaScript before shipping it to the browser. This biggest benefit of having an intermediate process is the ability to add features which are normally not there. Like for example the support of [ES6 destructuring](http://krasimirtsonev.com/blog/article/constructive-destructuring-es6-assignment) with [Babel](http://babeljs.io/) or static type checking with [Flow](https://flowtype.org/). There are tools for dependency injection too. [InversifyJS](https://github.com/inversify/InversifyJS) is one of them and in the next section we will see how it works with React components.
 
-#### Dependency injection powered by an IoC container
+### Dependency injection powered by an IoC container
 
 Not long ago an user in Twitter asked [Michel Weststrate](https://twitter.com/mweststrate)(the author of [MobX](https://github.com/mobxjs/mobx)) the following:
 
