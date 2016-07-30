@@ -6,11 +6,15 @@
 * Basic
   * [Communication](./patterns/communication/)
   * [Event handlers](./patterns/event-handlers)
-* [Composition](./patterns/composition/)
-* [Higher-order components](./patterns/higher-order-components/)
-* [Dependency injection](./patterns/dependency-injection)
-* [One direction data flow](./patterns/one-direction-data-flow)
-* [Flux](./patterns/flux)
+  * [Composition](./patterns/composition/)
+  * [Higher-order components](./patterns/higher-order-components/)
+
+* Dependency management
+  * [Dependency injection](./patterns/dependency-injection)
+
+* Data flow
+  * [One direction data flow](./patterns/one-direction-data-flow)
+  * [Flux](./patterns/flux)
 
 ---
 
