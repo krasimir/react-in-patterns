@@ -3,8 +3,9 @@
 :books: List of design patterns/techniques used while developing with [React](https://facebook.github.io/react/).
 
 ---
-
-* [Communication](./patterns/communication/)
+* Basic
+  * [Communication](./patterns/communication/)
+  * [Event handlers](./patterns/event-handlers)
 * [Composition](./patterns/composition/)
 * [Higher-order components](./patterns/higher-order-components/)
 * [Dependency injection](./patterns/dependency-injection)
