@@ -44,14 +44,14 @@ class Clock extends React.Component {
 ReactDOM.render(<Clock time={ new Date() }/>, ...);
 ```
 
-In the constructor of the component we save the passed `time` to the state. We later update the state and the component is rerendered. To make it looks like a real clock we use two helper methods - `_formatTime` and `_updateTime`. The first one is all about extracting hours, minutes and seconds and making sure that they are following the XX format. The updating is actually changing the current `time` by one second.
+In the constructor of the component we store the passed `time` object to the internal state. By using `setInterval` we update the state every second and the component is rerendered. To make it looks like a real clock we use two helper methods - `_formatTime` and `_updateTime`. The first one is all about extracting hours, minutes and seconds and making sure that they are following the two-digits format. `_updateTime` is mutating the current `time` object by one second.
 
 ## The problems
 
 There are couple of things happening in our component. It looks like it has a little bit too many responsibilities.
 
 * It mutates the state by itself. Changing the time inside the component may not be a good idea because then only `Clock` knows the current value. If there is another part of the system that depends on this data it will be difficult to share it.
-* `_formatTime` is actually doing two jobs - it extracts the needed information from the date object and makes sure that the values are always with two digits. That's fine but it will be nice if the extracting is not part of this component because then `Clock` is bound to the type of the `time` (coming as a prop).
+* `_formatTime` is actually doing two things - it extracts the needed information from the date object and makes sure that the values are always with two digits. That's fine but it will be nice if the extracting is not part of this component because then `Clock` is bound to the type of the `time` object (coming as a prop). I.e. knows specifics about the shape of the data.
 
 ## Solution
 
@@ -59,13 +59,13 @@ So, let's split the component into two parts - container and presentation.
 
 ### Container
 
-Containers know about data, it's shape and where it comes. They know details about how the things work or the so called *business logic*. They receive information and format it so it is easy to use by the presentational component. Very often we use [higher-order components](https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components) to create containers. Their `render` method normally contains only the presentational component. In the context of the [flux architecture](https://github.com/krasimir/react-in-patterns/tree/master/patterns/flux) that's the bit which is bound to the stores' changes and calls action creators.
+Containers know about data, it's shape and where it comes from. They know details about how the things work or the so called *business logic*. They receive information and format it so it is easy to use by the presentational component. Very often we use [higher-order components](https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components) to create containers. Their `render` method contains only the presentational component. In the context of the [flux architecture](https://github.com/krasimir/react-in-patterns/tree/master/patterns/flux) that's the bit which is bound to the stores' changes and calls action creators.
 
 Here's how our `ClockContainer` looks like:
 
 ```js
 // Clock/index.js
-import Clock from './Clock.jsx';
+import Clock from './Clock.jsx'; // <-- that's the presentational component
 
 export default class ClockContainer extends React.Component {
   constructor(props) {
@@ -132,7 +132,7 @@ export default class ClockContainer extends React.Component {
 }
 ```
 
-we export a function that accepts the presentational component:
+we may export a function that accepts the presentational component:
 
 ```js
 export default function(Component) {
@@ -146,4 +146,13 @@ export default function(Component) {
 
 Using this technique our container is really flexible in rendering its result. It will be really helpful if we want to switch from digital to analog clock representation.
 
-Even the testing becomes easier because we have to thing less for our components. Containers are not concern with UI stuff and very often the actions that trigger logic are controlled with callbacks. Presentational components are just about rendering the incoming props and their unit tests are more or less checking if the right callback is called if something is clicked/filled in.
+Even the testing becomes easier because we have to think less for our components. Containers are not concern with UI stuff and very often the actions that trigger logic are controlled with callbacks. Presentational components are just about rendering the incoming props and their unit tests are more or less checking if the right callback is called if something is clicked/filled in.
+
+## Other resources
+
+* [Presentational and Container Components by Dan Abramov](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0)
+* [Container Components by "Learn React with chantastic"](https://medium.com/@learnreact/container-components-c0e67432e005)
+
+## A side note
+
+*Nothing is set in stone. Presentational components do have internal state sometimes. Containers may have additional markup. The concept described here has no strict rules and what exactly to put where depends on the concrete context.*
