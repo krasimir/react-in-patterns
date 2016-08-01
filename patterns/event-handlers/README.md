@@ -1,5 +1,9 @@
 ## [React in patterns](../../README.md) / Event handlers
 
+* [Source code](https://github.com/krasimir/react-in-patterns/tree/master/patterns/event-handlers/src)
+
+---
+
 Most of the times we handle DOM events in the component that contains the elements dispatching the events. Like in the example below, we have a click handler and we want to run a function of the same component:
 
 ```js

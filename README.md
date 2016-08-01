@@ -8,6 +8,7 @@
   * [Event handlers](./patterns/event-handlers)
   * [Composition](./patterns/composition/)
   * [Higher-order components](./patterns/higher-order-components/)
+  * [Presentational and container components](./patterns/presentational-and-container)
 
 * Dependency management
   * [Dependency injection](./patterns/dependency-injection)
