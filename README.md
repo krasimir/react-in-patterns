@@ -32,4 +32,4 @@
 
 ## Resources
 
-* [React patterns by Michael Chan](https://github.com/planningcenter/react-patterns)
+* [React patterns at Planning Center Online](https://github.com/planningcenter/react-patterns)
