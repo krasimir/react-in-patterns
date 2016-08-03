@@ -29,3 +29,7 @@
 ## Linting
 
 * Run `npm run lint`
+
+## Resources
+
+* [React patterns by Michael Chan](https://github.com/planningcenter/react-patterns)
