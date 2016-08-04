@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import enhanceComponent from './enhanceComponent.jsx';
 
 var Content = (props) => <p>I am { props.name }</p>;
+var EnhancedContent = enhanceComponent(Content);
 
 Content.propTypes = {
   name: React.PropTypes.string
@@ -11,8 +12,6 @@ Content.propTypes = {
 
 class App extends React.Component {
   render() {
-    var EnhancedContent = enhanceComponent(Content);
-
     return <EnhancedContent name='Content component' />;
   }
 };

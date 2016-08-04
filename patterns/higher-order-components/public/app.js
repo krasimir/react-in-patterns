@@ -19790,6 +19790,7 @@ var Content = function Content(props) {
     props.name
   );
 };
+var EnhancedContent = (0, _enhanceComponent2.default)(Content);
 
 Content.propTypes = {
   name: _react2.default.PropTypes.string
@@ -19807,8 +19808,6 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'render',
     value: function render() {
-      var EnhancedContent = (0, _enhanceComponent2.default)(Content);
-
       return _react2.default.createElement(EnhancedContent, { name: 'Content component' });
     }
   }]);

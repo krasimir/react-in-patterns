@@ -19796,6 +19796,11 @@ function Clock(props) {
     seconds
   );
 };
+Clock.propTypes = {
+  hours: _react2.default.PropTypes.number.isRequired,
+  minutes: _react2.default.PropTypes.number.isRequired,
+  seconds: _react2.default.PropTypes.number.isRequired
+};
 
 },{"react":167}],169:[function(require,module,exports){
 'use strict';
