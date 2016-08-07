@@ -14,7 +14,7 @@ I'm obsessed by making my code simpler. I didn't say *smaller* because having le
 
 ![Basic flux architecture](http://krasimirtsonev.com/blog/articles/fluxiny/fluxiny_basic_flux_architecture.jpg)
 
-The main actor in this pattern is the **dispatcher**. It acts as a hub for all the events in the system. It's job is to receive notifications that we call **actions** and bypass them to all the **stores**. The store decides if it is interested or not and reacts by changing its internal state. The change is passed to the **views** which are (in my case) React components. If we have to compare Flux to the well known MVC we may say that the store is similar to the model. It keeps the data and its mutations.
+The main actor in this pattern is the **dispatcher**. It acts as a hub for all the events in the system. Its job is to receive notifications that we call **actions** and pass them to all the **stores**. The store decides if it is interested or not and reacts by changing its internal state. The change is passed to the **views** which are (in my case) React components. If we have to compare Flux to the well known MVC we may say that the store is similar to the model. It keeps the data and its mutations.
 
 The actions are coming to the dispatcher either from the views or from other part of the system like services. For example a module that performs a HTTP request. When it receives the result it may fire an action saying that the request was successful and attach the received data.
 
