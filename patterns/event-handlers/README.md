@@ -4,7 +4,7 @@
 
 ---
 
-Most of the times we handle DOM events in the component that contains the elements dispatching the events. Like in the example below, we have a click handler and we want to run a function of the same component:
+Most of the times we handle DOM events in the component that contains the elements dispatching the events. Like in the example below, we have a click handler and we want to run a function or method of the same component:
 
 ```js
 class Switcher extends React.Component {
