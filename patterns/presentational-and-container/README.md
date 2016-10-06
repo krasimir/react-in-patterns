@@ -4,7 +4,7 @@
 
 ---
 
-When we start using React we very soon also start asking questions. Where I'm suppose to put my data, how to communicate changes or how to manage state? The answers of this questions are very often matter of context and sometimes just practice and experience with the library. However, there is a pattern which is used widely and helps organizing React based applications - splitting the components into presentational and containers.
+When we start using React we very soon also start asking questions. Where I'm supposed to put my data, how to communicate changes or how to manage state? The answers of these questions are very often a matter of context and sometimes just practice and experience with the library. However, there is a pattern which is used widely and helps organizing React based applications - splitting the components into presentational and containers.
 
 Let's start with a simple example, illustrate the problem and then split the component into container and presentation. We will use a `Clock` component. It accepts a [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) object as a prop and displays the time which is changing in real time.
 
