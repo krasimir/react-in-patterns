@@ -6,6 +6,7 @@
 * Foundation
   * [Communication](./patterns/communication/)
   * [Event handlers](./patterns/event-handlers)
+  * [Controlled and uncontrolled inputs](./patterns/controlled-uncontrolled)
   * [Composition](./patterns/composition/)
   * [Higher-order components](./patterns/higher-order-components/)
   * [Presentational and container components](./patterns/presentational-and-container)
