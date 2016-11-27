@@ -8,7 +8,7 @@ React is probably one of the best choices for building UI. Good design, support 
 
 ## The example
 
-I picked [*tag-it*](https://github.com/aehlke/*tag-it*) jQuery plugin for my example. It transforms an unordered list to input field for managing tags:
+I picked [*tag-it*](https://github.com/aehlke/tag-it) jQuery plugin for my example. It transforms an unordered list to input field for managing tags:
 
 ```html
 <ul>
