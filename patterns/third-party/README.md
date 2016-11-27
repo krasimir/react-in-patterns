@@ -10,6 +10,15 @@ React is probably one of the best choices for building UI. Good design, support 
 
 I picked [tag-it](https://github.com/aehlke/tag-it) jQuery plugin for my example. It transforms an unordered list to input field for managing tags:
 
+```html
+<ul>
+  <li>JavaScript</li>
+  <li>CSS</li>
+</ul>
+```
+
+to:
+
 ![tag-it](./img/tag-it.png)
 
 To make it work we have to include jQuery, jQuery UI and the tag-it plugin code. It works like that:
