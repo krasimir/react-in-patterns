@@ -18,6 +18,9 @@
   * [One direction data flow](./patterns/one-direction-data-flow)
   * [Flux](./patterns/flux)
 
+* MISC
+  * [Integration of third-party libraries](./patterns/third-party)
+
 ---
 
 ## Building the examples
