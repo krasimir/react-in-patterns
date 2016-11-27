@@ -8,7 +8,7 @@ React is probably one of the best choices for building UI. Good design, support 
 
 ## The example
 
-I picked [tag-it](https://github.com/aehlke/tag-it) jQuery plugin for my example. It transforms an unordered list to input field for managing tags:
+I picked [*tag-it*](https://github.com/aehlke/*tag-it*) jQuery plugin for my example. It transforms an unordered list to input field for managing tags:
 
 ```html
 <ul>
@@ -21,7 +21,7 @@ to:
 
 ![tag-it](./img/tag-it.png)
 
-To make it work we have to include jQuery, jQuery UI and the tag-it plugin code. It works like that:
+To make it work we have to include jQuery, jQuery UI and the *tag-it* plugin code. It works like that:
 
 ```jsx
 $('<dom element selector>').tagit();
@@ -58,9 +58,6 @@ class App extends React.Component {
     );
   }
 }
-App.propTypes = {
-  service: React.PropTypes.object
-};
 
 ReactDOM.render(<App />, document.querySelector('#container'));
 ```
@@ -69,7 +66,7 @@ The entry point is our `App` class. It uses the `Tags` component that displays a
 
 ## Force a single-render
 
-The very first thing that we have to do is to force a single-render. In our case we need `Tags` component rendered only once. That's because when React adds the elements in the actual DOM we want to pass the control of them to jQuery. If we skip this both React and jQuery will work on same DOM elements without knowing for each other. To achieve a single-render we have to use the lifecycle method `shouldComponentUpdate` like so:
+The very first thing that we have to do is to force a single-render of the `Tags` component. That's because when React adds the elements in the actual DOM we want to pass the control of them to jQuery. If we skip this both React and jQuery will work on same DOM elements without knowing for each other. To achieve a single-render we have to use the lifecycle method `shouldComponentUpdate` like so:
 
 ```jsx
 class Tags extends React.Component {
@@ -79,11 +76,11 @@ class Tags extends React.Component {
   ...
 ```
 
-By returning `false` here we are saying "Nope, this component will never rerender again". If defined `shouldComponentUpdate` is used by React to understand whether to trigger `render` or not. That's ideal for our case because we want to get the markup on the page using React but we don't want to rely on it after that.
+By always returning `false` here we are saying that our component will never rerender. If defined `shouldComponentUpdate` is used by React to understand whether to trigger `render` or not. That's ideal for our case because we want to place the markup on the page using React but we don't want to rely on it after that.
 
 ## Initializing the plugin
 
-React gives us an [API](https://facebook.github.io/react/docs/refs-and-the-dom.html) for accessing actual DOM nodes. We have to use the `ref` attribute on a node and later reach that node via `this.refs`. `componentDidMount` is the proper lifecycle method for initializing the tag-it. That's because we get it called when React mounts the result of the `render` method.
+React gives us an [API](https://facebook.github.io/react/docs/refs-and-the-dom.html) for accessing actual DOM nodes. We have to use the `ref` attribute on a node and later reach that node via `this.refs`. `componentDidMount` is the proper lifecycle method for initializing the *tag-it* plugin. That's because we get it called when React mounts the result of the `render` method.
 
 ```jsx
 class Tags extends React.Component {
@@ -102,13 +99,13 @@ class Tags extends React.Component {
   ...
 ```
 
-The code above together with `shouldComponentUpdate` lead to React rendering the `<ul>` with two items and then tag-it transforms it to a working tag editing widget.
+The code above together with `shouldComponentUpdate` lead to React rendering the `<ul>` with two items and then *tag-it* transforms it to a working tag editing widget.
 
 ## Controlling the plugin using React
 
-Let's say that we want to programmatically add a new tag to the already running tag-it field. Such action will be triggered by the React component and needs to use the jQuery API. We have to find a way to communicate data to `Tags` component but still keep the single-render approach.
+Let's say that we want to programmatically add a new tag to the already running *tag-it* field. Such action will be triggered by the React component and needs to use the jQuery API. We have to find a way to communicate data to `Tags` component but still keep the single-render approach.
 
-To illustrate the whole process we will add an input field to `App` component and a button which if clicked will send the input to `Tags`.
+To illustrate the whole process we will add an input field to the `App` class and a button which if clicked will pass a string to `Tags` component.
 
 ```jsx
 class App extends React.Component {
@@ -139,7 +136,7 @@ class App extends React.Component {
 }
 ```
 
-We use the internal state of `App` as a data storage for the value of the newly added field. Every time when we click the button we update the state and trigger rerendering of `Tags`. However, because of `shouldComponentUpdate` visually nothing happens inside `Tags`. The only one change is that we get a value of the `newTag` prop which may be captured via another lifecycle method - `componentWillReceiveProps`:
+We use the internal state as a data storage for the value of the newly added field. Every time when we click the button we update the state and trigger rerendering of `Tags` component. However, because of `shouldComponentUpdate` we update nothing. The only one change is that we get a value of the `newTag` prop which may be captured via another lifecycle method - `componentWillReceiveProps`:
 
 ```jsx
 class Tags extends React.Component {
@@ -150,9 +147,9 @@ class Tags extends React.Component {
   ...
 ```
 
-`.tagit('createTag', newProps.newTag)` is a pure jQuery code.
+`.tagit('createTag', newProps.newTag)` is a pure jQuery code. `componentWillReceiveProps` is a nice place for calling methods of the third-party library.
 
-Here is a full code of the `Tags` component:
+Here is the full code of the `Tags` component:
 
 ```jsx
 class Tags extends React.Component {
