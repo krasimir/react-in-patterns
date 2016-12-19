@@ -39,3 +39,4 @@
 * [React Design principles](https://facebook.github.io/react/contributing/design-principles.html)
 * [Airbnb React/JSX Style Guide](https://github.com/airbnb/javascript/tree/master/react)
 * [React patterns at Planning Center Online](https://github.com/planningcenter/react-patterns)
+* [React patterns by Michael Chan](http://reactpatterns.com/)
