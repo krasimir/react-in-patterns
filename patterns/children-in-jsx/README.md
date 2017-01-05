@@ -6,7 +6,7 @@ React is highly composable. And the API that enables that is `props.children`. I
 
 Let's say that we have a title that needs some special formatting. For example:
 
-```
+```js
 <h1 className='lots-of-styles-here'>
   <strong>
     <i className='something-else'>Hello world</i>
@@ -15,7 +15,7 @@ Let's say that we have a title that needs some special formatting. For example:
 ```
 We may create a `Title` component that hides the `h1`, `strong` and `i` tags. And all we have to pass to it is the text `Hello world`:
 
-```
+```js
 function Title(props) {
   return (
     <h1 className='lots-of-styles-here'>
@@ -37,7 +37,7 @@ That's a nice way to encapsulate UI elements. Notice how simple is to manage the
 
 The same technique may be used for [composing components](https://github.com/krasimir/react-in-patterns/tree/master/patterns/composition). The same way as we passed `Hello world` we may pass another React component. Let's say that we have a header component but we need different content inside:
 
-```
+```js
 function Header(props) {
   return (
     <header className='app-header'>
@@ -63,7 +63,7 @@ or
 
 So far `props.children` was string literal and React component. It is interesting that we may pass a JSX expression too.
 
-```
+```js
 function UserName(props) {
   return (
 	  <div>
@@ -86,7 +86,7 @@ function App() {
 
 This may look weird but may be useful in some cases. Like for example when we have some knowledge in the parent component and don't necessary want to send it down the tree. The example below prints a list of TODOs. The `App` component has all the data and knows how to determine whether a TODO is completed or not. The `TodoList` component simply encapsulate the needed HTML markup.
 
-```
+```js
 function TodoList(props) {
   const renderTodo = (todo, i) => {
     return (
@@ -121,7 +121,7 @@ Notice how the `App` component doesn't expose the structure of the data. `TodoLi
 
 When I first saw that pattern I was thinking "How's that different then passing one more prop?". For example:
 
-```
+```js
 <TodoList
   todos={ todos }
   renderTodo={
