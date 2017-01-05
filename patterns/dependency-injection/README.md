@@ -66,7 +66,7 @@ export default function inject(Component) {
 import inject from './inject.jsx';
 import Title from './Title.jsx';
 
-var EnhancedTitle = injector(Title);
+var EnhancedTitle = inject(Title);
 export default function Header() {
   return (
     <header>
