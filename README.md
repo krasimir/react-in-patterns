@@ -6,6 +6,7 @@
 * Foundation
   * [Communication](./patterns/communication/)
   * [Event handlers](./patterns/event-handlers)
+  * [Children in JSX](./patterns/children-in-jsx)
   * [Controlled and uncontrolled inputs](./patterns/controlled-uncontrolled)
   * [Composition](./patterns/composition/)
   * [Higher-order components](./patterns/higher-order-components/)
