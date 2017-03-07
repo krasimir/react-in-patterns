@@ -379,3 +379,7 @@ Find some real use cases of InversifyJS with React [here](https://github.com/Mer
 ### Final thoughts
 
 Dependency injection is a tough problem. Especially in JavaScript. It's not really an issue within React application but appears everywhere. At the time of this writing React offers only the `context` as an instrument for resolving dependencies. As we mentioned above this technique should be used sparingly. And of course there are some alternatives. For example using the module system or libraries like InversifyJS.
+
+### Other resources related to dependency injection
+
+* [Level-up your dependencies in React ](https://medium.com/@marziosuperina/level-up-your-dependencies-in-react-part-1-d67bb2711b51)
