@@ -48,7 +48,7 @@ In the constructor of the component we store the passed `time` object to the int
 
 ## The problems
 
-There are couple of things happening in our component. It looks like it has a little bit too many responsibilities.
+There are couple of things happening in our component. It looks like it has a few too many responsibilities.
 
 * It mutates the state by itself. Changing the time inside the component may not be a good idea because then only `Clock` knows the current value. If there is another part of the system that depends on this data it will be difficult to share it.
 * `_formatTime` is actually doing two things - it extracts the needed information from the date object and makes sure that the values are always with two digits. That's fine but it will be nice if the extracting is not part of this component because then `Clock` is bound to the type of the `time` object (coming as a prop). I.e. knows specifics about the shape of the data.
@@ -99,7 +99,7 @@ It still accepts `time` (a date object), does the `setInterval` loop and knows d
 
 ### Presentational component
 
-Presentational components are concert with how the things look. They have the additional markup needed for making the page pretty. Such components are not bound to anything and have no dependencies. Very often implemented as a [stateless functional components](https://facebook.github.io/react/blog/2015/10/07/react-v0.14.html#stateless-functional-components) they don't have internal state.
+Presentational components are concerned with how the things look. They have the additional markup needed for making the page pretty. Such components are not bound to anything and have no dependencies. Very often implemented as a [stateless functional components](https://facebook.github.io/react/blog/2015/10/07/react-v0.14.html#stateless-functional-components) they don't have internal state.
 
 In our case the presentational component contains only the two-digits check and returns the `<h1>` tag:
 
