@@ -41,3 +41,4 @@
 * [Airbnb React/JSX Style Guide](https://github.com/airbnb/javascript/tree/master/react)
 * [React patterns at Planning Center Online](https://github.com/planningcenter/react-patterns)
 * [React patterns by Michael Chan](http://reactpatterns.com/)
+* [React patterns, techniques, tips and tricks](https://github.com/vasanthk/react-bits)
