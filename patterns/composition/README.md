@@ -33,14 +33,14 @@ import Navigation from './Navigation.jsx';
 
 export default class Header extends React.Component {
   render() {
-    return <header><Navigation /></header>;
+    return <Header><Navigation /></Header>;
   }
 }
 
 // Navigation.jsx
 export default class Navigation extends React.Component {
   render() {
-    return (<nav> ... </nav>);
+    return (<Nav> ... </Nav>);
   }
 }
 ```
@@ -69,7 +69,7 @@ export default class App extends React.Component {
 // Header.jsx
 export default class Header extends React.Component {
   render() {
-    return <header>{ this.props.children }</header>;
+    return <Header>{ this.props.children }</Header>;
   }
 };
 ```
@@ -98,11 +98,11 @@ class App extends React.Component {
 export default class Header extends React.Component {
   render() {
     return (
-      <header>
+      <Header>
         { this.props.title }
         <hr />
         { this.props.children }
-      </header>
+      </Header>
     );
   }
 };
