@@ -17,6 +17,7 @@ class Title extends React.Component {
     return <h1>{ this.props.text }</h1>;
   }
 };
+
 Title.propTypes = {
   text: PropTypes.string
 };
