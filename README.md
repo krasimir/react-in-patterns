@@ -4,6 +4,7 @@
 
 ---
 * Foundation
+  * [Introduction](./patterns/introduction.md)
   * [Communication](./patterns/communication/)
   * [Event handlers](./patterns/event-handlers)
   * [Children in JSX](./patterns/children-in-jsx)

@@ -4,7 +4,7 @@
 
 ---
 
-Building with React for a couple of months and you'll realize that every React component is like a small system that operates on its own. It has its own state, input and output.
+If you work with React for a couple of months you'll realize that every React component is like a small system that operates on its own. It has its own state, input and output. Let's see what are those.
 
 ### Input
 
@@ -18,7 +18,7 @@ class Title extends React.Component {
   }
 };
 Title.propTypes = {
-  text: React.PropTypes.string
+  text: PropTypes.string
 };
 Title.defaultProps = {
   text: 'Hello world'
@@ -65,6 +65,8 @@ class App extends React.Component {
 *Notice that if we don't return `{ this.props.children }` as part of the `Title`'s render method the `<span>` tag will not be rendered.*
 
 An indirect input to a component may be also the so called `context`. The whole React tree may have a `context` object which is accessible by every component. More about that in the [dependency injection](https://github.com/krasimir/react-in-patterns/tree/master/patterns/dependency-injection) section.
+
+There are several reasons about re-rendering of a React component. One of them is updating some of the props.
 
 ### Output
 
