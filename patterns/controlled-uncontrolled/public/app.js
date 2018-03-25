@@ -18089,10 +18089,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 // class App extends React.Component {
 //   constructor(props) {
 //     super(props);
-//     this.state = { value: '' };
+//     this.state = { value: 'hello' };
 //   }
 //   render() {
 //     return <input type='text' value={ this.state.value } />;
+//   }
+// };
+
+// class App extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = { value: 'hello' };
+//     this._change = this._handleInputChange.bind(this);
+//   }
+//   render() {
+//     return (
+//       <input
+//         type='text'
+//         value={ this.state.value }
+//         onChange={ this._change } />
+//     );
+//   }
+//   _handleInputChange(e) {
+//     this.setState({ value: e.target.value });
 //   }
 // };
 
@@ -18104,7 +18123,7 @@ var App = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-    _this.state = { value: '' };
+    _this.state = { value: 'hello' };
     _this._change = _this._handleInputChange.bind(_this);
     return _this;
   }
@@ -18112,15 +18131,21 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement('input', {
         type: 'text',
-        value: this.state.value,
-        onChange: this._change });
+        defaultValue: this.state.value,
+        onChange: this._change,
+        ref: function ref(input) {
+          return _this2.input = input;
+        } });
     }
   }, {
     key: '_handleInputChange',
-    value: function _handleInputChange(e) {
-      this.setState({ value: e.target.value });
+    value: function _handleInputChange() {
+      console.log(this.input.value);
+      this.setState({ value: this.input.value });
     }
   }]);
 
