@@ -38,6 +38,25 @@ The `Title` component has only one input - `text`. The parent component (`App`) 
 * `propTypes` - defines the type of the props. This helps React telling us when a provided prop is not what we expect.
 * `defaultProps` - defines the default values of the props. We may require the existence of certain props but for the rest is good practice to set a default value.
 
+React is not defining strictly what should be passed as a prop. It may be whatever we want. It even could be another component:
+
+```js
+class SomethingElse extends React.Component {
+  render() {
+    return <div>The answer is { this.props.answer }</div>;
+  }
+}
+
+class Answer extends React.Component {
+  render() {
+    return <span>42</span>;
+  }
+}
+
+// later somewhere in our application
+<SomethingElse answer={ <Answer /> } />
+```
+
 There is also `props.children` property that gives us an access to the child components passed by the owner of the component. For example:
 
 ```js
@@ -66,8 +85,6 @@ class App extends React.Component {
 *Notice that if we don't return `{ this.props.children }` as part of the `Title`'s render method the `<span>` tag will not be rendered.*
 
 An indirect input to a component may be also the so called `context`. The whole React tree may have a `context` object which is accessible by every component. More about that in the [dependency injection](https://github.com/krasimir/react-in-patterns/tree/master/patterns/dependency-injection) section.
-
-There are several reasons about re-rendering of a React component. One of them is updating some of the props.
 
 ### Output
 
