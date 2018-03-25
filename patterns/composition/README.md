@@ -113,7 +113,7 @@ export default class Header extends React.Component {
 
 This technique is helpful when we have a mix between components that exist inside the `Header` and components that have to be provided from the outside.
 
-### Children as function and render prop
+### Function as a children, render prop
 
 So far `props.children` was a React component. It is interesting that we may pass a JSX expression too.
 
@@ -196,7 +196,7 @@ return (
 );
 ```
 
-These two patterns, *children as a function* and *render prop* are probably one of my favorite ones. They provide flexibility and help when we want to reuse code. They are also a powerful way to abstract imperative code. Let's take the following example:
+These two patterns, *function as children* and *render prop* are probably one of my favorite ones. They provide flexibility and help when we want to reuse code. They are also a powerful way to abstract imperative code. Let's take the following example:
 
 ```js
 class DataProvider extends React.Component {
