@@ -7,9 +7,8 @@
   * [Introduction](./patterns/introduction.md)
   * [Communication](./patterns/communication/)
   * [Event handlers](./patterns/event-handlers)
-  * [Children in JSX](./patterns/children-in-jsx)
-  * [Controlled and uncontrolled inputs](./patterns/controlled-uncontrolled)
   * [Composition](./patterns/composition/)
+  * [Controlled and uncontrolled inputs](./patterns/controlled-uncontrolled)
   * [Higher-order components](./patterns/higher-order-components/)
   * [Presentational and container components](./patterns/presentational-and-container)
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class Navigation extends React.Component {
   constructor(props) {
@@ -35,5 +36,5 @@ export default class Navigation extends React.Component {
 };
 
 Navigation.propTypes = {
-  track: React.PropTypes.func
+  track: PropTypes.func
 };

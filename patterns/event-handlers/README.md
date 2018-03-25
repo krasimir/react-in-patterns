@@ -4,7 +4,14 @@
 
 ---
 
-Most of the times we handle DOM events in the component that contains the elements dispatching the events. Like in the example below, we have a click handler and we want to run a function or method of the same component:
+React provides a series of attributes for handling events. The solution is almost the same as the one used in the standard DOM. There are some differences like using camelCase or the fact that we pass a function but overall it is pretty similar.
+
+```js
+<Logo onClick={ theLogoIsClicked } />
+<input type='text' onChange={ event => theInputIsChanged(event.target.value) } />
+```
+
+Usually we handle events in the component that contains the elements dispatching the events. Like in the example below, we have a click handler and we want to run a function or a method of the same component:
 
 ```js
 class Switcher extends React.Component {
@@ -21,7 +28,7 @@ class Switcher extends React.Component {
 };
 ```
 
-That's all fine because `_handleButtonClick` is a function and we indeed pass a function to the `onClick` attribute. The problem is that as it is the code doesn't keep the scope. So, if we have to use `this` inside `_handleButtonClick` we'll get an error.
+That's all fine because `_handleButtonClick` is a function and we indeed pass a function to the `onClick` attribute. The problem is that as it is the code doesn't keep the same context. So, if we have to use `this` inside `_handleButtonClick` we'll get an error.
 
 ```js
 class Switcher extends React.Component {

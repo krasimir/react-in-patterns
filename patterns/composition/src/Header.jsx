@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class Header extends React.Component {
   render() {
@@ -20,7 +21,7 @@ export default class Header extends React.Component {
 };
 
 Header.propTypes = {
-  title: React.PropTypes.any,
-  track: React.PropTypes.func,
-  children: React.PropTypes.any
+  title: PropTypes.any,
+  track: PropTypes.func,
+  children: PropTypes.any
 };

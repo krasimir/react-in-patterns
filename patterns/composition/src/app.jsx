@@ -4,12 +4,12 @@ import ReactDOM from 'react-dom';
 import Header from './Header.jsx';
 import Navigation from './Navigation.jsx';
 
+const Title = () => <h1>Hello there!</h1>;
+
 class App extends React.Component {
   render() {
-    var title = <h1>Hello there!</h1>;
-
     return (
-      <Header track={ this._track } title={ title }>
+      <Header track={ this._track } title={ <Title /> }>
         <Navigation track={ this._track } />
       </Header>
     );

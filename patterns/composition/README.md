@@ -47,8 +47,8 @@ export default class Navigation extends React.Component {
 
 However, following this pattern we introduce several problems:
 
-* We may consider the `App` as a place where we wire stuff, as an entry point. So, it's a good place for such composition. The `Header` though may have other elements like a logo, search field or a slogan. It will be nice if they are passed somehow from the outside so we don't create a hard-coded dependency. What if we need the same `Header` component but without the `Navigation`. We can't easily achieve that because we have the two bound tightly together.
-* It's difficult to test. We may have some business logic in the `Header` and in order to test it we have to create an instance of the component. However, because it imports other components we will probably create instances of those components too and it becomes heavy for testing. We may break our `Header` test by doing something wrong in the `Navigation` component which is totally misleading. *(Note: while testing the [shallow rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) solves this problem by rendering only the `Header` without its nested children.)*
+* We may consider the `App` as a place where we wire stuff, as an entry point. So, it's a good place for such composition. The `Header` though may have other elements like a logo, search field or a slogan. It will be nice if they are passed somehow from the outside so we don't create a hard-coded dependencies. What if we need the same `Header` component but without the `Navigation`. We can't easily achieve that because we have the two bound tightly together.
+* It's difficult to test. We may have some business logic in the `Header` and in order to test it we have to create an instance of the component. However, because it imports other components we will probably create instances of those components too and it becomes heavy to test. We may break our `Header` test by doing something wrong in the `Navigation` component which is totally misleading. *(Note: to some extent [shallow rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) solves this problem by rendering only the `Header` without its nested children.)*
 
 ### Using React's children API
 
@@ -74,7 +74,9 @@ export default class Header extends React.Component {
 };
 ```
 
-It's also easy to test because we may render the `Header` with an empty `<div>`. This will isolate the component and will let us focus on only one piece of our application.
+Notice also that if we don't use `this.props.children` the `Navigation` component will never be rendered.
+
+It now becomes easier to test because we may render the `Header` with an empty `<div>`. This will isolate the component and will let us focus on only one piece of our application.
 
 ### Passing a child as a property
 
@@ -82,12 +84,12 @@ Every React component receive props. It's nice that these props may contain all 
 
 ```js
 // App.jsx
+const Title = () => <h1>Hello there!</h1>;
+
 class App extends React.Component {
   render() {
-    var title = <h1>Hello there!</h1>;
-
     return (
-      <Header title={ title }>
+      <Header title={ <Title /> }>
         <Navigation />
       </Header>
     );
@@ -110,3 +112,88 @@ export default class Header extends React.Component {
 ```
 
 This technique is helpful when we have a mix between components that exist inside the `Header` and components that have to be provided from the outside.
+
+### Children-as-function and render prop
+
+So far `props.children` was a React component. It is interesting that we may pass a JSX expression too.
+
+```js
+function UserName(props) {
+  return (
+	  <div>
+      <b>{ props.children.lastName }</b>,
+      { props.children.firstName }
+    </div>
+  );
+}
+
+function App() {
+  var user = {
+    firstName: 'Krasimir',
+    lastName: 'Tsonev'
+  };
+	return (
+    <UserName>{ user }</UserName>
+  );
+}
+```
+
+This may look weird but may be useful in some cases. Like for example when we have some knowledge in the parent component and don't necessary want to send it down the tree. The example below prints a list of TODOs. The `App` component has all the data and knows how to determine whether a TODO is completed or not. The `TodoList` component simply encapsulate the needed HTML markup.
+
+```js
+function TodoList(props) {
+  return (
+	  <section className='main-section'>
+      <ul className='todo-list'>{
+        props.todos.map((todo, i) => (
+          <li key={ i }>{ props.children(todo) }</li>
+        ))
+      }</ul>
+    </section>
+  );
+}
+
+function App() {
+  const todos = [
+    { label: 'Write tests', status: 'done' },
+    { label: 'Sent report', status: 'progress' },
+    { label: 'Answer emails', status: 'done' }
+  ];
+  var isCompleted = todo => todo.status === 'done';
+	return (
+    <TodoList todos={ todos }>
+    	{ todo => isCompleted(todo) ? <b>{ todo.label }</b> : todo.label }
+    </TodoList>
+  );
+}
+```
+
+Notice how the `App` component doesn't expose the structure of the data. `TodoList` has no idea that there is `label` or `status` properties.
+
+We may slightly change our `TodoList` component to demonstrate the *render prop* pattern:
+
+```js
+function TodoList(props) {
+  return (
+	  <section className='main-section'>
+      <ul className='todo-list'>{
+        props.todos.map((todo, i) => (
+          <li key={ i }>{ props.render(todo) }</li>
+        ))
+      }</ul>
+    </section>
+  );
+}
+```
+
+Instead of using `props.children` we use `props.render`. Later in the `App` component we pass still the same function but as a prop:
+
+```js
+return (
+  <TodoList
+    todos={ todos }
+    render={ todo => isCompleted(todo) ? <b>{ todo.label }</b> : todo.label } />
+);
+```
+
+
