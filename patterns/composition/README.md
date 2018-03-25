@@ -120,7 +120,7 @@ So far `props.children` was a React component. It is interesting that we may pas
 ```js
 function UserName(props) {
   return (
-	  <div>
+    <div>
       <b>{ props.children.lastName }</b>,
       { props.children.firstName }
     </div>
@@ -143,7 +143,7 @@ This may look weird but may be useful in some cases. Like for example when we ha
 ```js
 function TodoList(props) {
   return (
-	  <section className='main-section'>
+    <section className='main-section'>
       <ul className='todo-list'>{
         props.todos.map((todo, i) => (
           <li key={ i }>{ props.children(todo) }</li>
@@ -175,7 +175,7 @@ We may slightly change our `TodoList` component to demonstrate the *render prop*
 ```js
 function TodoList(props) {
   return (
-	  <section className='main-section'>
+    <section className='main-section'>
       <ul className='todo-list'>{
         props.todos.map((todo, i) => (
           <li key={ i }>{ props.render(todo) }</li>
