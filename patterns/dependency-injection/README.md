@@ -15,7 +15,6 @@ export default function Title(props) {
   return <h1>{ props.title }</h1>;
 }
 
-// -----------------------------------
 // Header.jsx
 import Title from './Title.jsx';
 export default function Header() {
@@ -26,7 +25,6 @@ export default function Header() {
   );
 }
 
-// -----------------------------------
 // App.jsx
 import Header from './Header.jsx';
 class App extends React.Component {
@@ -76,11 +74,11 @@ export default function Header() {
 }
 ```
 
-The `title` is hidden in a middle layer (higher-order component) where we pass it as a prop to the original `Title` component. That's all nice but it solves only half of the problem. Now we don't have to pass the `title` down the tree but how this data will reach the `enhance.jsx` helper.
+The `title` is hidden in a middle layer (higher-order component) where we pass it as a prop to the original `Title` component. That's all nice but it solves only half of the problem. Now we don't have to pass the `title` down the tree but how this data reaches the `inject.jsx` helper.
 
-## Using React's context
+## Using React's context (prior v. 16.3)
 
-React has the concept of [*context*](https://facebook.github.io/react/docs/context.html). The *context* is something that every component may have access to. It's something like an [event bus](https://github.com/krasimir/EventBus) but for data. A single model which we can access from everywhere.
+React has the concept of [*context*](https://facebook.github.io/react/docs/context.html). The *context* is something that every component may have access to. It's something like an [event bus](https://github.com/krasimir/EventBus) but for data. A single *store* which we access from everywhere.
 
 ```js
 // a place where we'll define the context
@@ -121,7 +119,7 @@ export default {
   }
 }
 ```
-Then, if we go back to our example, the very top `App` component may look like that:
+Then, if we go back to our example, the `App` component may look like that:
 
 ```js
 import dependencies from './dependencies';
@@ -174,7 +172,7 @@ export default wire(Title, ['title'], function resolve(title) {
 });
 ```
 
-The `wire` function accepts first a React component, then an array with all the needed dependencies (which are `register`ed already) and then a function which I like to call `mapper`. It receives what's stored in the context as a raw data and returns an object which is the actual React props for our component (`Title`). In this example we just pass what we get - a `title` string variable. However, in a real app this could be a collection of data stores, configuration or something else. So, it's nice that we pass exactly what we need and don't pollute the components with data that they don't need.
+The `wire` function accepts a React component, then an array with all the needed dependencies (which are `register`ed already) and then a function which I like to call `mapper`. It receives what's stored in the context as a raw data and returns an object which is the actual React props for our component (`Title`). In this example we just pass what we get - a `title` string variable. However, in a real app this could be a collection of data stores, configuration or something else.
 
 Here is how the `wire` function looks like:
 

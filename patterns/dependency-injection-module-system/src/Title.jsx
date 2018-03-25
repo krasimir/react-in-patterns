@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { wire } from './di.jsx';
 
 var Title = function (props) {
@@ -6,7 +7,7 @@ var Title = function (props) {
 };
 
 Title.propTypes = {
-  title: React.PropTypes.string
+  title: PropTypes.string
 };
 
 export default wire(Title, ['my-awesome-title'], title => ({ title }));

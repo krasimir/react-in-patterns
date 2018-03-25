@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function Clock(props) {
   var [ hours, minutes, seconds ] = [
@@ -10,7 +11,7 @@ export default function Clock(props) {
   return <h1>{ hours } : { minutes } : { seconds }</h1>;
 };
 Clock.propTypes = {
-  hours: React.PropTypes.number.isRequired,
-  minutes: React.PropTypes.number.isRequired,
-  seconds: React.PropTypes.number.isRequired
+  hours: PropTypes.number.isRequired,
+  minutes: PropTypes.number.isRequired,
+  seconds: PropTypes.number.isRequired
 };

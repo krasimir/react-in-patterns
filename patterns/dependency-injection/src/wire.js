@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function wire(Component, dependencies, mapper) {
   class Inject extends React.Component {
@@ -10,9 +11,9 @@ export default function wire(Component, dependencies, mapper) {
     }
   }
   Inject.contextTypes = {
-    data: React.PropTypes.object,
-    get: React.PropTypes.func,
-    register: React.PropTypes.func
+    data: PropTypes.object,
+    get: PropTypes.func,
+    register: PropTypes.func
   };
   return Inject;
 };

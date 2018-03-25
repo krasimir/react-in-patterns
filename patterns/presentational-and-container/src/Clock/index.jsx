@@ -1,5 +1,6 @@
 import React from 'react';
 import Clock from './Clock.jsx';
+import PropTypes from 'prop-types';
 
 export default class ClockContainer extends React.Component {
   constructor(props) {
@@ -28,5 +29,5 @@ export default class ClockContainer extends React.Component {
   }
 };
 ClockContainer.propTypes = {
-  time: React.PropTypes.object.isRequired
+  time: PropTypes.object.isRequired
 };

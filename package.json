@@ -30,8 +30,8 @@
     "gulp-sourcemaps": "1.6.0",
     "gulp-util": "3.0.7",
     "prop-types": "15.6.1",
-    "react": "16.2.0",
-    "react-dom": "16.2.0",
+    "react": "16.3.0-alpha.3",
+    "react-dom": "16.3.0-alpha.3",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0"
   },

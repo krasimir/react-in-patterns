@@ -292,8 +292,3 @@ The knowledge for the configuration is hidden into the higher-order component. `
 ```js
 var OriginalComponent  = (props) => <p>{ props.title }</p>;
 ```
-
-### What's next
-
-Check out [dependency injection](https://github.com/krasimir/react-in-patterns/tree/master/patterns/dependency-injection) and [presentational and container ](https://github.com/krasimir/react-in-patterns/tree/master/patterns/presentational-and-container) sections. There are good example of higher-order components.
-

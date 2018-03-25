@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import Header from './Header.jsx';
 import CONFIG from './config';
 import dependencies from './dependencies';
@@ -15,9 +16,9 @@ class App extends React.Component {
   }
 };
 App.childContextTypes = {
-  data: React.PropTypes.object,
-  get: React.PropTypes.func,
-  register: React.PropTypes.func
+  data: PropTypes.object,
+  get: PropTypes.func,
+  register: PropTypes.func
 };
 
 ReactDOM.render(<App />, document.querySelector('#container'));

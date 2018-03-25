@@ -19003,6 +19003,64 @@ if (process.env.NODE_ENV === 'production') {
 },{"./cjs/react.development.js":22,"./cjs/react.production.min.js":23,"_process":16}],25:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = Header;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Title = require('./Title.jsx');
+
+var _Title2 = _interopRequireDefault(_Title);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Header() {
+  return _react2.default.createElement(
+    'header',
+    null,
+    _react2.default.createElement(_Title2.default, null)
+  );
+}
+
+},{"./Title.jsx":26,"react":24}],26:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _context = require('./context');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Title() {
+  return _react2.default.createElement(
+    _context.Consumer,
+    null,
+    function (dependencies) {
+      return _react2.default.createElement(
+        'h1',
+        null,
+        'Title: ',
+        dependencies.get('title')
+      );
+    }
+  );
+}
+
+exports.default = Title;
+
+},{"./context":28,"react":24}],27:[function(require,module,exports){
+'use strict';
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
@@ -19013,6 +19071,16 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _Header = require('./Header.jsx');
+
+var _Header2 = _interopRequireDefault(_Header);
+
+var _dependencies = require('./dependencies');
+
+var _dependencies2 = _interopRequireDefault(_dependencies);
+
+var _context = require('./context');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19021,66 +19089,25 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// class App extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = { value: 'hello' };
-//   }
-//   render() {
-//     return <input type='text' value={ this.state.value } />;
-//   }
-// };
-
-// class App extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = { value: 'hello' };
-//     this._change = this._handleInputChange.bind(this);
-//   }
-//   render() {
-//     return (
-//       <input
-//         type='text'
-//         value={ this.state.value }
-//         onChange={ this._change } />
-//     );
-//   }
-//   _handleInputChange(e) {
-//     this.setState({ value: e.target.value });
-//   }
-// };
+_dependencies2.default.register('title', 'React in patterns');
 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
 
-  function App(props) {
+  function App() {
     _classCallCheck(this, App);
 
-    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
-
-    _this.state = { value: 'hello' };
-    _this._change = _this._handleInputChange.bind(_this);
-    return _this;
+    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
   }
 
   _createClass(App, [{
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
-      return _react2.default.createElement('input', {
-        type: 'text',
-        defaultValue: this.state.value,
-        onChange: this._change,
-        ref: function ref(input) {
-          return _this2.input = input;
-        } });
-    }
-  }, {
-    key: '_handleInputChange',
-    value: function _handleInputChange() {
-      console.log(this.input.value);
-      this.setState({ value: this.input.value });
+      return _react2.default.createElement(
+        _context.Provider,
+        { value: _dependencies2.default },
+        _react2.default.createElement(_Header2.default, null)
+      );
     }
   }]);
 
@@ -19091,7 +19118,38 @@ var App = function (_React$Component) {
 
 _reactDom2.default.render(_react2.default.createElement(App, null), document.querySelector('#container'));
 
-},{"react":24,"react-dom":21}]},{},[25])
+},{"./Header.jsx":25,"./context":28,"./dependencies":29,"react":24,"react-dom":21}],28:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Consumer = exports.Provider = undefined;
+
+var _react = require('react');
+
+var Context = (0, _react.createContext)({});
+
+var Provider = exports.Provider = Context.Provider;
+var Consumer = exports.Consumer = Context.Consumer;
+
+},{"react":24}],29:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  data: {},
+  get: function get(key) {
+    return this.data[key];
+  },
+  register: function register(key, value) {
+    this.data[key] = value;
+  }
+};
+
+},{}]},{},[27])
 
 
 //# sourceMappingURL=app.js.map
