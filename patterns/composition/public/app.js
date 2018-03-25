@@ -18869,6 +18869,10 @@ var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _Header = require('./Header.jsx');
 
 var _Header2 = _interopRequireDefault(_Header);
@@ -18893,8 +18897,42 @@ var Title = function Title() {
   );
 };
 
-var App = function (_React$Component) {
-  _inherits(App, _React$Component);
+var DataProvider = function (_React$Component) {
+  _inherits(DataProvider, _React$Component);
+
+  function DataProvider(props) {
+    _classCallCheck(this, DataProvider);
+
+    var _this = _possibleConstructorReturn(this, (DataProvider.__proto__ || Object.getPrototypeOf(DataProvider)).call(this, props));
+
+    _this.state = { data: null };
+    setTimeout(function () {
+      return _this.setState({ data: 'Hey there!' });
+    }, 5000);
+    return _this;
+  }
+
+  _createClass(DataProvider, [{
+    key: 'render',
+    value: function render() {
+      if (this.state.data === null) return null;
+      return _react2.default.createElement(
+        'section',
+        null,
+        this.props.render(this.state.data)
+      );
+    }
+  }]);
+
+  return DataProvider;
+}(_react2.default.Component);
+
+DataProvider.propTypes = {
+  render: _propTypes2.default.func
+};
+
+var App = function (_React$Component2) {
+  _inherits(App, _React$Component2);
 
   function App() {
     _classCallCheck(this, App);
@@ -18908,7 +18946,14 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         _Header2.default,
         { track: this._track, title: _react2.default.createElement(Title, null) },
-        _react2.default.createElement(_Navigation2.default, { track: this._track })
+        _react2.default.createElement(_Navigation2.default, { track: this._track }),
+        _react2.default.createElement(DataProvider, { render: function render(message) {
+            return _react2.default.createElement(
+              'p',
+              null,
+              message
+            );
+          } })
       );
     }
   }, {
@@ -18925,7 +18970,7 @@ var App = function (_React$Component) {
 
 _reactDom2.default.render(_react2.default.createElement(App, null), document.querySelector('#container'));
 
-},{"./Header.jsx":30,"./Navigation.jsx":31,"react":29,"react-dom":26}]},{},[32])
+},{"./Header.jsx":30,"./Navigation.jsx":31,"prop-types":22,"react":29,"react-dom":26}]},{},[32])
 
 
 //# sourceMappingURL=app.js.map

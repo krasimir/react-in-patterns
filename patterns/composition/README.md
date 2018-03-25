@@ -132,7 +132,7 @@ function App() {
     firstName: 'Krasimir',
     lastName: 'Tsonev'
   };
-	return (
+  return (
     <UserName>{ user }</UserName>
   );
 }
@@ -160,7 +160,7 @@ function App() {
     { label: 'Answer emails', status: 'done' }
   ];
   var isCompleted = todo => todo.status === 'done';
-	return (
+  return (
     <TodoList todos={ todos }>
     	{ todo => isCompleted(todo) ? <b>{ todo.label }</b> : todo.label }
     </TodoList>
@@ -186,7 +186,7 @@ function TodoList(props) {
 }
 ```
 
-Instead of using `props.children` we use `props.render`. Later in the `App` component we pass still the same function but as a prop:
+Instead of using `props.children` we use `props.render`. Later in the `App` component we still pass the same function but as a prop:
 
 ```js
 return (
@@ -195,5 +195,36 @@ return (
     render={ todo => isCompleted(todo) ? <b>{ todo.label }</b> : todo.label } />
 );
 ```
+
+These two patterns, *children as a function* and *render prop* are probably one of my favorite ones. They provide flexibility and help when we want to reuse code. They are also a powerful way to abstract imperative code. Let's take the following example:
+
+```js
+class DataProvider extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { data: null };
+    setTimeout(() => this.setState({ data: 'Hey there!' }), 5000);
+  }
+  render() {
+    if (this.state.data === null) return null;
+    return <section>{ this.props.render(this.state.data) }</section>;
+  }
+}
+```
+
+`DataProvider` renders nothing when first gets mounted. Five seconds later we update the state of the component and we render a `<section>` followed by what is `render` prop returning. Imagine that this same component fetches data from a remote server and we want to display it only when it is available.
+
+```js
+<DataProvider render={ message => <p>{ message }</p> } />
+```
+
+We do say what we want to happen but not how. That is hidden inside the `DataProvider`. Recently I used this pattern at work where we had to restrict some UI to certain users.
+
+```js
+<Authorize permissionsInclude={[ 'read:products' ]} render={ () => <ProductsList /> } />
+```
+
+Pretty nice and self-explanatory in a declarative fashion. 
 
 
