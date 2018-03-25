@@ -9,7 +9,6 @@
   * [Event handlers](./patterns/event-handlers)
   * [Composition](./patterns/composition/)
   * [Controlled and uncontrolled inputs](./patterns/controlled-uncontrolled)
-  * [Higher-order components](./patterns/higher-order-components/)
   * [Presentational and container components](./patterns/presentational-and-container)
 
 * Dependency management
