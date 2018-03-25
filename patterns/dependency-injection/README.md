@@ -199,7 +199,9 @@ export default function wire(Component, dependencies, mapper) {
 
 ## Using React's context (v. 16.3 and above)
 
-For years the context API was not really recommended by Facebook. They mention in the official docs that the API is not stable and may change. And that is exactly what happened. In the 16.3 version we got another API which is more natural and easy to work with. Let's use the same example and pass the title string following the new API.
+For years the context API was not really recommended by Facebook. They mention in the official docs that the API is not stable and may change. And that is exactly what happened. In the 16.3 version we got a new one which I think is more natural and easy to work with.
+
+Let's use the same example with the string that needs to reach a `<Title>` component.
 
 We will start by defining a file that will contain our context creation:
 
