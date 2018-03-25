@@ -4,7 +4,7 @@ import { Consumer } from './context';
 function Title() {
   return (
     <Consumer>{
-      dependencies => <h1>Title: { dependencies.get('title') }</h1>
+      ({ title }) => <h1>Title: { title }</h1>
     }</Consumer>
   );
 }

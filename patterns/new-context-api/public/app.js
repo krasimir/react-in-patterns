@@ -19045,12 +19045,13 @@ function Title() {
   return _react2.default.createElement(
     _context.Consumer,
     null,
-    function (dependencies) {
+    function (_ref) {
+      var title = _ref.title;
       return _react2.default.createElement(
         'h1',
         null,
         'Title: ',
-        dependencies.get('title')
+        title
       );
     }
   );
@@ -19075,10 +19076,6 @@ var _Header = require('./Header.jsx');
 
 var _Header2 = _interopRequireDefault(_Header);
 
-var _dependencies = require('./dependencies');
-
-var _dependencies2 = _interopRequireDefault(_dependencies);
-
 var _context = require('./context');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -19088,8 +19085,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-_dependencies2.default.register('title', 'React in patterns');
 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
@@ -19105,7 +19100,7 @@ var App = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         _context.Provider,
-        { value: _dependencies2.default },
+        { value: { title: 'React In Patterns' } },
         _react2.default.createElement(_Header2.default, null)
       );
     }
@@ -19118,7 +19113,7 @@ var App = function (_React$Component) {
 
 _reactDom2.default.render(_react2.default.createElement(App, null), document.querySelector('#container'));
 
-},{"./Header.jsx":25,"./context":28,"./dependencies":29,"react":24,"react-dom":21}],28:[function(require,module,exports){
+},{"./Header.jsx":25,"./context":28,"react":24,"react-dom":21}],28:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -19133,23 +19128,7 @@ var Context = (0, _react.createContext)({});
 var Provider = exports.Provider = Context.Provider;
 var Consumer = exports.Consumer = Context.Consumer;
 
-},{"react":24}],29:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {
-  data: {},
-  get: function get(key) {
-    return this.data[key];
-  },
-  register: function register(key, value) {
-    this.data[key] = value;
-  }
-};
-
-},{}]},{},[27])
+},{"react":24}]},{},[27])
 
 
 //# sourceMappingURL=app.js.map

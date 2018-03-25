@@ -197,15 +197,57 @@ export default function wire(Component, dependencies, mapper) {
 
 `Inject` is a higher-order component that gets access to the context and retrieves all the items listed under `dependencies` array. The `mapper` is a function receiving the `context` data and transforms it to props for our component.
 
-At the end of this section we should mention that the usage of `context` is not highly recommended by Facebook:
+## Using React's context (v. 16.3 and above)
 
-> Context is an advanced and experimental feature. The API is likely to change in future releases.
+For years the context API was not really recommended by Facebook. They mention in the official docs that the API is not stable and may change. And that is exactly what happened. In the 16.3 version we got another API which is more natural and easy to work with. Let's use the same example and pass the title string following the new API.
 
-> Most applications will never need to use context. Especially if you are just getting started with React, you likely do not want to use context. Using context will make your code harder to understand because it makes the data flow less clear. It is similar to using global variables to pass state through your application.
+We will start by defining a file that will contain our context creation:
 
-> If you have to use context, use it sparingly.
+```js
+// context.js
+import { createContext } from 'react';
 
-> Regardless of whether you're building an application or a library, try to isolate your use of context to a small area and avoid using the context API directly when possible so that it's easier to upgrade when the API changes.
+const Context = createContext({});
+
+export const Provider = Context.Provider;
+export const Consumer = Context.Consumer;
+```
+
+`createContext` accepts a default value of our context and returns an object that has `.Provider` and `.Consumer` properties. Those are actually valid React classes. The provider is delivering the dependency while the consumer gets access to it. And because they usually live in different files we better create a single place for their initialization. 
+
+Let's say that our `App` component is the root of our tree. At that place we have to pass the context.
+
+```js
+import { Provider } from './context';
+
+class App extends React.Component {
+  render() {
+    return (
+      <Provider value={ { title: 'React In Patterns' } }>
+        <Header />
+      </Provider>
+    );
+  }
+};
+```
+
+The wrapped components and their child now share the same context. `<Header>` contains `<Title>` and in side `<Title>` we use the consumer.
+
+```js
+import { Consumer } from './context';
+
+function Title() {
+  return (
+    <Consumer>{
+      ({ title }) => <h1>Title: { title }</h1>
+    }</Consumer>
+  );
+}
+```
+
+Notice that the `Consumer` class uses the function as children (render prop) pattern to deliver the context. 
+
+The new API feels easier to understand and eliminates the boilerplate. It is still pretty new but I think it worth trying. It opens a whole new range of possibilities.
 
 ## Using the module system
 
@@ -377,7 +419,3 @@ Find some real use cases of InversifyJS with React [here](https://github.com/Mer
 ### Final thoughts
 
 Dependency injection is a tough problem. Especially in JavaScript. It's not really an issue within React application but appears everywhere. At the time of this writing React offers only the `context` as an instrument for resolving dependencies. As we mentioned above this technique should be used sparingly. And of course there are some alternatives. For example using the module system or libraries like InversifyJS.
-
-### Other resources related to dependency injection
-
-* [Level-up your dependencies in React ](https://medium.com/@marziosuperina/level-up-your-dependencies-in-react-part-1-d67bb2711b51)
