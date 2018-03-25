@@ -113,7 +113,7 @@ export default class Header extends React.Component {
 
 This technique is helpful when we have a mix between components that exist inside the `Header` and components that have to be provided from the outside.
 
-### Children-as-function and render prop
+### Children as function and render prop
 
 So far `props.children` was a React component. It is interesting that we may pass a JSX expression too.
 
@@ -128,7 +128,7 @@ function UserName(props) {
 }
 
 function App() {
-  var user = {
+  const user = {
     firstName: 'Krasimir',
     lastName: 'Tsonev'
   };
@@ -159,7 +159,7 @@ function App() {
     { label: 'Sent report', status: 'progress' },
     { label: 'Answer emails', status: 'done' }
   ];
-  var isCompleted = todo => todo.status === 'done';
+  const isCompleted = todo => todo.status === 'done';
   return (
     <TodoList todos={ todos }>
     	{ todo => isCompleted(todo) ? <b>{ todo.label }</b> : todo.label }
@@ -225,6 +225,6 @@ We do say what we want to happen but not how. That is hidden inside the `DataPro
 <Authorize permissionsInclude={[ 'read:products' ]} render={ () => <ProductsList /> } />
 ```
 
-Pretty nice and self-explanatory in a declarative fashion. 
+Pretty nice and self-explanatory in a declarative fashion. `Authorize` goes to our identity provider and checks what are the permissions of the current user.
 
 
