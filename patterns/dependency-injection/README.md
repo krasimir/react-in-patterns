@@ -215,7 +215,7 @@ export const Provider = Context.Provider;
 export const Consumer = Context.Consumer;
 ```
 
-`createContext` accepts a default value of our context and returns an object that has `.Provider` and `.Consumer` properties. Those are actually valid React classes. The provider is delivering the dependency while the consumer gets access to it. And because they usually live in different files we better create a single place for their initialization. 
+`createContext` accepts a default value of our context and returns an object that has `.Provider` and `.Consumer` properties. Those are actually valid React classes. The provider accepts our context and sends it down the React tree. The consumer is used to access the context and basically read data from it. And because they usually live in different files we better create a single place for their initialization. 
 
 Let's say that our `App` component is the root of our tree. At that place we have to pass the context.
 
@@ -233,7 +233,7 @@ class App extends React.Component {
 };
 ```
 
-The wrapped components and their child now share the same context. `<Header>` contains `<Title>` and in side `<Title>` we use the consumer.
+The wrapped components and their children now share the same context. The `<Title>` component is the one that needs the title so that is the place where we use the `<Consumer>`.
 
 ```js
 import { Consumer } from './context';
