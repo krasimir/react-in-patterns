@@ -3,22 +3,23 @@
 :books: List of design patterns/techniques used while developing with [React](https://facebook.github.io/react/).
 
 ---
+* [Introduction](./patterns/introduction.md)
+
 * Foundation
-  * [Introduction](./patterns/introduction.md)
   * [Communication](./patterns/communication/)
   * [Event handlers](./patterns/event-handlers)
   * [Composition](./patterns/composition/)
   * [Controlled and uncontrolled inputs](./patterns/controlled-uncontrolled)
   * [Presentational and container components](./patterns/presentational-and-container)
 
-* Dependency management
-  * [Dependency injection](./patterns/dependency-injection)
-
 * Data flow
   * [One direction data flow](./patterns/one-direction-data-flow)
   * [Flux](./patterns/flux)
+  * [Redux](./patterns/redux)
 
 * MISC
+  * [Dependency injection](./patterns/dependency-injection)
+  * [Styling](./patterns/styling)
   * [Integration of third-party libraries](./patterns/third-party)
 
 ---
