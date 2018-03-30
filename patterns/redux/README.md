@@ -41,7 +41,9 @@ Notice that we pass the value of the `visible` as an argument and we don't have 
 Redux provides a helper `createStore` for creating a store. Its signature is as follows:
 
 ```js
-createStore(<reducer>, <initial state>, <enhancer>);
+import { createStore } from 'redux';
+
+createStore([reducer], [initial state], [enhancer]);
 ```
 
 We already mentioned that the reducer is a function that accepts the current state and action and returns the new state. More about that in a bit. The second argument is the initial state of the store. This comes as a handy instrument to initialize our application with data that we already have. This feature is the essence of processes like server-side rendering or persistent experience. The third parameter, enhancer, provides an API for extending Redux with third party middlewares and basically plug some functionally which is not baked-in. Like for example an instrument for handling async processes.
@@ -58,3 +60,46 @@ In the typical React application we usually don't use `getState` and `subscribe`
 
 ### Reducer
 
+The reducer function is probably the most beautiful part of Redux. Even before that I was interested in writing pure functions with an immutability in mind but Redux forced me to do it. There are two characteristics of the reducer that are quite important and without them we basically have a broken pattern.
+
+(1) It must be a pure function - it means that the function should return the exact same output for given inputs.
+
+(2) It should have no side effects - stuff like accessing a global variable, making an async call or waiting for a promise to resolve have no place in here.
+
+### Wiring to React components
+
+If we talk about Redux in the context of React we almost always mean [react-redux](https://github.com/reactjs/react-redux) module. It provides two things that help wire Redux to our components.
+
+(1) `<Provider>` component - it's a component that accepts our store and makes it available for the children down the React tree. For example:
+
+```js
+<Provider store={ myStore }>
+  <MyApp />
+</Provider>
+```
+
+We usually have a single place in our app where we use it. It is the very top composition bit.
+
+(2) `connect` function - it is a function that does the subscription to updates in the store and re-renders our component. It implements a [higher-order component](https://github.com/krasimir/react-in-patterns/tree/master/patterns/composition#higher-order-component). Here is its signature:
+
+```
+connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])
+```
+
+`mapStateToProps` parameter is a function that accepts the current state and must return a set of key-value pairs (an object) that are getting send as props to our React component. For example:
+
+```js
+const mapStateToProps = state => ({
+  visible: state.visible
+});
+```
+
+`mapDispatchToProps` is a similar one but instead of the `state` receives a `dispatch` function. Here is the place where we can define a prop for dispatching actions.
+
+```js
+const mapDispatchToProps = dispatch => ({
+  changeVisibility: value => dispatch(changeVisibility(value))
+});
+```
+
+`mergeProps` combines both `mapStateToProps` and `mapDispatchToProps` and the props send to the component and gives us the opportunity to accumulate better props. Like for example if we need to fire two actions we may combine them to a single prop and send that to React's component. `options` accepts couple of settings that control how how the connection works.
