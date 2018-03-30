@@ -143,7 +143,7 @@ const changeVisibility = visible => ({ type: CHANGE_VISIBILITY, visible });
 
 ### Store and its reducers
 
-There is something that we talk about while explaining the store and reducers. We usually have more then one reducer because we want to manage multiple things. The store is only one and we in theory have only one state object. What happens in most of the apps running in production is that the application state is a composition of slices. Every slice represent a part of our system. In this very small example we have counting and visibility slices. So our initial state looks like that:
+There is something that we didn't talk about while explaining the store and reducers. We usually have more then one reducer because we want to manage multiple things. The store is only one and we in theory have only one state object. What happens in most of the apps running in production is that the application state is a composition of slices. Every slice represents a part of our system. In this very small example we have counting and visibility slices. So our initial state looks like that:
 
 ```js
 const initialState = {
@@ -154,7 +154,7 @@ const initialState = {
 };
 ```
 
-We must define separate reducers for both slices. This is to introduce some flexibility and to make our code readable. Imagine if we have a giant app with ten or more state slices and we keep working within a single function. It will be too difficult to manage.
+We must define separate reducers for both parts. This is to introduce some flexibility and to improve the readability of our code. Imagine if we have a giant app with ten or more state slices and we keep working within a single function. It will be too difficult to manage.
 
 Redux comes with a helper that allows us to target a specific part of the state and assign a reducer to it. It is called `combineReducers`:
 
@@ -183,5 +183,60 @@ const counterReducer = function (state, action) {
 };
 ```
 
-Every reducer is fired at least once when the store is initialized. In that very first call the `state` is `undefined` and the `action` is `{ type: "@@redux/INIT"}`. Our reducer should return an initial value of our data. 
+Every reducer is fired at least once when the store is initialized. In that very first run the `state` is `undefined` and the `action` is `{ type: "@@redux/INIT"}`. In this case our reducer should return the initial value of our data - `{ value: 0 }`.
+
+The reducer for the visibility is pretty similar except that it waits for `CHANGE_VISIBILITY` action:
+
+```js
+const visibilityReducer = function (state, action) {
+  if (action.type === CHANGE_VISIBILITY) {
+    return action.visible;
+  }
+  return true;
+};
+```
+
+And at the end we have to pass both reducers to `combineReducers` so we create our `rootReducer`.
+
+```js
+const rootReducer = combineReducers({
+  counter: counterReducer,
+  visible: visibilityReducer
+});
+```
+
+### Selectors
+
+Before moving to the React components we have to mention the concept of a *selector*. From the previous section we know that our state is usually divided into different parts. We have dedicated reducers to update the data but when it comes to fetching it we still have a single object. Here is the place where the selectors come in handy. The selector is a function that accepts the whole state object and extracts only the information that we need. For example for our small app we need two of those:
+
+```js
+const getCounterValue = state => state.counter.value;
+const getVisibility = state => state.visible;
+```
+
+A counter app is too small to see the real power of writing such helpers. However, in a big project is quite different. And it is not just about saving a few lines of code. Neither is about readability. Selectors come with these stuff but they are also contextual and may contain logic. Since they have access to the whole state they are able to answer business logic related questions. Like for example "Is the user authorize to do X while being on page Y". This may be done in a single selector.
+
+### React components
+
+Let's first deal with the UI that manages the visibility of the counter.
+
+```js
+function Visibility({ changeVisibility }) {
+  return (
+    <div>
+      <button onClick={ () => changeVisibility(true) }>Visible</button>
+      <button onClick={ () => changeVisibility(false) }>Hidden</button>
+    </div>
+  );
+}
+
+const VisibilityConnected = connect(
+  null,
+  dispatch => ({
+    changeVisibility: value => dispatch(changeVisibility(value))
+  })
+)(Visibility);
+```
+
+We have two buttons `Visible` and `Hidden`. They both fire `CHANGE_VISIBILITY` action but the first one passes `true` as a value while the second one `false`.
 
