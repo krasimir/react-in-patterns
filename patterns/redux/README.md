@@ -238,5 +238,58 @@ const VisibilityConnected = connect(
 )(Visibility);
 ```
 
-We have two buttons `Visible` and `Hidden`. They both fire `CHANGE_VISIBILITY` action but the first one passes `true` as a value while the second one `false`.
+We have two buttons `Visible` and `Hidden`. They both fire `CHANGE_VISIBILITY` action but the first one passes `true` as a value while the second one `false`. What's interesting in the here is the `VisibilityConnected` component class. It gets created as a result of the wiring done via Redux's `connect`. Notice that we pass `null` as `mapStateToProps` because we don't need any of the data in the store. We just need to `dispatch` an action.
 
+The second component is slightly more complicated. It is named `Counter` and renders two buttons and the counter number.
+
+```js
+function Counter({ value, add, subtract }) {
+  return (
+    <div>
+      <p>Value: { value }</p>
+      <button onClick={ add }>Add</button>
+      <button onClick={ subtract }>Subtract</button>
+    </div>
+  );
+}
+
+const CounterConnected = connect(
+  state => ({
+    value: getCounterValue(state)
+  }),
+  dispatch => ({
+    add: () => dispatch(add()),
+    subtract: () => dispatch(subtract())
+  })
+)(Counter);
+```
+
+We now need both `mapStateToProps` and `mapDispatchToProps` because we want to read data from the store and dispatch actions. Our component receives three props - `value`, `add` and `subtract`. 
+
+The very last bit is an `App` component where we compose the application.
+
+```js
+function App({ visible }) {
+  return (
+    <div>
+      <VisibilityConnected />
+      { visible && <CounterConnected /> }
+    </div>
+  );
+}
+const AppConnected = connect(
+  state => ({
+    visible: getVisibility(state)
+  })
+)(App);
+```
+
+We again need to `connect` our component because we want to control the visibility of the counter. The `getVisibility` selector returns a boolean that indicates weather `CounterConnected` will be rendered or not.
+
+## Final thoughts
+
+Redux is an wonderful pattern. Over the years the JavaScript community developed the idea and enhanced it with couple of new terms. I think a typical redux application looks more like this:
+
+![Redux architecture](redux-reallife.jpg)
+
+And we didn't even mention the side effects management. It is a whole new story with its own ideas and solutions. We can conclude that Redux itself is a pretty simple pattern. It teaches very useful techniques but unfortunately it is very often not enough. Sooner or later we have to introduce more concepts/patterns. Which of course is not that bad. We just have to plan for it.
