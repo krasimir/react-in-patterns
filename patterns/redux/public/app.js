@@ -21842,25 +21842,20 @@ var initialState = {
   },
   visible: true
 };
-var counterReducer = function counterReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState.counter;
-  var action = arguments[1];
-
+var counterReducer = function counterReducer(state, action) {
+  console.log(state, action);
   if (action.type === ADD) {
     return { value: state.value + 1 };
   } else if (action.type === SUBTRACT) {
     return { value: state.value - 1 };
   }
-  return state;
+  return state || { value: 0 };
 };
-var visibilityReducer = function visibilityReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState.visible;
-  var action = arguments[1];
-
+var visibilityReducer = function visibilityReducer(state, action) {
   if (action.type === CHANGE_VISIBILITY) {
     return action.visible;
   }
-  return state;
+  return true;
 };
 var rootReducer = (0, _redux.combineReducers)({
   counter: counterReducer,
@@ -21878,7 +21873,7 @@ var getVisibility = function getVisibility(state) {
 
 // Store creation
 
-var store = (0, _redux.createStore)(rootReducer);
+var store = (0, _redux.createStore)(rootReducer, initialState);
 
 // React components
 

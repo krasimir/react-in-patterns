@@ -66,6 +66,21 @@ The reducer function is probably the most beautiful part of Redux. Even before t
 
 (2) It should have no side effects - stuff like accessing a global variable, making an async call or waiting for a promise to resolve have no place in here.
 
+Here is a simple counter reducer:
+
+```js
+const counterReducer = function (state, action) {
+  if (action.type === ADD) {
+    return { value: state.value + 1 };
+  } else if (action.type === SUBTRACT) {
+    return { value: state.value - 1 };
+  }
+  return { value: 0 };
+};
+```
+
+There are no side effects and we return a brand new object every time. We accumulate the new value based on the previous state and the incoming action type. 
+
 ### Wiring to React components
 
 If we talk about Redux in the context of React we almost always mean [react-redux](https://github.com/reactjs/react-redux) module. It provides two things that help wire Redux to our components.
@@ -103,3 +118,70 @@ const mapDispatchToProps = dispatch => ({
 ```
 
 `mergeProps` combines both `mapStateToProps` and `mapDispatchToProps` and the props send to the component and gives us the opportunity to accumulate better props. Like for example if we need to fire two actions we may combine them to a single prop and send that to React's component. `options` accepts couple of settings that control how how the connection works.
+
+## Example
+
+Let's create a simple counter app that uses all the APIs above.
+
+![Redux counter app example](./redux-counter-app.png)
+
+The "Add" and "Subtract" buttons will simply change a value in our store. "Visible" and "Hidden" will control its visibility.
+
+### Modeling the actions
+
+For me, every Redux feature starts with modeling the action types and defining what state we want to keep. In our case we have three operations going on - adding, subtracting and managing visibility. So we will go with the following:
+
+```js
+const ADD = 'ADD';
+const SUBTRACT = 'SUBTRACT';
+const CHANGE_VISIBILITY = 'CHANGE_VISIBILITY';
+
+const add = () => ({ type: ADD });
+const subtract = () => ({ type: SUBTRACT });
+const changeVisibility = visible => ({ type: CHANGE_VISIBILITY, visible });
+```
+
+### Store and its reducers
+
+There is something that we talk about while explaining the store and reducers. We usually have more then one reducer because we want to manage multiple things. The store is only one and we in theory have only one state object. What happens in most of the apps running in production is that the application state is a composition of slices. Every slice represent a part of our system. In this very small example we have counting and visibility slices. So our initial state looks like that:
+
+```js
+const initialState = {
+  counter: {
+    value: 0
+  },
+  visible: true
+};
+```
+
+We must define separate reducers for both slices. This is to introduce some flexibility and to make our code readable. Imagine if we have a giant app with ten or more state slices and we keep working within a single function. It will be too difficult to manage.
+
+Redux comes with a helper that allows us to target a specific part of the state and assign a reducer to it. It is called `combineReducers`:
+
+```js
+import { createStore, combineReducers } from 'redux';
+
+const rootReducer = combineReducers({
+  counter: function A() { ... },
+  visible: function B() { ... }
+});
+const store = createStore(rootReducer);
+```
+
+Function `A` receives only the `counter` slice as a state and needs to return only that part. Same for `B`. Accepts a boolean (the value of `visible`) and must return a boolean.
+
+The reducer for our counter slice should take into account both actions `ADD` and `SUBTRACT` and based on them calculates the new `counter` state.
+
+```js
+const counterReducer = function (state, action) {
+  if (action.type === ADD) {
+    return { value: state.value + 1 };
+  } else if (action.type === SUBTRACT) {
+    return { value: state.value - 1 };
+  }
+  return state || { value: 0 };
+};
+```
+
+Every reducer is fired at least once when the store is initialized. In that very first call the `state` is `undefined` and the `action` is `{ type: "@@redux/INIT"}`. Our reducer should return an initial value of our data. 
+

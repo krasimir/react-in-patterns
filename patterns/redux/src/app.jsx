@@ -22,19 +22,20 @@ const initialState = {
   },
   visible: true
 };
-const counterReducer = function (state = initialState.counter, action) {
+const counterReducer = function (state, action) {
+  console.log(state, action);
   if (action.type === ADD) {
     return { value: state.value + 1 };
   } else if (action.type === SUBTRACT) {
     return { value: state.value - 1 };
   }
-  return state;
+  return state || { value: 0 };
 };
-const visibilityReducer = function (state = initialState.visible, action) {
+const visibilityReducer = function (state, action) {
   if (action.type === CHANGE_VISIBILITY) {
     return action.visible;
   }
-  return state;
+  return true;
 };
 const rootReducer = combineReducers({
   counter: counterReducer,
@@ -48,7 +49,7 @@ const getVisibility = state => state.visible;
 
 // Store creation
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, initialState);
 
 // React components
 
