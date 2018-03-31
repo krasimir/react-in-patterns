@@ -6,6 +6,8 @@
 
 If you work with React for a couple of days you will realize that every React component is like a small system that operates on its own. It has its own state, input and output. In the following sections we will explore these characteristics.
 
+![Input-Output](./communication.jpg)
+
 ### Input
 
 The input for a React component is its props. That's how we pass data to it:
