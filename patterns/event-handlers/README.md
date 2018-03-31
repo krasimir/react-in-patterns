@@ -7,6 +7,8 @@
 React provides a series of attributes for handling events. The solution is almost the same as the one used in the standard DOM. There are some differences like using camelCase or the fact that we pass a function but overall it is pretty similar.
 
 ```js
+const theLogoIsClicked = () => alert('Clicked');
+
 <Logo onClick={ theLogoIsClicked } />
 <input type='text' onChange={ event => theInputIsChanged(event.target.value) } />
 ```
@@ -51,7 +53,7 @@ class Switcher extends React.Component {
 };
 ```
 
-What we normally do is to use `bind` like so:
+What we normally do is to use `bind`:
 
 ```js
 <button onClick={ this._handleButtonClick.bind(this) }>
@@ -81,4 +83,31 @@ class Switcher extends React.Component {
 };
 ```
 
-Facebook by the way [recommend](https://facebook.github.io/react/docs/reusable-components.html#no-autobinding) the same technique while dealing with functions that need the context of the same component. The binding in the constructor may be also useful if we pass callbacks down the tree.
+Facebook by the way [recommend](https://facebook.github.io/react/docs/reusable-components.html#no-autobinding) the same technique while dealing with functions that need the context of the same component.
+
+The constructor is also a nice place for partially executing our handlers. Let's for example say that we have a form but want to handle every input in a single function.
+
+```js
+class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this._onNameChanged = this._onFieldChange.bind(this, 'name');
+    this._onPasswordChanged = this._onFieldChange.bind(this, 'password');
+  }
+  render() {
+    return (
+      <form>
+        <input onChange={ this._onNameChanged } />
+        <input onChange={ this._onPasswordChanged } />
+      </form>
+    );
+  }
+  _onFieldChange(field, event) {
+    console.log(`${ field } changed to ${ event.target.value }`);
+  }
+};
+```
+
+## Final thoughts
+
+There is not much to learn about event handling in React. The authors of the library did a good job in keeping what's already there. Since we are using HTML-like syntax it makes total sense that we have also a DOM-like event handling.

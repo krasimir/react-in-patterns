@@ -19021,17 +19021,52 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Switcher = function (_React$Component) {
-  _inherits(Switcher, _React$Component);
+var Form = function (_React$Component) {
+  _inherits(Form, _React$Component);
+
+  function Form(props) {
+    _classCallCheck(this, Form);
+
+    var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
+
+    _this._onNameChanged = _this._onFieldChange.bind(_this, 'name');
+    _this._onPasswordChanged = _this._onFieldChange.bind(_this, 'password');
+    return _this;
+  }
+
+  _createClass(Form, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'form',
+        null,
+        _react2.default.createElement('input', { onChange: this._onNameChanged }),
+        _react2.default.createElement('input', { onChange: this._onPasswordChanged })
+      );
+    }
+  }, {
+    key: '_onFieldChange',
+    value: function _onFieldChange(field, event) {
+      console.log(field + ' changed to ' + event.target.value);
+    }
+  }]);
+
+  return Form;
+}(_react2.default.Component);
+
+;
+
+var Switcher = function (_React$Component2) {
+  _inherits(Switcher, _React$Component2);
 
   function Switcher(props) {
     _classCallCheck(this, Switcher);
 
-    var _this = _possibleConstructorReturn(this, (Switcher.__proto__ || Object.getPrototypeOf(Switcher)).call(this, props));
+    var _this2 = _possibleConstructorReturn(this, (Switcher.__proto__ || Object.getPrototypeOf(Switcher)).call(this, props));
 
-    _this.state = { name: 'React in patterns' };
-    _this._buttonClick = _this._handleButtonClick.bind(_this);
-    return _this;
+    _this2.state = { name: 'React in patterns' };
+    _this2._buttonClick = _this2._handleButtonClick.bind(_this2);
+    return _this2;
   }
 
   _createClass(Switcher, [{
@@ -19055,7 +19090,12 @@ var Switcher = function (_React$Component) {
 
 ;
 
-_reactDom2.default.render(_react2.default.createElement(Switcher, null), document.querySelector('#container'));
+_reactDom2.default.render(_react2.default.createElement(
+  'div',
+  null,
+  _react2.default.createElement(Switcher, null),
+  _react2.default.createElement(Form, null)
+), document.querySelector('#container'));
 
 },{"react":24,"react-dom":21}]},{},[25])
 
