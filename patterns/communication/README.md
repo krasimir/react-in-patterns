@@ -4,7 +4,7 @@
 
 ---
 
-If you work with React for a couple of months you'll realize that every React component is like a small system that operates on its own. It has its own state, input and output. Let's see what are those.
+If you work with React for a couple of days you will realize that every React component is like a small system that operates on its own. It has its own state, input and output. In the following sections we will explore these characteristics.
 
 ### Input
 
@@ -12,12 +12,9 @@ The input for a React component is its props. That's how we pass data to it:
 
 ```js
 // Title.jsx
-class Title extends React.Component {
-  render() {
-    return <h1>{ this.props.text }</h1>;
-  }
-};
-
+function Title(props) {
+  return <h1>{ props.text }</h1>;
+}
 Title.propTypes = {
   text: PropTypes.string
 };
@@ -26,93 +23,97 @@ Title.defaultProps = {
 };
 
 // App.jsx
-class App extends React.Component {
-  render() {
-    return <Title text='Hello React' />;
-  }
-};
+function App() {
+  return <Title text='Hello React' />;
+}
 ```
 
-The `Title` component has only one input - `text`. The parent component (`App`) should provide it as an attribute while using the `<Title>` tag. There are two additional settings that we see above:
+The `Title` component has only one input (prop) - `text`. The parent component (`App`) should provide it as an attribute while using the `<Title>` tag. Alongside the component definition we also have to define at least `propTypes`. In there we define the type of every property and React hints us in the console if something unexpected gets send. `defaultProps` is another useful option. We may use it to set a default value of component's props so that if the developer forgets to pass them we have a meaningful values.
 
-* `propTypes` - defines the type of the props. This helps React telling us when a provided prop is not what we expect.
-* `defaultProps` - defines the default values of the props. We may require the existence of certain props but for the rest is good practice to set a default value.
-
-React is not defining strictly what should be passed as a prop. It may be whatever we want. It even could be another component:
+React is not defining strictly what should be passed as a prop. It may be whatever we want. It could even be another component:
 
 ```js
-class SomethingElse extends React.Component {
-  render() {
-    return <div>The answer is { this.props.answer }</div>;
-  }
+function SomethingElse({ answer }) {
+  return <div>The answer is { answer }</div>;
 }
-
-class Answer extends React.Component {
-  render() {
-    return <span>42</span>;
-  }
+function Answer() {
+  return <span>42</span>;
 }
 
 // later somewhere in our application
 <SomethingElse answer={ <Answer /> } />
 ```
 
-There is also `props.children` property that gives us an access to the child components passed by the owner of the component. For example:
+There is also a `props.children` property that gives us an access to the child components passed by the owner of the component. For example:
 
 ```js
-class Title extends React.Component {
-  render() {
-    return (
-      <h1>
-        { this.props.text }
-        { this.props.children }
-      </h1>
-    );
-  }
-};
-
-class App extends React.Component {
-  render() {
-    return (
-      <Title text='Hello React'>
-        <span>community</span>
-      </Title>
-    );
-  }
-};
+function Title({ text, children }) {
+  return (
+    <h1>
+      { text }
+      { children }
+    </h1>
+  );
+}
+function App() {
+  return (
+    <Title text='Hello React'>
+      <span>community</span>
+    </Title>
+  );
+}
 ```
 
-*Notice that if we don't return `{ this.props.children }` as part of the `Title`'s render method the `<span>` tag will not be rendered.*
+In this example `<span>community</span>` in `App` component is `children` in `Title` component. Notice that if we don't return `{ children }` as part of the `Title`'s body the `<span>` tag will not be rendered.
 
-An indirect input to a component may be also the so called `context`. The whole React tree may have a `context` object which is accessible by every component. More about that in the [dependency injection](https://github.com/krasimir/react-in-patterns/tree/master/patterns/dependency-injection) section.
+(prior v16.3) An indirect input to a component may be also the so called `context`. The whole React tree may have a `context` object which is accessible by every component. More about that in the [dependency injection](https://github.com/krasimir/react-in-patterns/tree/master/patterns/dependency-injection) section.
 
 ### Output
 
-The obvious output is the rendered HTML. Visually that's what we get from a React component. Of course some of the components contain logic that probably sends out transformed data or triggers an action/event in our system. To achieve that we again use component's props:
+The first obvious output of a React component is the rendered HTML. Visually that's what we get. However, because the prop may be everything including a function we could also receive data or see a process triggered.
+
+In the following example we have a component that accepts the user's input and sends it out (`<NameField />`).
 
 ```js
-class Title extends React.Component {
+function NameField({ valueUpdated }) {
+  return <input onChange={ event => valueUpdated(event.target.value) } />
+};
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { name: '' };
+  }
   render() {
     return (
-      <h1>
-        <a onClick={ this.props.logoClicked }>
-          <img src='path/to/logo.png' />
-        </a>
-      </h1>
+      <div>
+        <NameField valueUpdated={ name => this.setState({ name }) } />
+        Name: { this.state.name }
+      </div>
     );
-  }
-};
-
-class App extends React.Component {
-  render() {
-    return <Title logoClicked={ this.logoClicked } />;
-  }
-  logoClicked() {
-    console.log('logo clicked');
   }
 };
 ```
 
-We pass a callback which is invoked from within the component. The `logoClicked` function above may accept data which is how we transfer information back from the child to parent component.
+Very often we need an entry point of our logic. React comes with some handy lifecycle methods that may be used to trigger a process. Let's say that we have an external resource that needs to be fetched on a specific page.
 
-We should mention that there is no API that allow us accessing child's state. Or in other words we can't use `this.props.children[0].state` or something like that. The proper way of retrieving information from the children is by using props (passing callbacks). And that's a good thing. This approach forces us defining clear APIs and encourage the [one-way direction data flow](https://github.com/krasimir/react-in-patterns/tree/master/patterns/one-direction-data-flow).
+```js
+class ResultsPage extends React.Component {
+  componentDidMount() {
+    this.props.getResults();
+  }
+  render() {
+    if (this.props.results) {
+      return <List results={ this.props.results } />;
+    } else {
+      return <LoadingScreen />
+    }
+  }
+}
+```
+
+Let's say that we are building a search-results experience. We have a search page and we enter our criteria there. We click submit and the user goes to `/results` where we have to display the result of the search. Once we land on the results page we render some sort of a loading screen and trigger a request for fetching the results in `componentDidMount` lifecycle hook. When the data comes we pass it to a `<List>` component.
+
+## Final thoughts
+
+It is nice that we may think about every React component as a black box. It has its own input, lifecycle and output. It is up to us how we compose these boxes. And maybe that is one of the advantages that React offers. Easy to abstract and easy to compose.
