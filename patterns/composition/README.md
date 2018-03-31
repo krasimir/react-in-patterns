@@ -4,7 +4,7 @@
 
 ---
 
-One of the biggest benefits of [React](http://krasimirtsonev.com/blog/article/The-bare-minimum-to-work-with-React) is composability. I personally don't know a framework that offers such an easy way to create and combine components. In this section we will explore few composition techniques which proved to work well.
+One of the biggest benefits of React is composability. I personally don't know a framework that offers such an easy way to create and combine components. In this section we will explore few composition techniques which proved to work well.
 
 Let's get a simple example. Let's say that we have an application with a header and we want to place a navigation inside. We have three React components - `App`, `Header` and `Navigation`. They have to be nested into each other so we end up with the following markup:
 
@@ -22,107 +22,172 @@ The trivial approach for combining these components is to reference them in the 
 // app.jsx
 import Header from './Header.jsx';
 
-export default class App extends React.Component {
-  render() {
-    return <Header />;
-  }
+export default function App() {
+  return <Header />;
 }
 
 // Header.jsx
 import Navigation from './Navigation.jsx';
 
-export default class Header extends React.Component {
-  render() {
-    return <header><Navigation /></header>;
-  }
+export default function Header() {
+  return <header><Navigation /></header>;
 }
 
 // Navigation.jsx
-export default class Navigation extends React.Component {
-  render() {
-    return (<nav> ... </nav>);
-  }
+export default function Navigation() {
+  return (<nav> ... </nav>);
 }
 ```
 
-However, following this pattern we introduce several problems:
+However, following this approach we introduced several problems:
 
-* We may consider the `App` as a place where we wire stuff, as an entry point. So, it's a good place for such composition. The `Header` though may have other elements like a logo, search field or a slogan. It will be nice if they are passed somehow from the outside so we don't create a hard-coded dependencies. What if we need the same `Header` component but without the `Navigation`. We can't easily achieve that because we have the two bound tightly together.
+* We may consider the `App` as a place where we do our main composition. The `Header` though may have other elements like a logo, search field or a slogan. It will be nice if they are passed somehow from the outside so we don't create a hard-coded dependencies. What if we need the same `Header` component but without the `Navigation`. We can't easily achieve that because we have the two bound tightly together.
 * It's difficult to test. We may have some business logic in the `Header` and in order to test it we have to create an instance of the component. However, because it imports other components we will probably create instances of those components too and it becomes heavy to test. We may break our `Header` test by doing something wrong in the `Navigation` component which is totally misleading. *(Note: to some extent [shallow rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) solves this problem by rendering only the `Header` without its nested children.)*
 
 ### Using React's children API
 
-In React we have the handy [`this.props.children`](https://facebook.github.io/react/docs/multiple-components.html#children). That's how the parent reads/accesses its children. This API will make our Header agnostic and dependency-free:
+In React we have the handy [`children`](https://facebook.github.io/react/docs/multiple-components.html#children) prop. That's how the parent reads/accesses its children. This API will make our Header agnostic and dependency-free:
 
 ```js
 // App.jsx
-export default class App extends React.Component {
-  render() {
-    return (
-      <Header>
-        <Navigation />
-      </Header>
-    );
-  }
+export default function App() {
+  return (
+    <Header>
+      <Navigation />
+    </Header>
+  );
 }
 
 // Header.jsx
-export default class Header extends React.Component {
-  render() {
-    return <header>{ this.props.children }</header>;
-  }
+export default function Header({ children }) {
+  return <header>{ children }</header>;
 };
 ```
 
-Notice also that if we don't use `this.props.children` the `Navigation` component will never be rendered.
+Notice also that if we don't use `{ children }` in `Header`, the `Navigation` component will never be rendered.
 
 It now becomes easier to test because we may render the `Header` with an empty `<div>`. This will isolate the component and will let us focus on only one piece of our application.
 
-### Passing a child as a property
+### Passing a child as a prop
 
-Every React component receive props. It's nice that these props may contain all kind of data. Even other components.
+Every React component receive props right. As we mentioned already there is no any strict rule about what these props are. We may even pass other components.
 
 ```js
-// App.jsx
-const Title = () => <h1>Hello there!</h1>;
+const Title = function () {
+  return <h1>Hello there!</h1>;
+}
+const Header = function ({ title, children }) {
+  return (
+    <header>
+      { title }
+      { children }
+    </header>
+  );
+}
+function App() {
+  return (
+    <Header title={ <Title /> }>
+      <Navigation />
+    </Header>
+  );
+};
+```
+
+This technique is useful when a component like `Header` above needs to decide the order of its children but that's the only one decision that it takes.
+
+### Higher-order component
+
+For a long period of time higher-order components were the most popular way to enhance and compose React elements. They look really similar to the [decorator design pattern](http://robdodson.me/javascript-design-patterns-decorator/) because we have component wrapping and enhancing.
+
+On the technical side the higher-order component is a function that accepts our original component and returns an enhanced/populated version of it. The most trivial example is as follows:
+
+```js
+var enhanceComponent = (Component) =>
+  class Enhance extends React.Component {
+    render() {
+      return (
+        <Component {...this.props} />
+      )
+    }
+  };
+
+var OriginalTitle = () => <h1>Hello world</h1>;
+var EnhancedTitle = enhanceComponent(OriginalTitle);
 
 class App extends React.Component {
   render() {
-    return (
-      <Header title={ <Title /> }>
-        <Navigation />
-      </Header>
-    );
+    return <EnhancedTitle />;
   }
 };
-
-// Header.jsx
-export default class Header extends React.Component {
-  render() {
-    return (
-      <header>
-        { this.props.title }
-        <hr />
-        { this.props.children }
-      </header>
-    );
-  }
-};
-
 ```
 
-This technique is helpful when we have a mix between components that exist inside the `Header` and components that have to be provided from the outside.
+The very first thing that the higher-order component does is to render the original component. It's a good practice to proxy pass the `props` to it. This way we will keep the input of our original component. And here it comes the first big benefit of this pattern - because we control the input of the component we may send something that the component usually has no access to. Let's say that we have a configuration setting that `OriginalTitle` needs:
+
+```js
+var config = require('path/to/configuration');
+
+var enhanceComponent = (Component) =>
+  class Enhance extends React.Component {
+    render() {
+      return (
+        <Component
+          {...this.props}
+          title={ config.appTitle }
+        />
+      )
+    }
+  };
+
+var OriginalTitle  = ({ title }) => <h1>{ title }</h1>;
+var EnhancedTitle = enhanceComponent(OriginalTitle);
+```
+
+The knowledge for the `appTitle` is hidden into the higher-order component. `OriginalTitle` knows only that it receives a `prop` called `title`. It has no idea that this is coming from a configuration file. That's a huge advantage because allows us to isolate pieces of our system. It also helps with the testing of the component because we mock easily.
+
+Another characteristic of this pattern is that we have a nice buffer for additional logic. What if our `OriginalTitle` needs data also from a remote server. We may query this data in the higher-order component and again send it as a prop.
+
+```js
+var enhanceComponent = (Component) =>
+  class Enhance extends React.Component {
+    constructor(props) {
+      super(props);
+
+      this.state = { remoteTitle: null };
+    }
+    componentDidMount() {
+      fetchRemoteData('path/to/endpoint').then(data => {
+        this.setState({ remoteTitle: data.title });
+      });
+    }
+    render() {
+      return (
+        <Component
+          {...this.props}
+          title={ config.appTitle }
+          remoteTitle={ this.state.remoteTitle }
+        />
+      )
+    }
+  };
+
+var OriginalTitle  = ({ title, remoteTitle }) => <h1>{ title }{ remoteTitle }</h1>;
+var EnhancedTitle = enhanceComponent(OriginalTitle);
+```
+
+Again, the `OriginalTitle` knows that it receives two props and has to render them next to each other. Its only concern is the how the data looks like not where it comes from and how.
+
+*[Dan Abramov](https://github.com/gaearon) made a really [good point](https://github.com/krasimir/react-in-patterns/issues/12) that the actual creation of the higher-order component (i.e. calling a function like `enhanceComponent`) should happen at a component definition level. Or in other words, it's a bad practice to do it inside another React component because it may be slow and lead to performance issues.*
 
 ### Function as a children, render prop
 
-So far `props.children` was a React component. It is interesting that we may pass a JSX expression too.
+Last couple of months the React community started shifting in an interesting direction. So far in our examples the `children` prop was a React component. There is however a new pattern gaining popularity in which the same `children` prop is a JSX expression. Let's start by passing a simple object.
 
 ```js
-function UserName(props) {
+function UserName({ children ) {
   return (
     <div>
-      <b>{ props.children.lastName }</b>,
-      { props.children.firstName }
+      <b>{ children.lastName }</b>,
+      { children.firstName }
     </div>
   );
 }
@@ -138,15 +203,15 @@ function App() {
 }
 ```
 
-This may look weird but may be useful in some cases. Like for example when we have some knowledge in the parent component and don't necessary want to send it down the tree. The example below prints a list of TODOs. The `App` component has all the data and knows how to determine whether a TODO is completed or not. The `TodoList` component simply encapsulate the needed HTML markup.
+This may look weird but in fact is really helpful. Like for example when we have some knowledge in the parent component and don't necessary want to send it down to children. The example below prints a list of TODOs. The `App` component has all the data and knows how to determine whether a TODO is completed or not. The `TodoList` component simply encapsulate the needed HTML markup.
 
 ```js
-function TodoList(props) {
+function TodoList({ todos, children }) {
   return (
     <section className='main-section'>
       <ul className='todo-list'>{
-        props.todos.map((todo, i) => (
-          <li key={ i }>{ props.children(todo) }</li>
+        todos.map((todo, i) => (
+          <li key={ i }>{ children(todo) }</li>
         ))
       }</ul>
     </section>
@@ -170,25 +235,21 @@ function App() {
 
 Notice how the `App` component doesn't expose the structure of the data. `TodoList` has no idea that there is `label` or `status` properties.
 
-We may slightly change our `TodoList` component to demonstrate the *render prop* pattern:
+The so called *render prop* pattern is almost the same except that we use a prop and not `children` for rendering the todo.
 
 ```js
-function TodoList(props) {
+function TodoList({ todos, render }) {
   return (
     <section className='main-section'>
       <ul className='todo-list'>{
-        props.todos.map((todo, i) => (
-          <li key={ i }>{ props.render(todo) }</li>
+        todos.map((todo, i) => (
+          <li key={ i }>{ render(todo) }</li>
         ))
       }</ul>
     </section>
   );
 }
-```
 
-Instead of using `props.children` we use `props.render`. Later in the `App` component we still pass the same function but as a prop:
-
-```js
 return (
   <TodoList
     todos={ todos }
@@ -196,7 +257,7 @@ return (
 );
 ```
 
-These two patterns, *function as children* and *render prop* are probably one of my favorite ones. They provide flexibility and help when we want to reuse code. They are also a powerful way to abstract imperative code. Let's take the following example:
+These two patterns, *function as children* and *render prop* are probably one of my favorite ones recently. They provide flexibility and help when we want to reuse code. They are also a powerful way to abstract imperative code.
 
 ```js
 class DataProvider extends React.Component {
@@ -216,79 +277,17 @@ class DataProvider extends React.Component {
 `DataProvider` renders nothing when first gets mounted. Five seconds later we update the state of the component and we render a `<section>` followed by what is `render` prop returning. Imagine that this same component fetches data from a remote server and we want to display it only when it is available.
 
 ```js
-<DataProvider render={ message => <p>{ message }</p> } />
+<DataProvider render={ data => <p>The data is here!</p> } />
 ```
 
-We do say what we want to happen but not how. That is hidden inside the `DataProvider`. Recently I used this pattern at work where we had to restrict some UI to certain users.
+We do say what we want to happen but not how. That is hidden inside the `DataProvider`. These days we used this pattern at work where we had to restrict some UI to certain users having `read:products` permissions. And we used the *render prop* pattern.
 
 ```js
 <Authorize permissionsInclude={[ 'read:products' ]} render={ () => <ProductsList /> } />
 ```
 
-Pretty nice and self-explanatory in a declarative fashion. `Authorize` goes to our identity provider and checks what are the permissions of the current user.
+Pretty nice and self-explanatory in a declarative fashion. `Authorize` goes to our identity provider and checks what are the permissions of the current user. If he/she is allowed to read our products we render the `ProductList`.
 
-### Higher-order component
+## Final thoughts
 
-Higher-order components look really similar to the [decorator design pattern](http://robdodson.me/javascript-design-patterns-decorator/). It is wrapping a component and attaching some new functionalities or props to it.
-
-Here is a function that returns a higher-order component:
-
-```js
-var enhanceComponent = (Component) =>
-  class Enhance extends React.Component {
-    render() {
-      return (
-        <Component
-          {...this.state}
-          {...this.props}
-        />
-      )
-    }
-  };
-
-export default enhanceComponent;
-```
-
-Very often we expose a factory function that accepts our original component and when called returns the enhanced/wrapped version of it. For example:
-
-```js
-var OriginalComponent = () => <p>Hello world.</p>;
-var EnhancedComponent = enhanceComponent(OriginalComponent);
-
-class App extends React.Component {
-  render() {
-    return <EnhancedComponent />;
-  }
-};
-```
-
-The very first thing that the higher-order component does is to render the original component. It's a good practice to pass the `state` and `props` to it. This is helpful when we want to proxy data and use the higher-order component as it is our original component.
-
-[Dan Abramov](https://github.com/gaearon) made a really [good point](https://github.com/krasimir/react-in-patterns/issues/12) that the actual creation of the higher-order component (i.e. calling a function like `enhanceComponent`) should happen at a component definition level. Or in other words, it's a bad practice to do it inside another React component because it's slow and we basically generate a new type every time.
-
-### Benefits
-
-The higher-order component gives us control on the input. The data that we want to send as props. Let's say that we have a configuration setting that `OriginalComponent` needs:
-
-```js
-var config = require('path/to/configuration');
-
-var enhanceComponent = (Component) =>
-  class Enhance extends React.Component {
-    render() {
-      return (
-        <Component
-          {...this.state}
-          {...this.props}
-          title={ config.appTitle }
-        />
-      )
-    }
-  };
-```
-
-The knowledge for the configuration is hidden into the higher-order component. `OriginalComponent` knows only that it receives a `prop` called `title`. Where it comes from it is not important. That's a huge advantage because it helps us testing the component in an isolation and provides nice mechanism for mocking. Here is how the `title` may be used:
-
-```js
-var OriginalComponent  = (props) => <p>{ props.title }</p>;
-```
+I believe that the React's high levels of adoption happens because the library provides nice mechanisms for composition. Did you wonder why HTML is still here. It was created in the dawn of the internet and we still use it. That is because is highly composable. React and its JSX looks like HTML on steroids and as such it comes with the same capabilities. So, make sure that you master the composition because that is one of the biggest benefits of React.
