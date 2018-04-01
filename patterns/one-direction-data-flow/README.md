@@ -4,7 +4,7 @@
 
 ---
 
-One-way direction data flow is a pattern that works nicely with React. It is around the idea that the components do not modify the data that they receive. They only listen for changes in this data and maybe provide the new value but they do not update the actual data store. This update happens following another mechanism in another place and the component just gets rendered with the new value.
+One-way direction data flow is a pattern that works nicely with React. It is around the idea that the components do not modify the data that they receive. They only listen for changes in this data and maybe provide the new value but they do not update the actual data. This update happens following another mechanism in another place and the component just gets re-rendered with the new value.
 
 Let's for example get a simple `Switcher` component that contains a button. We click it to enable a flag in the system.
 
@@ -25,10 +25,8 @@ class Switcher extends React.Component {
 };
 
 // ... and we render it
-class App extends React.Component {
-  render() {
-    return <Switcher />;
-  }
+function App() {
+  return <Switcher />;
 };
 ```
 
@@ -64,14 +62,12 @@ class Switcher extends React.Component {
   }
 };
 
-class App extends React.Component {
-  render() {
-    return <Switcher onChange={ Store.set.bind(Store) } />;
-  }
+function App() {
+  return <Switcher onChange={ Store.set.bind(Store) } />;
 };
 ```
 
-Our `Store` object is a simple [singleton](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript) where we have helpers for setting and getting the value of the `_flag` property. By passing the getter to the component we are able to update the data externally. More or less our application workflow looks like that:
+Our `Store` object is a [singleton](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript) where we have helpers for setting and getting the value of the `_flag` property. By passing the getter to the component we are able to update the data externally. More or less our application workflow looks like that:
 
 ```
 User's input
@@ -79,7 +75,7 @@ User's input
   Switcher -------> Store
 ```
 
-Let's assume that we are saving the flag value to a backend service via the `Store`. When the user comes back we have to set a proper initial state. If the user left the flag truthy we have to show *"lights on"* and not the default *"lights off"*. Now it gets tricky because we have the data knowledge in two places. The UI and the `Store` have their own states. We have to communicate in both directions `Store ---> Switcher` and `Switcher ---> Store`.
+Let's assume that we are saving the flag value to a back-end service via the `Store`. When the user comes back we have to set a proper initial state. If the user left the flag as `true` we have to show *"lights on"* and not the default *"lights off"*. Now it gets tricky because we have the data knowledge in two places. The UI and the `Store` have their own states. We have to communicate in both directions from the store to the switcher and from the switcher to the store.
 
 ```js
 // ... in App component
@@ -94,7 +90,7 @@ constructor(props) {
   ...
 ```
 
-Our schema changes to the following:
+Our workflow changes to the following:
 
 ```
 User's input
@@ -116,12 +112,12 @@ One-way direction data flow solves this problem. It eliminates the multiple stat
 var Store = {
   _handlers: [],
   _flag: '',
-  onChange: function(handler) {
+  subscribe: function(handler) {
     this._handlers.push(handler);
   },
   set: function(value) {
     this._flag = value;
-    this._handlers.forEach(handler => handler())
+    this._handlers.forEach(handler => handler(value))
   },
   get: function() {
     return this._flag;
@@ -135,13 +131,15 @@ Then we will hook our main `App` component and we'll re-render it every time whe
 class App extends React.Component {
   constructor(props) {
     super(props);
-    Store.onChange(this.forceUpdate.bind(this));
+
+    this.state = { value: Store.get() };
+    Store.subscribe(value => this.setState({ value }));
   }
   render() {
     return (
       <div>
         <Switcher
-          value={ Store.get() }
+          value={ this.state.value }
           onChange={ Store.set.bind(Store) } />
       </div>
     );
@@ -149,29 +147,21 @@ class App extends React.Component {
 };
 ```
 
-*(Notice that we are using [`forceUpdate`](https://facebook.github.io/react/docs/component-api.html#forceupdate) which is not really recommended. Normally a [high-order component](https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components) is used to enable the re-rendering. We used `forceUpdate` just to keep the example simple.)*
-
-Because of this change the `Switcher` becomes really simple. We don't need the internal state:
+Because of this change the `Switcher` becomes really simple. We don't need the internal state and the component may be written as a stateless function.
 
 ```js
-class Switcher extends React.Component {
-  constructor(props) {
-    super(props);
-    this._onButtonClick = e => {
-      this.props.onChange(!this.props.value);
-    }
-  }
-  render() {
-    return (
-      <button onClick={ this._onButtonClick }>
-        { this.props.value ? 'lights on' : 'lights off' }
-      </button>
-    );
-  }
+function Switcher({ value, onChange }) {
+  return (
+    <button onClick={ e => onChange(!value) }>
+      { value ? 'lights on' : 'lights off' }
+    </button>
+  );
 };
 ```
 
-The benefit that comes with this pattern is that our components become dummy representation of the `Store`'s data. It's really easy to think about the React components as views (renderers). We write our application in a declarative way and deal with the complexity in only one place.
+## Final thoughts
+
+The benefit that comes with this pattern is that our components become dummy representation of the store's data. It is really easy to think about the React components as views (renderers). We write our application in a declarative way and deal with the complexity in only one place.
 
 The diagram of the application changes to:
 
@@ -191,4 +181,4 @@ Switcher ---->
 User input
 ```
 
-As we can see the data flows in only one direction and there is no need to sync two (or more) parts of our system. One-way direction data flow is not only about React based apps. Proved many times that makes the applications easy to reason about. It may need a little bit more wiring but it definitely worth it.
+As we can see the data flows in only one direction and there is no need to sync two (or more) parts of our app. One-way direction data flow is not only about React based apps. It makes sense to any type of application which is heavily depending on UI updates.

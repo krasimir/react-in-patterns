@@ -1,51 +1,46 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 var Store = {
   _handlers: [],
-  _flag: '',
-  onChange: function (handler) {
+  _flag: false,
+  subscribe: function (handler) {
     this._handlers.push(handler);
   },
   set: function (value) {
     this._flag = value;
-    this._handlers.forEach(handler => handler());
+    this._handlers.forEach(handler => handler(value));
   },
   get: function () {
     return this._flag;
   }
 };
 
-class Switcher extends React.Component {
-  constructor(props) {
-    super(props);
-    this._onButtonClick = e => {
-      this.props.onChange(!this.props.value);
-    };
-  }
-  render() {
-    return (
-      <button onClick={ this._onButtonClick }>
-        { this.props.value ? 'lights on' : 'lights off' }
-      </button>
-    );
-  }
+function Switcher({ value, onChange }) {
+  return (
+    <button onClick={ e => onChange(!value) }>
+      { value ? 'lights on' : 'lights off' }
+    </button>
+  );
 };
 Switcher.propTypes = {
-  value: React.PropTypes.bool,
-  onChange: React.PropTypes.func
+  value: PropTypes.bool,
+  onChange: PropTypes.func
 };
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    Store.onChange(this.forceUpdate.bind(this));
+
+    this.state = { value: Store.get() };
+    Store.subscribe(value => this.setState({ value }));
   }
   render() {
     return (
       <div>
         <Switcher
-          value={ !!Store.get() }
+          value={ this.state.value }
           onChange={ Store.set.bind(Store) } />
       </div>
     );
