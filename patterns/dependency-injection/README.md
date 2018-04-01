@@ -5,7 +5,7 @@
 
 ---
 
-Big part of the modules/components that we write have dependencies. A proper management of these dependencies is critical for the success of the project. There is a technique (some people consider it as a *pattern*) called [*dependency injection*](http://krasimirtsonev.com/blog/article/Dependency-injection-in-JavaScript) that helps solving the problem.
+Big part of the modules/components that we write have dependencies. A proper management of these dependencies is critical for the success of the project. There is a technique (most people consider it a *pattern*) called [*dependency injection*](http://krasimirtsonev.com/blog/article/Dependency-injection-in-JavaScript) that helps solving the problem.
 
 In React the need of dependency injector is easily visible. Let's consider the following application tree:
 
@@ -38,7 +38,7 @@ class App extends React.Component {
 };
 ```
 
-The string "React in patterns" should somehow reach the `Title` component. The direct way of doing this is to pass it from `App` to `Header` and then `Header` to pass it to `Title`. However, this may work for these three components but what happens if there are multiple properties and deeper nesting. Lots of components will have to mention properties that they are not interested in. It is clear that most React components receive their dependencies via props but the question is how these dependencies reach that point.
+The string "React in patterns" should somehow reach the `Title` component. The direct way of doing this is to pass it from `App` to `Header` and then `Header` pass it down to `Title`. However, this may work for these three components but what happens if there are multiple properties and deeper nesting. Lots of components will act as proxy passing properties to their children.
 
 We already saw how the [higher-order component](https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components) may be used to inject data. Let's use the same technique to inject the `title` variable:
 
@@ -78,7 +78,7 @@ The `title` is hidden in a middle layer (higher-order component) where we pass i
 
 ## Using React's context (prior v. 16.3)
 
-React has the concept of [*context*](https://facebook.github.io/react/docs/context.html). The *context* is something that every component may have access to. It's something like an [event bus](https://github.com/krasimir/EventBus) but for data. A single *store* which we access from everywhere.
+React has the concept of [*context*](https://facebook.github.io/react/docs/context.html). The *context* is something that every React component has access to. It's something like an [event bus](https://github.com/krasimir/EventBus) but for data. A single *store* which we access from everywhere.
 
 ```js
 // a place where we'll define the context
@@ -93,7 +93,7 @@ App.childContextTypes = {
   title: React.PropTypes.string
 };
 
-// a place where we need data
+// a place where we use the context
 class Inject extends React.Component {
   render() {
     var title = this.context.title;
@@ -157,7 +157,7 @@ Title.contextTypes = {
 };
 ```
 
-Ideally we don't want to specify the `contextTypes` every time when we need an access to the context. This detail may be wrapped in a higher-order component. And even more, we may write an utility function that is more descriptive and helps us declare the exact wiring. I.e instead of accessing the context directly with `this.context.get('title')` we ask the higher-order component to get what we need and to pass it as a prop to our component. For example:
+Ideally we don't want to specify the `contextTypes` every time when we need an access to the context. This detail may be wrapped again in a higher-order component. And even more, we may write an utility function that is more descriptive and helps us declare the exact wiring. I.e instead of accessing the context directly with `this.context.get('title')` we ask the higher-order component to get what we need and to pass it as props to our component. For example:
 
 ```js
 // Title.jsx
@@ -172,7 +172,7 @@ export default wire(Title, ['title'], function resolve(title) {
 });
 ```
 
-The `wire` function accepts a React component, then an array with all the needed dependencies (which are `register`ed already) and then a function which I like to call `mapper`. It receives what's stored in the context as a raw data and returns an object which is the actual React props for our component (`Title`). In this example we just pass what we get - a `title` string variable. However, in a real app this could be a collection of data stores, configuration or something else.
+The `wire` function accepts a React component, then an array with all the needed dependencies (which are `register`ed already) and then a function which I like to call `mapper`. It receives what is stored in the context as a raw data and returns an object which is the actual React props for our component (`Title`). In this example we just pass what we get - a `title` string variable. However, in a real app this could be a collection of data stores, configuration or something else.
 
 Here is how the `wire` function looks like:
 
@@ -203,7 +203,7 @@ For years the context API was not really recommended by Facebook. They mention i
 
 Let's use the same example with the string that needs to reach a `<Title>` component.
 
-We will start by defining a file that will contain our context creation:
+We will start by defining a file that will contain our context initialization:
 
 ```js
 // context.js
@@ -215,17 +215,19 @@ export const Provider = Context.Provider;
 export const Consumer = Context.Consumer;
 ```
 
-`createContext` accepts a default value of our context and returns an object that has `.Provider` and `.Consumer` properties. Those are actually valid React classes. The provider accepts our context and sends it down the React tree. The consumer is used to access the context and basically read data from it. And because they usually live in different files we better create a single place for their initialization. 
+`createContext` returns an object that has `.Provider` and `.Consumer` properties. Those are actually valid React classes. The provider accepts our context in the form of a `value` prop. The consumer is used to access the context and basically read data from it. And because they usually live in different files it is a good idea to create a single place for their initialization. 
 
 Let's say that our `App` component is the root of our tree. At that place we have to pass the context.
 
 ```js
 import { Provider } from './context';
 
+const context = { title: 'React In Patterns' };
+
 class App extends React.Component {
   render() {
     return (
-      <Provider value={ { title: 'React In Patterns' } }>
+      <Provider value={ context }>
         <Header />
       </Provider>
     );
@@ -233,7 +235,7 @@ class App extends React.Component {
 };
 ```
 
-The wrapped components and their children now share the same context. The `<Title>` component is the one that needs the title so that is the place where we use the `<Consumer>`.
+The wrapped components and their children now share the same context. The `<Title>` component is the one that needs the `title` string so that is the place where we use the `<Consumer>`.
 
 ```js
 import { Consumer } from './context';
@@ -261,7 +263,7 @@ As we know the typical module system in JavaScript has a caching mechanism. It's
 
 > Multiple calls to require('foo') may not cause the module code to be executed multiple times. This is an important feature. With it, "partially done" objects can be returned, thus allowing transitive dependencies to be loaded even when they would cause cycles.
 
-How's that helping for our injection? Well, if we export an object we are actually exporting a [singleton](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript) and every other module that imports the file will get the same object. This allows us to `register` our dependencies and later `fetch` them in another file.
+How is that helping for our injection? Well, if we export an object we are actually exporting a [singleton](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript) and every other module that imports the file will get the same object. This allows us to `register` our dependencies and later `fetch` them in another file.
 
 Let's create a new file called `di.jsx` with the following content:
 
@@ -296,7 +298,7 @@ export function wire(Component, deps, mapper) {
 }
 ```
 
-We'll store the dependencies in `dependencies` global variable (it's global for our module, not at an application level). We then export two functions `register` and `fetch` that write and read entries. It looks a little bit like implementing setter and getter against a simple JavaScript object. Then we have the `wire` function that accepts our React component and returns a [higher-order component](https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components). In the constructor of that component we are resolving the dependencies and later while rendering the original component we pass them as props. We follow the same pattern where we describe what we need (`deps` argument) and extract the needed props with a `mapper` function.
+We'll store the dependencies in `dependencies` global variable (it's global for our module, not for the whole application). We then export two functions `register` and `fetch` that write and read entries. It looks a little bit like implementing setter and getter against a simple JavaScript object. Then we have the `wire` function that accepts our React component and returns a [higher-order component](https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components). In the constructor of that component we are resolving the dependencies and later while rendering the original component we pass them as props. We follow the same pattern where we describe what we need (`deps` argument) and extract the needed props with a `mapper` function.
 
 Having the `di.jsx` helper we are again able to register our dependencies at the entry point of our application (`app.jsx`) and inject them wherever (`Title.jsx`) we need.
 
@@ -336,88 +338,8 @@ var Title = function(props) {
 export default wire(Title, ['my-awesome-title'], title => ({ title }));
 ```
 
-If we look at the `Title.jsx` file we'll see that the actual component and the wiring may live in different files. That way the component and the mapper function become easily unit testable.
+*If we look at the `Title.jsx` file we'll see that the actual component and the wiring may live in different files. That way the component and the mapper function become easily unit testable.*
 
-## Injecting with the help of a build process
+## Final thoughts
 
-We are all processing our JavaScript before shipping it to the browser. This biggest benefit of having an intermediate process is the ability to add features which are normally not there. Like for example the support of [ES6 destructuring](http://krasimirtsonev.com/blog/article/constructive-destructuring-es6-assignment) with [Babel](http://babeljs.io/) or static type checking with [Flow](https://flowtype.org/). There are tools for dependency injection too. [InversifyJS](https://github.com/inversify/InversifyJS) is one of them and in the next section we will see how it works with React components.
-
-### Dependency injection powered by an IoC container
-
-Not long ago an user in Twitter asked [Michel Weststrate](https://twitter.com/mweststrate)(the author of [MobX](https://github.com/mobxjs/mobx)) the following:
-
-> How safe is it to use mobx-react <Provider>? Or are there any other options for connecting stores to components without passing them explicitly through each component?
-
-The [answer](https://twitter.com/mweststrate/status/750267384926208000) was the following:
-
-> Dependency injection like InversifyJS also works nicely
-
-[InversifyJS](https://github.com/inversify/InversifyJS) is an IoC container. We can use an IoC container to inject a value into React components without passing it explicitly through each component and without using the context.
-
-In this demonstration we are going to use InversifyJS and [TypeScript](https://github.com/Microsoft/TypeScript). We are using InversifyJS because it works in both Node.js and web browsers. This is an important feature because some React applications use server-side rendering. We are also using TypeScript because it is the recommended by InversifyJS.
-
-InversifyJS supports two kinds of injections:
-
-- Constructor injection
-- Property injection
-
-In order to use "constructor injection" the IoC container needs to be able to create the instances of the classes. In React the components sometimes are just functions (not classes) and we can't delegate the creation of the instances of the components to the IoC container. This means that **constructor injection powered by IoC containers don't play nicely with React**
-
-However, **property injection works just fine** considering the fact that we want to pass dependencies to components without passing them explicitly through each component.
-
-Let's take a look to a basic example.
-
-We need to start by configuring the IoC container. In InversifyJs we need to create a dictionary that maps a type identifier with a type. The dictionary entries are known as "type bindings".
-
-In this case, we are binding the identifier `UserStore` to the class `UserStore`. This time the identifier is a Class but InversifyJS also allows us to use `Symbols` or string literals as identifiers. Symbols or string literals are required when we use interfaces.
-
-```ts
-import { Kernel, makePropertyInjectDecorator } from "inversify";
-import { UserStore } from "./store/user";
-import "reflect-metadata";
-
-let kernel = new Kernel();
-kernel.bind<UserStore>(UserStore).to(UserStore);
-
-let pInject = makePropertyInjectDecorator(kernel);
-export { kernel, pInject };
-```
-
-We also need to generate a decorator using the function `makePropertyInjectDecorator`.
-
-The generated `pInject` decorator allows us to flag the properties of a class that we want to be injected:
-
-```ts
-import { pInject } from "./utils/di";
-import { UserStore } from "./store/user";
-
-class User extends React.Component<any, any> {
-
-    @pInject(UserStore)
-    private userStore: UserStore;
-
-    public render() {
-        return (
-            <h1>{this.userStore.pageTitle}</h1>
-        );
-    }
-}
-```
-
-Injected properties are *lazy evaluated*. This means that the value of the `userStore` property is only set after we try to access it for the first time.
-
-Based on the [React docs](https://facebook.github.io/react/docs/context.html) we should try to avoid using context:
-
-The main advantage of using an IoC container like InversifyJS is that **we are not using the context**!
-
-InversifyJS is also great for testing because we can declare a new bindings and inject a mock or stub instead of a real value:
-
-```ts
-kernel.bind<UserStore>(UserStore).toConstantValue({ pageTitle: "Some text for testing..." });
-```
-
-Find some real use cases of InversifyJS with React [here](https://github.com/Mercateo/dwatch/blob/master/app/src/components/site/LocaleSwitcher.tsx#L12) and [here](https://github.com/Mercateo/dwatch/blob/master/app/src/components/site/Header.tsx#L14) or learn more about InversifyJS at the official repository [here](https://github.com/inversify/InversifyJS).
-
-### Final thoughts
-
-Dependency injection is a tough problem. Especially in JavaScript. It's not really an issue within React application but appears everywhere. At the time of this writing React offers only the `context` as an instrument for resolving dependencies. As we mentioned above this technique should be used sparingly. And of course there are some alternatives. For example using the module system or libraries like InversifyJS.
+Dependency injection is a tough problem. Especially in JavaScript. Lots of people didn't realize but putting a proper dependency management is a key process.
