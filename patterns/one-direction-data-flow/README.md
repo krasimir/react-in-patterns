@@ -69,11 +69,7 @@ function App() {
 
 Our `Store` object is a [singleton](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript) where we have helpers for setting and getting the value of the `_flag` property. By passing the getter to the component we are able to update the data externally. More or less our application workflow looks like that:
 
-```
-User's input
-     |
-  Switcher -------> Store
-```
+![one-direction data flow](./one-direction-1.jpg)
 
 Let's assume that we are saving the flag value to a back-end service via the `Store`. When the user comes back we have to set a proper initial state. If the user left the flag as `true` we have to show *"lights on"* and not the default *"lights off"*. Now it gets tricky because we have the data knowledge in two places. The UI and the `Store` have their own states. We have to communicate in both directions from the store to the switcher and from the switcher to the store.
 
@@ -92,17 +88,7 @@ constructor(props) {
 
 Our workflow changes to the following:
 
-```
-User's input
-     |
-  Switcher <-------> Store
-                      ^ |
-                      | |
-                      | |
-                      | v
-    Service communicating
-    with our backend
-```
+![one-direction data flow](./one-direction-2.jpg)
 
 All this leads to managing two states instead of one. What if the `Store` changes its value based on other actions in the system. We have to propagate that change to the `Switcher` and we increase the complexity of our app.
 
@@ -161,24 +147,4 @@ function Switcher({ value, onChange }) {
 
 ## Final thoughts
 
-The benefit that comes with this pattern is that our components become dummy representation of the store's data. It is really easy to think about the React components as views (renderers). We write our application in a declarative way and deal with the complexity in only one place.
-
-The diagram of the application changes to:
-
-```
-Service communicating
-with our backend
-    ^
-    |
-    v
-  Store <-----
-    |        |
-    v        |
-Switcher ---->
-    ^
-    |
-    |
-User input
-```
-
-As we can see the data flows in only one direction and there is no need to sync two (or more) parts of our app. One-way direction data flow is not only about React based apps. It makes sense to any type of application which is heavily depending on UI updates.
+The benefit that comes with this pattern is that our components become dummy representation of the store's data. There is only one source of truth and this makes the development easier.
