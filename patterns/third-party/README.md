@@ -4,7 +4,7 @@
 
 ---
 
-React is probably one of the best choices for building UI. Good design, support and community. However, there are cases where we want to use an external service or we want to integrate something completely different. We all know that React works heavily with the actual DOM and basically controls what's rendered on the screen. That's why integrating of third-party components could be tricky. In this article we will see how to mix React and jQuery's UI plugin and do it safely.
+React is probably one of the best choices for building UI. Good design, support and community. However, there are cases where we want to use an external service or we want to integrate something completely different. We all know that React works heavily with the actual DOM and basically controls what's rendered on the screen. That's why integrating of third-party components may be tricky. In this section we will see how to mix React and jQuery's UI plugin and do it safely.
 
 ## The example
 
@@ -62,7 +62,7 @@ class App extends React.Component {
 ReactDOM.render(<App />, document.querySelector('#container'));
 ```
 
-The entry point is our `App` class. It uses the `Tags` component that displays an unordered list based on the passed `tags` prop. When React renders the list on the screen we know that we have a `<ul>` tag so we can hook it to the jQuery plugin.
+The entry point is our `App` class. It uses the `Tags` component that displays an unordered list based on the passed `tags` prop. When React renders the list on the screen we know that we have a `<ul>` tag so we can hook it up to the jQuery plugin.
 
 ## Force a single-render
 
@@ -76,7 +76,7 @@ class Tags extends React.Component {
   ...
 ```
 
-By always returning `false` here we are saying that our component will never rerender. If defined `shouldComponentUpdate` is used by React to understand whether to trigger `render` or not. That's ideal for our case because we want to place the markup on the page using React but we don't want to rely on it after that.
+By always returning `false` here we are saying that our component will never re-render. If defined `shouldComponentUpdate` is used by React to understand whether to trigger `render` or not. That's ideal for our case because we want to place the markup on the page using React but we don't want to rely on it after that.
 
 ## Initializing the plugin
 
@@ -99,7 +99,7 @@ class Tags extends React.Component {
   ...
 ```
 
-The code above together with `shouldComponentUpdate` lead to React rendering the `<ul>` with two items and then *tag-it* transforms it to a working tag editing widget.
+The code above together with `shouldComponentUpdate` leads to React rendering the `<ul>` with two items and then *tag-it* transforms it to a working tag editing widget.
 
 ## Controlling the plugin using React
 
@@ -136,7 +136,7 @@ class App extends React.Component {
 }
 ```
 
-We use the internal state as a data storage for the value of the newly added field. Every time when we click the button we update the state and trigger rerendering of `Tags` component. However, because of `shouldComponentUpdate` we update nothing. The only one change is that we get a value of the `newTag` prop which may be captured via another lifecycle method - `componentWillReceiveProps`:
+We use the internal state as a data storage for the value of the newly added field. Every time when we click the button we update the state and trigger re-rendering of `Tags` component. However, because of `shouldComponentUpdate` we have no any updates on the screen. The only one change is that we get a new value of the `newTag` prop which may be captured via another lifecycle method - `componentWillReceiveProps`:
 
 ```jsx
 class Tags extends React.Component {
@@ -173,6 +173,6 @@ class Tags extends React.Component {
 };
 ```
 
-## Conclusion
+## Final thoughts
 
-Even though React is manipulating the DOM tree we are able to integrate third-party libraries and services. The available lifecycle methods give us enough control on the rendering process.
+Even though React is manipulating the DOM tree we are able to integrate third-party libraries and services. The available lifecycle methods give us enough control on the rendering process so they are the perfect bridge between React and non-React code.
