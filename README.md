@@ -2,38 +2,34 @@
 
 :books: List of design patterns/techniques used while developing with [React](https://facebook.github.io/react/).
 
----
-* [Introduction](./patterns/introduction.md)
+## Content
 
-* Foundation
-  * [Communication](./patterns/communication/)
-  * [Event handlers](./patterns/event-handlers)
-  * [Composition](./patterns/composition/)
-  * [Controlled and uncontrolled inputs](./patterns/controlled-uncontrolled)
-  * [Presentational and container components](./patterns/presentational-and-container)
+* [Introduction](./book/chapter-1/README.md)
 
-* Data flow
-  * [One direction data flow](./patterns/one-direction-data-flow)
-  * [Flux](./patterns/flux)
-  * [Redux](./patterns/redux)
+### Foundation
 
-* MISC
-  * [Dependency injection](./patterns/dependency-injection)
-  * [Styling](./patterns/styling)
-  * [Integration of third-party libraries](./patterns/third-party)
+* [Communication](./book/chapter-2/README.md)
+* [Event handlers](./book/chapter-3/README.md)
+* [Composition](./book/chapter-4/README.md)
+* [Controlled and uncontrolled inputs](./book/chapter-5/README.md)
+* [Presentational and container components](./book/chapter-6/README.md) 
 
----
+### Data flow
 
-## Building the examples
+* [One direction data flow](./book/chapter-7/README.md)
+* [Flux](./book/chapter-8/README.md)
+* [Redux](./book/chapter-9/README.md)
 
-* Run `npm i`
-* Run `npm run build` for building the examples
-* Run `npm run watch` if you plan making changes
-* Open the content of the `public` folder in a browser
+### MISC
 
-## Linting
+* [Dependency injection](./book/chapter-10/README.md)
+* [Styling](./book/chapter-11/README.md)
+* [Integration of third-party libraries](./book/chapter-12/README.md)
 
-* Run `npm run lint`
+
+## Source code
+
+The code samples used in the book are available [here](./code).
 
 ## Other resources
 

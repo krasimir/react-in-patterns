@@ -19,7 +19,7 @@ I picked [*tag-it*](https://github.com/aehlke/tag-it) jQuery plugin for my examp
 
 to:
 
-![tag-it](./img/tag-it.png)
+![tag-it](./tag-it.png)
 
 To make it work we have to include jQuery, jQuery UI and the *tag-it* plugin code. It works like that:
 

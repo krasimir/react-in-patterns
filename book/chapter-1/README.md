@@ -1,4 +1,4 @@
-## [React in patterns](../../README.md) / Introduction
+# Introduction
 
 This book is targeting developers that already have basic understanding of what React is and how it works. It's not meant to be used as a complete how-to guide but as an introduction to popular concepts/design patterns. Paradigms that more or less are introduced by the community. It points you to an abstract thinking. For example, instead of talking about Flux it talks about data flow. Instead of talking about higher-order component it talks about composition.
 
