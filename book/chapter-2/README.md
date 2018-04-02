@@ -1,14 +1,10 @@
-## [React in patterns](../../README.md) / Communication
-
-* [Source code](https://github.com/krasimir/react-in-patterns/tree/master/patterns/communication/src)
-
----
+# Communication
 
 If you work with React for a couple of days you will realize that every React component is like a small system that operates on its own. It has its own state, input and output. In the following sections we will explore these characteristics.
 
 ![Input-Output](./communication.jpg)
 
-### Input
+## Input
 
 The input for a React component is its props. That's how we pass data to it:
 
@@ -70,7 +66,7 @@ In this example `<span>community</span>` in `App` component is `children` in `Ti
 
 (prior v16.3) An indirect input to a component may be also the so called `context`. The whole React tree may have a `context` object which is accessible by every component. More about that in the [dependency injection](https://github.com/krasimir/react-in-patterns/tree/master/patterns/dependency-injection) section.
 
-### Output
+## Output
 
 The first obvious output of a React component is the rendered HTML. Visually that's what we get. However, because the prop may be everything including a function we could also receive data or see a process triggered.
 

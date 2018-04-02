@@ -1,8 +1,4 @@
-## [React in patterns](../../README.md) / Composition
-
-* [Source code](https://github.com/krasimir/react-in-patterns/tree/master/patterns/composition/src)
-
----
+# Composition
 
 One of the biggest benefits of React is composability. I personally don't know a framework that offers such an easy way to create and combine components. In this section we will explore few composition techniques which proved to work well.
 
@@ -44,7 +40,7 @@ However, following this approach we introduced several problems:
 * We may consider the `App` as a place where we do our main composition. The `Header` though may have other elements like a logo, search field or a slogan. It will be nice if they are passed somehow from the outside so we don't create a hard-coded dependencies. What if we need the same `Header` component but without the `Navigation`. We can't easily achieve that because we have the two bound tightly together.
 * It's difficult to test. We may have some business logic in the `Header` and in order to test it we have to create an instance of the component. However, because it imports other components we will probably create instances of those components too and it becomes heavy to test. We may break our `Header` test by doing something wrong in the `Navigation` component which is totally misleading. *(Note: to some extent [shallow rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) solves this problem by rendering only the `Header` without its nested children.)*
 
-### Using React's children API
+## Using React's children API
 
 In React we have the handy [`children`](https://facebook.github.io/react/docs/multiple-components.html#children) prop. That's how the parent reads/accesses its children. This API will make our Header agnostic and dependency-free:
 
@@ -68,7 +64,7 @@ Notice also that if we don't use `{ children }` in `Header`, the `Navigation` co
 
 It now becomes easier to test because we may render the `Header` with an empty `<div>`. This will isolate the component and will let us focus on only one piece of our application.
 
-### Passing a child as a prop
+## Passing a child as a prop
 
 Every React component receive props right. As we mentioned already there is no any strict rule about what these props are. We may even pass other components.
 
@@ -95,7 +91,7 @@ function App() {
 
 This technique is useful when a component like `Header` above needs to decide the order of its children but that's the only one decision that it takes.
 
-### Higher-order component
+## Higher-order component
 
 For a long period of time higher-order components were the most popular way to enhance and compose React elements. They look really similar to the [decorator design pattern](http://robdodson.me/javascript-design-patterns-decorator/) because we have component wrapping and enhancing.
 
@@ -178,7 +174,7 @@ Again, the `OriginalTitle` knows that it receives two props and has to render th
 
 *[Dan Abramov](https://github.com/gaearon) made a really [good point](https://github.com/krasimir/react-in-patterns/issues/12) that the actual creation of the higher-order component (i.e. calling a function like `enhanceComponent`) should happen at a component definition level. Or in other words, it's a bad practice to do it inside another React component because it may be slow and lead to performance issues.*
 
-### Function as a children, render prop
+## Function as a children, render prop
 
 Last couple of months the React community started shifting in an interesting direction. So far in our examples the `children` prop was a React component. There is however a new pattern gaining popularity in which the same `children` prop is a JSX expression. Let's start by passing a simple object.
 

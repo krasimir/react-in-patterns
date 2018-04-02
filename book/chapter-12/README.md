@@ -1,8 +1,4 @@
-## [React in patterns](../../README.md) / Third-party integration
-
-* [Source code](https://github.com/krasimir/react-in-patterns/tree/master/patterns/third-party/src)
-
----
+# Third-party integration
 
 React is probably one of the best choices for building UI. Good design, support and community. However, there are cases where we want to use an external service or we want to integrate something completely different. We all know that React works heavily with the actual DOM and basically controls what's rendered on the screen. That's why integrating of third-party components may be tricky. In this section we will see how to mix React and jQuery's UI plugin and do it safely.
 

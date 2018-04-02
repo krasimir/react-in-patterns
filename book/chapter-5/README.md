@@ -1,8 +1,4 @@
-## [React in patterns](../../README.md) / Controlled and uncontrolled inputs
-
-* [Source code](https://github.com/krasimir/react-in-patterns/tree/master/patterns/controlled-uncontrolled/src)
-
----
+# Controlled and uncontrolled inputs
 
 These two terms *controlled* and *uncontrolled* are very often used in the context of forms management. *controlled* input is an input that gets its value from a single source of truth. For example the `App` component below has a single `<input>` field which is *controlled*:
 

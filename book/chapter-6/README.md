@@ -1,8 +1,4 @@
-## [React in patterns](../../README.md) / Presentational and container components
-
-* [Source code](https://github.com/krasimir/react-in-patterns/tree/master/patterns/presentational-and-container/src)
-
----
+# Presentational and container components
 
 Every beginning is difficult. React is no exception and as beginners we also have lots of questions. Where I'm supposed to put my data, how to communicate changes or how to manage state? The answers of these questions are very often a matter of context and sometimes just practice and experience with the library. However, there is a pattern which is used widely and helps organizing React based applications - splitting the component into presentation and container.
 

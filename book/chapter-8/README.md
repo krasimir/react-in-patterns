@@ -1,8 +1,4 @@
-## [React in patterns](../../README.md) / Flux
-
-* [Source code](https://github.com/krasimir/fluxiny)
-
----
+# Flux
 
 I'm obsessed by making my code simpler. I didn't say *smaller* because having less code doesn't mean that is simple and easy to work with. I believe that big part of the problems in the software industry come from the unnecessary complexity. Complexity which is a result of our own abstractions. You know, we (the programmers) like to abstract. We like placing things in black boxes and hope that these boxes work together.
 
