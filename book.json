@@ -3,7 +3,7 @@
   "title": "React in patterns",
   "description": "A book about common design patterns used while developing with React.",
   "author": "Krasimir Tsonev",
-  "gitbook": "1.0.0",
+  "gitbook": "1.0.1",
   "pdf": {
     "pageNumbers": true,
     "fontSize": 12,
