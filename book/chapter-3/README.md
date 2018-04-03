@@ -28,7 +28,6 @@ class Switcher extends React.Component {
 
 That's all fine because `_handleButtonClick` is a function and we indeed pass a function to the `onClick` attribute. The problem is that as it is the code doesn't keep the same context. So, if we have to use `this` inside `_handleButtonClick` we'll get an error.
 
-<div style="font-size: 10px">
 ```js
 class Switcher extends React.Component {
   constructor(props) {
@@ -49,7 +48,6 @@ class Switcher extends React.Component {
   }
 };
 ```
-</div>
 
 What we normally do is to use `bind`:
 
