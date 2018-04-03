@@ -1,4 +1,224 @@
-(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = Header;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Title = require('./Title.jsx');
+
+var _Title2 = _interopRequireDefault(_Title);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Header() {
+  return _react2.default.createElement(
+    'header',
+    null,
+    _react2.default.createElement(_Title2.default, null)
+  );
+}
+
+},{"./Title.jsx":2,"react":33}],2:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _wire = require('./wire');
+
+var _wire2 = _interopRequireDefault(_wire);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Title(props) {
+  return _react2.default.createElement(
+    'h1',
+    null,
+    props.title
+  );
+}
+Title.propTypes = {
+  title: _propTypes2.default.string
+};
+
+exports.default = (0, _wire2.default)(Title, ['config'], function (config) {
+  return { title: config.name };
+});
+
+},{"./wire":6,"prop-types":26,"react":33}],3:[function(require,module,exports){
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _Header = require('./Header.jsx');
+
+var _Header2 = _interopRequireDefault(_Header);
+
+var _config = require('./config');
+
+var _config2 = _interopRequireDefault(_config);
+
+var _dependencies = require('./dependencies');
+
+var _dependencies2 = _interopRequireDefault(_dependencies);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+_dependencies2.default.register('config', _config2.default);
+
+var App = function (_React$Component) {
+  _inherits(App, _React$Component);
+
+  function App() {
+    _classCallCheck(this, App);
+
+    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+  }
+
+  _createClass(App, [{
+    key: 'getChildContext',
+    value: function getChildContext() {
+      return _dependencies2.default;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(_Header2.default, null);
+    }
+  }]);
+
+  return App;
+}(_react2.default.Component);
+
+;
+App.childContextTypes = {
+  data: _propTypes2.default.object,
+  get: _propTypes2.default.func,
+  register: _propTypes2.default.func
+};
+
+_reactDom2.default.render(_react2.default.createElement(App, null), document.querySelector('#container'));
+
+},{"./Header.jsx":1,"./config":4,"./dependencies":5,"prop-types":26,"react":33,"react-dom":30}],4:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  name: 'React in patterns'
+};
+
+},{}],5:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  data: {},
+  get: function get(key) {
+    return this.data[key];
+  },
+  register: function register(key, value) {
+    this.data[key] = value;
+  }
+};
+
+},{}],6:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+exports.default = wire;
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function wire(Component, dependencies, mapper) {
+  var Inject = function (_React$Component) {
+    _inherits(Inject, _React$Component);
+
+    function Inject() {
+      _classCallCheck(this, Inject);
+
+      return _possibleConstructorReturn(this, (Inject.__proto__ || Object.getPrototypeOf(Inject)).apply(this, arguments));
+    }
+
+    _createClass(Inject, [{
+      key: 'render',
+      value: function render() {
+        var resolved = dependencies.map(this.context.get.bind(this.context));
+        var props = mapper.apply(undefined, _toConsumableArray(resolved));
+
+        return _react2.default.createElement(Component, props);
+      }
+    }]);
+
+    return Inject;
+  }(_react2.default.Component);
+
+  Inject.contextTypes = {
+    data: _propTypes2.default.object,
+    get: _propTypes2.default.func,
+    register: _propTypes2.default.func
+  };
+  return Inject;
+};
+
+},{"prop-types":26,"react":33}],7:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -32,7 +252,7 @@ var ExecutionEnvironment = {
 };
 
 module.exports = ExecutionEnvironment;
-},{}],2:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 
 /**
@@ -62,7 +282,7 @@ function camelize(string) {
 }
 
 module.exports = camelize;
-},{}],3:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -100,7 +320,7 @@ function camelizeStyleName(string) {
 }
 
 module.exports = camelizeStyleName;
-},{"./camelize":2}],4:[function(require,module,exports){
+},{"./camelize":8}],10:[function(require,module,exports){
 'use strict';
 
 /**
@@ -138,7 +358,7 @@ function containsNode(outerNode, innerNode) {
 }
 
 module.exports = containsNode;
-},{"./isTextNode":12}],5:[function(require,module,exports){
+},{"./isTextNode":18}],11:[function(require,module,exports){
 "use strict";
 
 /**
@@ -175,7 +395,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],6:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -196,7 +416,7 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = emptyObject;
 }).call(this,require('_process'))
 
-},{"_process":16}],7:[function(require,module,exports){
+},{"_process":22}],13:[function(require,module,exports){
 'use strict';
 
 /**
@@ -233,7 +453,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 }
 
 module.exports = getActiveElement;
-},{}],8:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 /**
@@ -264,7 +484,7 @@ function hyphenate(string) {
 }
 
 module.exports = hyphenate;
-},{}],9:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -301,7 +521,7 @@ function hyphenateStyleName(string) {
 }
 
 module.exports = hyphenateStyleName;
-},{"./hyphenate":8}],10:[function(require,module,exports){
+},{"./hyphenate":14}],16:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -358,7 +578,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 }).call(this,require('_process'))
 
-},{"_process":16}],11:[function(require,module,exports){
+},{"_process":22}],17:[function(require,module,exports){
 'use strict';
 
 /**
@@ -381,7 +601,7 @@ function isNode(object) {
 }
 
 module.exports = isNode;
-},{}],12:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 /**
@@ -404,7 +624,7 @@ function isTextNode(object) {
 }
 
 module.exports = isTextNode;
-},{"./isNode":11}],13:[function(require,module,exports){
+},{"./isNode":17}],19:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -470,7 +690,7 @@ function shallowEqual(objA, objB) {
 }
 
 module.exports = shallowEqual;
-},{}],14:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -536,7 +756,7 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = warning;
 }).call(this,require('_process'))
 
-},{"./emptyFunction":5,"_process":16}],15:[function(require,module,exports){
+},{"./emptyFunction":11,"_process":22}],21:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -628,7 +848,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],16:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -814,7 +1034,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],17:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -878,7 +1098,7 @@ module.exports = checkPropTypes;
 
 }).call(this,require('_process'))
 
-},{"./lib/ReactPropTypesSecret":21,"_process":16,"fbjs/lib/invariant":10,"fbjs/lib/warning":14}],18:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":27,"_process":22,"fbjs/lib/invariant":16,"fbjs/lib/warning":20}],24:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -938,7 +1158,7 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-},{"./lib/ReactPropTypesSecret":21,"fbjs/lib/emptyFunction":5,"fbjs/lib/invariant":10}],19:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":27,"fbjs/lib/emptyFunction":11,"fbjs/lib/invariant":16}],25:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -1485,7 +1705,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 }).call(this,require('_process'))
 
-},{"./checkPropTypes":17,"./lib/ReactPropTypesSecret":21,"_process":16,"fbjs/lib/emptyFunction":5,"fbjs/lib/invariant":10,"fbjs/lib/warning":14,"object-assign":15}],20:[function(require,module,exports){
+},{"./checkPropTypes":23,"./lib/ReactPropTypesSecret":27,"_process":22,"fbjs/lib/emptyFunction":11,"fbjs/lib/invariant":16,"fbjs/lib/warning":20,"object-assign":21}],26:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -1518,7 +1738,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 }).call(this,require('_process'))
 
-},{"./factoryWithThrowingShims":18,"./factoryWithTypeCheckers":19,"_process":16}],21:[function(require,module,exports){
+},{"./factoryWithThrowingShims":24,"./factoryWithTypeCheckers":25,"_process":22}],27:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -1532,7 +1752,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],22:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 (function (process){
 /** @license React v16.3.0-alpha.3
  * react-dom.development.js
@@ -17902,7 +18122,7 @@ module.exports = reactDom;
 
 }).call(this,require('_process'))
 
-},{"_process":16,"fbjs/lib/ExecutionEnvironment":1,"fbjs/lib/camelizeStyleName":3,"fbjs/lib/containsNode":4,"fbjs/lib/emptyFunction":5,"fbjs/lib/emptyObject":6,"fbjs/lib/getActiveElement":7,"fbjs/lib/hyphenateStyleName":9,"fbjs/lib/invariant":10,"fbjs/lib/shallowEqual":13,"fbjs/lib/warning":14,"object-assign":15,"prop-types/checkPropTypes":17,"react":27}],23:[function(require,module,exports){
+},{"_process":22,"fbjs/lib/ExecutionEnvironment":7,"fbjs/lib/camelizeStyleName":9,"fbjs/lib/containsNode":10,"fbjs/lib/emptyFunction":11,"fbjs/lib/emptyObject":12,"fbjs/lib/getActiveElement":13,"fbjs/lib/hyphenateStyleName":15,"fbjs/lib/invariant":16,"fbjs/lib/shallowEqual":19,"fbjs/lib/warning":20,"object-assign":21,"prop-types/checkPropTypes":23,"react":33}],29:[function(require,module,exports){
 /** @license React v16.3.0-alpha.3
  * react-dom.production.min.js
  *
@@ -18147,7 +18367,7 @@ var Eg={createPortal:Dg,findDOMNode:function(a){if(null==a)return null;if(1===a.
 D("40");return a._reactRootContainer?(Z.unbatchedUpdates(function(){Cg(null,null,a,!1,function(){a._reactRootContainer=null})}),!0):!1},unstable_createPortal:function(){return Dg.apply(void 0,arguments)},unstable_batchedUpdates:Z.batchedUpdates,unstable_deferredUpdates:Z.deferredUpdates,flushSync:Z.flushSync,unstable_flushControlled:Z.flushControlled,__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{EventPluginHub:Ra,EventPluginRegistry:Ca,EventPropagators:jb,ReactControlledComponent:Yb,ReactDOMComponentTree:ab,
 ReactDOMEventListener:Zd},createRoot:function(a,b){return new tg(a,!0,null!=b&&!0===b.hydrate)}};Z.injectIntoDevTools({findFiberByHostInstance:Ua,bundleType:0,version:"16.3.0-alpha.3",rendererPackageName:"react-dom"});var Fg=Object.freeze({default:Eg}),Gg=Fg&&Eg||Fg;module.exports=Gg["default"]?Gg["default"]:Gg;
 
-},{"fbjs/lib/ExecutionEnvironment":1,"fbjs/lib/containsNode":4,"fbjs/lib/emptyFunction":5,"fbjs/lib/emptyObject":6,"fbjs/lib/getActiveElement":7,"fbjs/lib/shallowEqual":13,"object-assign":15,"react":27}],24:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":7,"fbjs/lib/containsNode":10,"fbjs/lib/emptyFunction":11,"fbjs/lib/emptyObject":12,"fbjs/lib/getActiveElement":13,"fbjs/lib/shallowEqual":19,"object-assign":21,"react":33}],30:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -18190,7 +18410,7 @@ if (process.env.NODE_ENV === 'production') {
 
 }).call(this,require('_process'))
 
-},{"./cjs/react-dom.development.js":22,"./cjs/react-dom.production.min.js":23,"_process":16}],25:[function(require,module,exports){
+},{"./cjs/react-dom.development.js":28,"./cjs/react-dom.production.min.js":29,"_process":22}],31:[function(require,module,exports){
 (function (process){
 /** @license React v16.3.0-alpha.3
  * react.development.js
@@ -19604,7 +19824,7 @@ module.exports = react;
 
 }).call(this,require('_process'))
 
-},{"_process":16,"fbjs/lib/emptyFunction":5,"fbjs/lib/emptyObject":6,"fbjs/lib/invariant":10,"fbjs/lib/warning":14,"object-assign":15,"prop-types/checkPropTypes":17}],26:[function(require,module,exports){
+},{"_process":22,"fbjs/lib/emptyFunction":11,"fbjs/lib/emptyObject":12,"fbjs/lib/invariant":16,"fbjs/lib/warning":20,"object-assign":21,"prop-types/checkPropTypes":23}],32:[function(require,module,exports){
 /** @license React v16.3.0-alpha.3
  * react.production.min.js
  *
@@ -19628,7 +19848,7 @@ _calculateChangedBits:b,_defaultValue:a,_currentValue:a,_changedBits:0,Provider:
 c)&&!J.hasOwnProperty(c)&&(d[c]=void 0===b[c]&&void 0!==k?k[c]:b[c])}c=arguments.length-2;if(1===c)d.children=e;else if(1<c){k=Array(c);for(var l=0;l<c;l++)k[l]=arguments[l+2];d.children=k}return{$$typeof:r,type:a.type,key:g,ref:h,props:d,_owner:f}},createFactory:function(a){var b=K.bind(null,a);b.type=a;return b},isValidElement:L,version:"16.3.0-alpha.3",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{ReactCurrentOwner:H,assign:m}},W=Object.freeze({default:V}),X=W&&V||W;
 module.exports=X["default"]?X["default"]:X;
 
-},{"fbjs/lib/emptyFunction":5,"fbjs/lib/emptyObject":6,"object-assign":15}],27:[function(require,module,exports){
+},{"fbjs/lib/emptyFunction":11,"fbjs/lib/emptyObject":12,"object-assign":21}],33:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -19640,227 +19860,7 @@ if (process.env.NODE_ENV === 'production') {
 
 }).call(this,require('_process'))
 
-},{"./cjs/react.development.js":25,"./cjs/react.production.min.js":26,"_process":16}],28:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = Header;
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _Title = require('./Title.jsx');
-
-var _Title2 = _interopRequireDefault(_Title);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function Header() {
-  return _react2.default.createElement(
-    'header',
-    null,
-    _react2.default.createElement(_Title2.default, null)
-  );
-}
-
-},{"./Title.jsx":29,"react":27}],29:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _wire = require('./wire');
-
-var _wire2 = _interopRequireDefault(_wire);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function Title(props) {
-  return _react2.default.createElement(
-    'h1',
-    null,
-    props.title
-  );
-}
-Title.propTypes = {
-  title: _propTypes2.default.string
-};
-
-exports.default = (0, _wire2.default)(Title, ['config'], function (config) {
-  return { title: config.name };
-});
-
-},{"./wire":33,"prop-types":20,"react":27}],30:[function(require,module,exports){
-'use strict';
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = require('react-dom');
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _Header = require('./Header.jsx');
-
-var _Header2 = _interopRequireDefault(_Header);
-
-var _config = require('./config');
-
-var _config2 = _interopRequireDefault(_config);
-
-var _dependencies = require('./dependencies');
-
-var _dependencies2 = _interopRequireDefault(_dependencies);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-_dependencies2.default.register('config', _config2.default);
-
-var App = function (_React$Component) {
-  _inherits(App, _React$Component);
-
-  function App() {
-    _classCallCheck(this, App);
-
-    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
-  }
-
-  _createClass(App, [{
-    key: 'getChildContext',
-    value: function getChildContext() {
-      return _dependencies2.default;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(_Header2.default, null);
-    }
-  }]);
-
-  return App;
-}(_react2.default.Component);
-
-;
-App.childContextTypes = {
-  data: _propTypes2.default.object,
-  get: _propTypes2.default.func,
-  register: _propTypes2.default.func
-};
-
-_reactDom2.default.render(_react2.default.createElement(App, null), document.querySelector('#container'));
-
-},{"./Header.jsx":28,"./config":31,"./dependencies":32,"prop-types":20,"react":27,"react-dom":24}],31:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {
-  name: 'React in patterns'
-};
-
-},{}],32:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {
-  data: {},
-  get: function get(key) {
-    return this.data[key];
-  },
-  register: function register(key, value) {
-    this.data[key] = value;
-  }
-};
-
-},{}],33:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-exports.default = wire;
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-function wire(Component, dependencies, mapper) {
-  var Inject = function (_React$Component) {
-    _inherits(Inject, _React$Component);
-
-    function Inject() {
-      _classCallCheck(this, Inject);
-
-      return _possibleConstructorReturn(this, (Inject.__proto__ || Object.getPrototypeOf(Inject)).apply(this, arguments));
-    }
-
-    _createClass(Inject, [{
-      key: 'render',
-      value: function render() {
-        var resolved = dependencies.map(this.context.get.bind(this.context));
-        var props = mapper.apply(undefined, _toConsumableArray(resolved));
-
-        return _react2.default.createElement(Component, props);
-      }
-    }]);
-
-    return Inject;
-  }(_react2.default.Component);
-
-  Inject.contextTypes = {
-    data: _propTypes2.default.object,
-    get: _propTypes2.default.func,
-    register: _propTypes2.default.func
-  };
-  return Inject;
-};
-
-},{"prop-types":20,"react":27}]},{},[30])
+},{"./cjs/react.development.js":31,"./cjs/react.production.min.js":32,"_process":22}]},{},[3])
 
 
 //# sourceMappingURL=app.js.map

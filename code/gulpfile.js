@@ -9,15 +9,15 @@ var fs = require('fs');
 var duration = require('gulp-duration');
 var eslint = require('gulp-eslint');
 
-var createBundler = function(folder) {
+var createBundler = function (folder) {
   return browserify({
     entries: [
-      './patterns/' + folder + '/src/app.jsx'
+      './' + folder + '/src/app.jsx'
     ],
     debug: true,
     transform: [ babelify ]
   });
-}
+};
 
 var build = function (folder, callback) {
   folder.bundler.bundle()
@@ -27,20 +27,20 @@ var build = function (folder, callback) {
     .pipe(sourcemaps.init({ loadMaps: true })).on('error', gutil.log)
     .pipe(sourcemaps.write('./'))
     .pipe(duration(folder.path + ' changed'))
-    .pipe(gulp.dest('./patterns/' + folder.path + '/public'))
-    .on('end', callback ? callback : function() {});
+    .pipe(gulp.dest('./' + folder.path + '/public'))
+    .on('end', callback ? callback : function () {});
 };
-var folders = fs.readdirSync('./patterns')
+var folders = fs.readdirSync('./')
   .filter(function (folder) {
-    try { fs.statSync('./patterns/' + folder + '/src/app.jsx') } catch(err) {
-      gutil.log(gutil.colors.yellow('Note: Path ./patterns/' + folder + '/src/app.jsx does not exist ' +
-        'which is fine. It simply means that the ./patterns/' + folder + ' does not require an example or it is placed in another repo.'));
+    try {
+      fs.statSync('./' + folder + '/src/app.jsx');
+    } catch(err) {
       return false;
     }
     return true;
   })
   .map(function (folder) {
-    return { path: folder, bundler: createBundler(folder) }
+    return { path: folder, bundler: createBundler(folder) };
   });
 
 gulp.task('build', function () {
@@ -53,14 +53,14 @@ gulp.task('build', function () {
 
 gulp.task('build-watch', ['build'], function () {
   folders.forEach(function (folder) {
-    gulp.watch('./patterns/' + folder.path + '/src/**/*.*').on('change', function () {
+    gulp.watch('./' + folder.path + '/src/**/*.*').on('change', function () {
       build(folder);
     });
   });
 });
 
 gulp.task('lint', function () {
-  return gulp.src(['**/*.js','!node_modules/**'])
+  return gulp.src(['**/*.js', '!node_modules/**'])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());

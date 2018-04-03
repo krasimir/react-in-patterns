@@ -1,4 +1,95 @@
-(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// class App extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = { value: 'hello' };
+//   }
+//   render() {
+//     return <input type='text' value={ this.state.value } />;
+//   }
+// };
+
+// class App extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = { value: 'hello' };
+//     this._change = this._handleInputChange.bind(this);
+//   }
+//   render() {
+//     return (
+//       <input
+//         type='text'
+//         value={ this.state.value }
+//         onChange={ this._change } />
+//     );
+//   }
+//   _handleInputChange(e) {
+//     this.setState({ value: e.target.value });
+//   }
+// };
+
+var App = function (_React$Component) {
+  _inherits(App, _React$Component);
+
+  function App(props) {
+    _classCallCheck(this, App);
+
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+    _this.state = { value: 'hello' };
+    _this._change = _this._handleInputChange.bind(_this);
+    return _this;
+  }
+
+  _createClass(App, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement('input', {
+        type: 'text',
+        defaultValue: this.state.value,
+        onChange: this._change,
+        ref: function ref(input) {
+          return _this2.input = input;
+        } });
+    }
+  }, {
+    key: '_handleInputChange',
+    value: function _handleInputChange() {
+      console.log(this.input.value);
+      this.setState({ value: this.input.value });
+    }
+  }]);
+
+  return App;
+}(_react2.default.Component);
+
+;
+
+_reactDom2.default.render(_react2.default.createElement(App, null), document.querySelector('#container'));
+
+},{"react":25,"react-dom":22}],2:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -32,7 +123,7 @@ var ExecutionEnvironment = {
 };
 
 module.exports = ExecutionEnvironment;
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 "use strict";
 
 /**
@@ -62,7 +153,7 @@ function camelize(string) {
 }
 
 module.exports = camelize;
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -100,7 +191,7 @@ function camelizeStyleName(string) {
 }
 
 module.exports = camelizeStyleName;
-},{"./camelize":2}],4:[function(require,module,exports){
+},{"./camelize":3}],5:[function(require,module,exports){
 'use strict';
 
 /**
@@ -138,7 +229,7 @@ function containsNode(outerNode, innerNode) {
 }
 
 module.exports = containsNode;
-},{"./isTextNode":12}],5:[function(require,module,exports){
+},{"./isTextNode":13}],6:[function(require,module,exports){
 "use strict";
 
 /**
@@ -175,7 +266,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -196,7 +287,7 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = emptyObject;
 }).call(this,require('_process'))
 
-},{"_process":16}],7:[function(require,module,exports){
+},{"_process":17}],8:[function(require,module,exports){
 'use strict';
 
 /**
@@ -233,7 +324,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 }
 
 module.exports = getActiveElement;
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 
 /**
@@ -264,7 +355,7 @@ function hyphenate(string) {
 }
 
 module.exports = hyphenate;
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -301,7 +392,7 @@ function hyphenateStyleName(string) {
 }
 
 module.exports = hyphenateStyleName;
-},{"./hyphenate":8}],10:[function(require,module,exports){
+},{"./hyphenate":9}],11:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -358,7 +449,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 }).call(this,require('_process'))
 
-},{"_process":16}],11:[function(require,module,exports){
+},{"_process":17}],12:[function(require,module,exports){
 'use strict';
 
 /**
@@ -381,7 +472,7 @@ function isNode(object) {
 }
 
 module.exports = isNode;
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 /**
@@ -404,7 +495,7 @@ function isTextNode(object) {
 }
 
 module.exports = isTextNode;
-},{"./isNode":11}],13:[function(require,module,exports){
+},{"./isNode":12}],14:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -470,7 +561,7 @@ function shallowEqual(objA, objB) {
 }
 
 module.exports = shallowEqual;
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -536,7 +627,7 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = warning;
 }).call(this,require('_process'))
 
-},{"./emptyFunction":5,"_process":16}],15:[function(require,module,exports){
+},{"./emptyFunction":6,"_process":17}],16:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -628,7 +719,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -814,7 +905,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -878,7 +969,7 @@ module.exports = checkPropTypes;
 
 }).call(this,require('_process'))
 
-},{"./lib/ReactPropTypesSecret":18,"_process":16,"fbjs/lib/invariant":10,"fbjs/lib/warning":14}],18:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":19,"_process":17,"fbjs/lib/invariant":11,"fbjs/lib/warning":15}],19:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -892,7 +983,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 (function (process){
 /** @license React v16.3.0-alpha.3
  * react-dom.development.js
@@ -17262,7 +17353,7 @@ module.exports = reactDom;
 
 }).call(this,require('_process'))
 
-},{"_process":16,"fbjs/lib/ExecutionEnvironment":1,"fbjs/lib/camelizeStyleName":3,"fbjs/lib/containsNode":4,"fbjs/lib/emptyFunction":5,"fbjs/lib/emptyObject":6,"fbjs/lib/getActiveElement":7,"fbjs/lib/hyphenateStyleName":9,"fbjs/lib/invariant":10,"fbjs/lib/shallowEqual":13,"fbjs/lib/warning":14,"object-assign":15,"prop-types/checkPropTypes":17,"react":24}],20:[function(require,module,exports){
+},{"_process":17,"fbjs/lib/ExecutionEnvironment":2,"fbjs/lib/camelizeStyleName":4,"fbjs/lib/containsNode":5,"fbjs/lib/emptyFunction":6,"fbjs/lib/emptyObject":7,"fbjs/lib/getActiveElement":8,"fbjs/lib/hyphenateStyleName":10,"fbjs/lib/invariant":11,"fbjs/lib/shallowEqual":14,"fbjs/lib/warning":15,"object-assign":16,"prop-types/checkPropTypes":18,"react":25}],21:[function(require,module,exports){
 /** @license React v16.3.0-alpha.3
  * react-dom.production.min.js
  *
@@ -17507,7 +17598,7 @@ var Eg={createPortal:Dg,findDOMNode:function(a){if(null==a)return null;if(1===a.
 D("40");return a._reactRootContainer?(Z.unbatchedUpdates(function(){Cg(null,null,a,!1,function(){a._reactRootContainer=null})}),!0):!1},unstable_createPortal:function(){return Dg.apply(void 0,arguments)},unstable_batchedUpdates:Z.batchedUpdates,unstable_deferredUpdates:Z.deferredUpdates,flushSync:Z.flushSync,unstable_flushControlled:Z.flushControlled,__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{EventPluginHub:Ra,EventPluginRegistry:Ca,EventPropagators:jb,ReactControlledComponent:Yb,ReactDOMComponentTree:ab,
 ReactDOMEventListener:Zd},createRoot:function(a,b){return new tg(a,!0,null!=b&&!0===b.hydrate)}};Z.injectIntoDevTools({findFiberByHostInstance:Ua,bundleType:0,version:"16.3.0-alpha.3",rendererPackageName:"react-dom"});var Fg=Object.freeze({default:Eg}),Gg=Fg&&Eg||Fg;module.exports=Gg["default"]?Gg["default"]:Gg;
 
-},{"fbjs/lib/ExecutionEnvironment":1,"fbjs/lib/containsNode":4,"fbjs/lib/emptyFunction":5,"fbjs/lib/emptyObject":6,"fbjs/lib/getActiveElement":7,"fbjs/lib/shallowEqual":13,"object-assign":15,"react":24}],21:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":2,"fbjs/lib/containsNode":5,"fbjs/lib/emptyFunction":6,"fbjs/lib/emptyObject":7,"fbjs/lib/getActiveElement":8,"fbjs/lib/shallowEqual":14,"object-assign":16,"react":25}],22:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -17550,7 +17641,7 @@ if (process.env.NODE_ENV === 'production') {
 
 }).call(this,require('_process'))
 
-},{"./cjs/react-dom.development.js":19,"./cjs/react-dom.production.min.js":20,"_process":16}],22:[function(require,module,exports){
+},{"./cjs/react-dom.development.js":20,"./cjs/react-dom.production.min.js":21,"_process":17}],23:[function(require,module,exports){
 (function (process){
 /** @license React v16.3.0-alpha.3
  * react.development.js
@@ -18964,7 +19055,7 @@ module.exports = react;
 
 }).call(this,require('_process'))
 
-},{"_process":16,"fbjs/lib/emptyFunction":5,"fbjs/lib/emptyObject":6,"fbjs/lib/invariant":10,"fbjs/lib/warning":14,"object-assign":15,"prop-types/checkPropTypes":17}],23:[function(require,module,exports){
+},{"_process":17,"fbjs/lib/emptyFunction":6,"fbjs/lib/emptyObject":7,"fbjs/lib/invariant":11,"fbjs/lib/warning":15,"object-assign":16,"prop-types/checkPropTypes":18}],24:[function(require,module,exports){
 /** @license React v16.3.0-alpha.3
  * react.production.min.js
  *
@@ -18988,7 +19079,7 @@ _calculateChangedBits:b,_defaultValue:a,_currentValue:a,_changedBits:0,Provider:
 c)&&!J.hasOwnProperty(c)&&(d[c]=void 0===b[c]&&void 0!==k?k[c]:b[c])}c=arguments.length-2;if(1===c)d.children=e;else if(1<c){k=Array(c);for(var l=0;l<c;l++)k[l]=arguments[l+2];d.children=k}return{$$typeof:r,type:a.type,key:g,ref:h,props:d,_owner:f}},createFactory:function(a){var b=K.bind(null,a);b.type=a;return b},isValidElement:L,version:"16.3.0-alpha.3",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{ReactCurrentOwner:H,assign:m}},W=Object.freeze({default:V}),X=W&&V||W;
 module.exports=X["default"]?X["default"]:X;
 
-},{"fbjs/lib/emptyFunction":5,"fbjs/lib/emptyObject":6,"object-assign":15}],24:[function(require,module,exports){
+},{"fbjs/lib/emptyFunction":6,"fbjs/lib/emptyObject":7,"object-assign":16}],25:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -19000,98 +19091,7 @@ if (process.env.NODE_ENV === 'production') {
 
 }).call(this,require('_process'))
 
-},{"./cjs/react.development.js":22,"./cjs/react.production.min.js":23,"_process":16}],25:[function(require,module,exports){
-'use strict';
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = require('react-dom');
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-// class App extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = { value: 'hello' };
-//   }
-//   render() {
-//     return <input type='text' value={ this.state.value } />;
-//   }
-// };
-
-// class App extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = { value: 'hello' };
-//     this._change = this._handleInputChange.bind(this);
-//   }
-//   render() {
-//     return (
-//       <input
-//         type='text'
-//         value={ this.state.value }
-//         onChange={ this._change } />
-//     );
-//   }
-//   _handleInputChange(e) {
-//     this.setState({ value: e.target.value });
-//   }
-// };
-
-var App = function (_React$Component) {
-  _inherits(App, _React$Component);
-
-  function App(props) {
-    _classCallCheck(this, App);
-
-    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
-
-    _this.state = { value: 'hello' };
-    _this._change = _this._handleInputChange.bind(_this);
-    return _this;
-  }
-
-  _createClass(App, [{
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      return _react2.default.createElement('input', {
-        type: 'text',
-        defaultValue: this.state.value,
-        onChange: this._change,
-        ref: function ref(input) {
-          return _this2.input = input;
-        } });
-    }
-  }, {
-    key: '_handleInputChange',
-    value: function _handleInputChange() {
-      console.log(this.input.value);
-      this.setState({ value: this.input.value });
-    }
-  }]);
-
-  return App;
-}(_react2.default.Component);
-
-;
-
-_reactDom2.default.render(_react2.default.createElement(App, null), document.querySelector('#container'));
-
-},{"react":24,"react-dom":21}]},{},[25])
+},{"./cjs/react.development.js":23,"./cjs/react.production.min.js":24,"_process":17}]},{},[1])
 
 
 //# sourceMappingURL=app.js.map
