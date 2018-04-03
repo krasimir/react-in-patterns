@@ -12,6 +12,7 @@
   },
   "styles": {
     "website": "./styles/website.css",
-    "ebook": "./styles/ebook.css"
+    "ebook": "./styles/ebook.css",
+    "pdf": "./styles/ebook.css"
   }
 }
