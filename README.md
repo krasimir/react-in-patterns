@@ -10,6 +10,8 @@
 * [Mobi](https://www.gitbook.com/download/mobi/book/krasimir/react-in-patterns)
 * [ePub](https://www.gitbook.com/download/epub/book/krasimir/react-in-patterns)
 
+![React in patterns cover](./cover.jpg)
+
 ## Content
 
 * [In brief](chapter-1/README.md)
