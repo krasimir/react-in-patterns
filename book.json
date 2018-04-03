@@ -11,9 +11,9 @@
     "paperSize": "a5"
   },
   "styles": {
-    "ebook": "styles/ebook.css",
-    "pdf": "styles/ebook.css",
-    "mobi": "styles/ebook.css",
-    "epub": "styles/ebook.css"
+    "ebook": "./book/styles/ebook.css",
+    "pdf": "./book/styles/ebook.css",
+    "mobi": "./book/styles/ebook.css",
+    "epub": "./book/styles/ebook.css"
   }
 }
