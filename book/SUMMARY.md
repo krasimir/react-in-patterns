@@ -1,6 +1,6 @@
 # Summary
 
-* [Introduction](chapter-1/README.md)
+* [In brief](chapter-1/README.md)
 
 ### Foundation
 
