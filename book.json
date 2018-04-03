@@ -9,5 +9,9 @@
     "fontSize": 12,
     "fontFamily": "Arial",
     "paperSize": "a5"
+  },
+  "styles": {
+    "website": "./styles/website.css",
+    "ebook": "./styles/ebook.css"
   }
 }
