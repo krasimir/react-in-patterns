@@ -1,0 +1,755 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Event handlers · React in patterns</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Krasimir Tsonev">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../chapter-4/" />
+    
+    
+    <link rel="prev" href="../chapter-2/" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../chapter-1/">
+            
+                <a href="../chapter-1/">
+            
+                    
+                    In brief
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Foundation</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../chapter-2/">
+            
+                <a href="../chapter-2/">
+            
+                    
+                    Communication
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.1.1" data-path="../chapter-2/">
+            
+                <a href="../chapter-2/#input">
+            
+                    
+                    Input
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.1.2" data-path="../chapter-2/">
+            
+                <a href="../chapter-2/#output">
+            
+                    
+                    Output
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.2" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Event handlers
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../chapter-4/">
+            
+                <a href="../chapter-4/">
+            
+                    
+                    Composition
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="2.3.1" data-path="../chapter-4/">
+            
+                <a href="../chapter-4/#using-reacts-children-api">
+            
+                    
+                    Using React's children API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.2" data-path="../chapter-4/">
+            
+                <a href="../chapter-4/#passing-a-child-as-a-prop">
+            
+                    
+                    Passing a child as a prop
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.3" data-path="../chapter-4/">
+            
+                <a href="../chapter-4/#higher-order-component">
+            
+                    
+                    Higher-order component
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3.4" data-path="../chapter-4/">
+            
+                <a href="../chapter-4/#function-as-a-children-render-prop">
+            
+                    
+                    Function as a children, render prop
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="../chapter-5/">
+            
+                <a href="../chapter-5/">
+            
+                    
+                    Controlled and uncontrolled inputs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="../chapter-6/">
+            
+                <a href="../chapter-6/">
+            
+                    
+                    Presentational and container components
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Data flow</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="../chapter-7/">
+            
+                <a href="../chapter-7/">
+            
+                    
+                    One direction data flow
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="../chapter-8/">
+            
+                <a href="../chapter-8/">
+            
+                    
+                    Flux
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.2.1" data-path="../chapter-8/">
+            
+                <a href="../chapter-8/#flux-architecture-and-its-main-characteristics">
+            
+                    
+                    Flux architecture and its main characteristics
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2.2" data-path="../chapter-8/">
+            
+                <a href="../chapter-8/#implementing-a-flux-architecture">
+            
+                    
+                    Implementing a Flux architecture
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="../chapter-9/">
+            
+                <a href="../chapter-9/">
+            
+                    
+                    Redux
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="3.3.1" data-path="../chapter-9/">
+            
+                <a href="../chapter-9/#redux-architecture-and-its-main-characteristics">
+            
+                    
+                    Redux architecture and its main characteristics
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3.2" data-path="../chapter-9/">
+            
+                <a href="../chapter-9/#simple-counter-app-using-redux">
+            
+                    
+                    Simple counter app using Redux
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+        
+        <li class="header">MISC</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="../chapter-10/">
+            
+                <a href="../chapter-10/">
+            
+                    
+                    Dependency injection
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.1.1" data-path="../chapter-10/">
+            
+                <a href="../chapter-10/#using-reacts-context-prior-v-163">
+            
+                    
+                    Using React's context (prior v. 16.3)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.2" data-path="../chapter-10/">
+            
+                <a href="../chapter-10/#using-reacts-context-v-163-and-above">
+            
+                    
+                    Using React's context (v. 16.3 and above)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.1.3" data-path="../chapter-10/">
+            
+                <a href="../chapter-10/#using-the-module-system">
+            
+                    
+                    Using the module system
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="../chapter-11/">
+            
+                <a href="../chapter-11/">
+            
+                    
+                    Styling
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="4.2.1" data-path="../chapter-11/">
+            
+                <a href="../chapter-11/#the-good-old-css-class">
+            
+                    
+                    The good old CSS class
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2.2" data-path="../chapter-11/">
+            
+                <a href="../chapter-11/#inline-styling">
+            
+                    
+                    Inline styling
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2.3" data-path="../chapter-11/">
+            
+                <a href="../chapter-11/#css-modules">
+            
+                    
+                    CSS modules
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2.4" data-path="../chapter-11/">
+            
+                <a href="../chapter-11/#styled-components">
+            
+                    
+                    Styled-components
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3" data-path="../chapter-12/">
+            
+                <a href="../chapter-12/">
+            
+                    
+                    Integration of third-party libraries
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Event handlers</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="event-handlers">Event handlers</h1>
+<p>React provides a series of attributes for handling events. The solution is almost the same as the one used in the standard DOM. There are some differences like using camelCase or the fact that we pass a function but overall it is pretty similar.</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> theLogoIsClicked = () =&gt; alert(<span class="hljs-string">&apos;Clicked&apos;</span>);
+
+&lt;Logo onClick={ theLogoIsClicked } /&gt;
+&lt;input type=&apos;text&apos; onChange={ event =&gt; theInputIsChanged(event.target.value) } /&gt;
+</code></pre>
+<p>Usually we handle events in the component that contains the elements dispatching the events. Like in the example below, we have a click handler and we want to run a function or a method of the same component:</p>
+<pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Switcher</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  render() {
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{</span> <span class="hljs-attr">this._handleButtonClick</span> }&gt;</span>
+        click me
+      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
+    );
+  }
+  _handleButtonClick() {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;Button is clicked&apos;</span>);
+  }
+};
+</code></pre>
+<p>That&apos;s all fine because <code>_handleButtonClick</code> is a function and we indeed pass a function to the <code>onClick</code> attribute. The problem is that as it is the code doesn&apos;t keep the same context. So, if we have to use <code>this</code> inside <code>_handleButtonClick</code> we&apos;ll get an error.</p>
+<pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Switcher</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  <span class="hljs-keyword">constructor</span>(props) {
+    <span class="hljs-keyword">super</span>(props);
+    <span class="hljs-keyword">this</span>.state = { name: <span class="hljs-string">&apos;React in patterns&apos;</span> };
+  }
+  render() {
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{</span> <span class="hljs-attr">this._handleButtonClick</span> }&gt;</span>
+        click me
+      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
+    );
+  }
+  _handleButtonClick() {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Button is clicked inside <span class="hljs-subst">${ this.state.name }</span>`</span>);
+    <span class="hljs-comment">// leads to</span>
+    <span class="hljs-comment">// Uncaught TypeError: Cannot read property &apos;state&apos; of null</span>
+  }
+};
+</code></pre>
+<p>What we normally do is to use <code>bind</code>:</p>
+<pre><code class="lang-js">&lt;button onClick={ this._handleButtonClick.bind(this) }&gt;
+  click me
+&lt;/button&gt;
+</code></pre>
+<p>However, this means that the <code>bind</code> function is called again and again because we may render the button many times. A better approach would be to create the bindings in the constructor of the component:</p>
+<pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Switcher</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  <span class="hljs-keyword">constructor</span>(props) {
+    <span class="hljs-keyword">super</span>(props);
+    <span class="hljs-keyword">this</span>.state = { name: <span class="hljs-string">&apos;React in patterns&apos;</span> };
+    <span class="hljs-keyword">this</span>._buttonClick = <span class="hljs-keyword">this</span>._handleButtonClick.bind(<span class="hljs-keyword">this</span>);
+  }
+  render() {
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{</span> <span class="hljs-attr">this._buttonClick</span> }&gt;</span>
+        click me
+      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
+    );
+  }
+  _handleButtonClick() {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`Button is clicked inside <span class="hljs-subst">${ this.state.name }</span>`</span>);
+  }
+};
+</code></pre>
+<p>Facebook by the way <a href="https://facebook.github.io/react/docs/reusable-components.html#no-autobinding" target="_blank">recommend</a> the same technique while dealing with functions that need the context of the same component.</p>
+<p>The constructor is also a nice place for partially executing our handlers. Let&apos;s for example say that we have a form but want to handle every input in a single function.</p>
+<pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Form</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  <span class="hljs-keyword">constructor</span>(props) {
+    <span class="hljs-keyword">super</span>(props);
+    <span class="hljs-keyword">this</span>._onNameChanged = <span class="hljs-keyword">this</span>._onFieldChange.bind(<span class="hljs-keyword">this</span>, <span class="hljs-string">&apos;name&apos;</span>);
+    <span class="hljs-keyword">this</span>._onPasswordChanged = <span class="hljs-keyword">this</span>._onFieldChange.bind(<span class="hljs-keyword">this</span>, <span class="hljs-string">&apos;password&apos;</span>);
+  }
+  render() {
+    <span class="hljs-keyword">return</span> (
+      &lt;form&gt;
+        &lt;input onChange={ this._onNameChanged } /&gt;
+        &lt;input onChange={ this._onPasswordChanged } /&gt;
+      &lt;/form&gt;
+    );
+  }
+  _onFieldChange(field, event) {
+    console.log(`${ field } changed to ${ event.target.value }`);
+  }
+};
+</code></pre>
+<h2 id="final-thoughts">Final thoughts</h2>
+<p>There is not much to learn about event handling in React. The authors of the library did a good job in keeping what&apos;s already there. Since we are using HTML-like syntax it makes total sense that we have also a DOM-like event handling.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../chapter-2/#output" class="navigation navigation-prev " aria-label="Previous page: Output">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../chapter-4/" class="navigation navigation-next " aria-label="Next page: Composition">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Event handlers","level":"2.2","depth":1,"next":{"title":"Composition","level":"2.3","depth":1,"path":"chapter-4/README.md","ref":"chapter-4/README.md","articles":[{"title":"Using React's children API","level":"2.3.1","depth":2,"anchor":"#using-reacts-children-api","path":"chapter-4/README.md","ref":"chapter-4/README.md#using-reacts-children-api","articles":[]},{"title":"Passing a child as a prop","level":"2.3.2","depth":2,"anchor":"#passing-a-child-as-a-prop","path":"chapter-4/README.md","ref":"chapter-4/README.md#passing-a-child-as-a-prop","articles":[]},{"title":"Higher-order component","level":"2.3.3","depth":2,"anchor":"#higher-order-component","path":"chapter-4/README.md","ref":"chapter-4/README.md#higher-order-component","articles":[]},{"title":"Function as a children, render prop","level":"2.3.4","depth":2,"anchor":"#function-as-a-children-render-prop","path":"chapter-4/README.md","ref":"chapter-4/README.md#function-as-a-children-render-prop","articles":[]}]},"previous":{"title":"Output","level":"2.1.2","depth":2,"anchor":"#output","path":"chapter-2/README.md","ref":"chapter-2/README.md#output","articles":[]},"dir":"ltr"},"config":{"plugins":["livereload"],"root":"./book","styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-3/README.md","mtime":"2018-04-03T04:14:23.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-03T08:37:52.758Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
