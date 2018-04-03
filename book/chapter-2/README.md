@@ -74,7 +74,8 @@ In the following example we have a component that accepts the user's input and s
 
 ```js
 function NameField({ valueUpdated }) {
-  return <input onChange={ event => valueUpdated(event.target.value) } />
+  return <input onChange={
+    event => valueUpdated(event.target.value) } />
 };
 class App extends React.Component {
   constructor(props) {
@@ -85,7 +86,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <NameField valueUpdated={ name => this.setState({ name }) } />
+        <NameField valueUpdated={
+          name => this.setState({ name }) } />
         Name: { this.state.name }
       </div>
     );
