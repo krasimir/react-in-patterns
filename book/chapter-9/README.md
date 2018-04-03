@@ -119,7 +119,7 @@ const mapDispatchToProps = dispatch => ({
 
 `mergeProps` combines both `mapStateToProps` and `mapDispatchToProps` and the props send to the component and gives us the opportunity to accumulate better props. Like for example if we need to fire two actions we may combine them to a single prop and send that to React's component. `options` accepts couple of settings that control how how the connection works.
 
-## Example
+## Simple counter app using Redux
 
 Let's create a simple counter app that uses all the APIs above.
 
