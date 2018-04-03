@@ -9,5 +9,11 @@
     "fontSize": 12,
     "fontFamily": "Arial",
     "paperSize": "a5"
+  },
+  "styles": {
+    "ebook": "styles/ebook.css",
+    "pdf": "styles/ebook.css",
+    "mobi": "styles/ebook.css",
+    "epub": "styles/ebook.css"
   }
 }
