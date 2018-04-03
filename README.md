@@ -1,6 +1,14 @@
 # React in patterns
 
-:books: List of design patterns/techniques used while developing with [React](https://facebook.github.io/react/).
+:books: A free book that talks about design patterns/techniques used while developing with [React](https://facebook.github.io/react/).
+
+## Book
+
+* [GitBook](https://www.gitbook.com/book/krasimir/react-in-patterns/details)
+* [Web](https://krasimir.gitbooks.io/react-in-patterns/content/)
+* [PDF](https://www.gitbook.com/download/pdf/book/krasimir/react-in-patterns)
+* [Mobi](https://www.gitbook.com/download/mobi/book/krasimir/react-in-patterns)
+* [ePub](https://www.gitbook.com/download/epub/book/krasimir/react-in-patterns)
 
 ## Content
 
