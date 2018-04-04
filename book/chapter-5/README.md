@@ -48,7 +48,7 @@ class App extends React.Component {
     this.state = { value: 'hello' };
   }
   render() {
-    return <input type='text' defaultValue={ this.state.value } />;
+    return <input type='text' defaultValue={ this.state.value } />
   }
 };
 ```

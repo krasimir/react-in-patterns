@@ -175,7 +175,9 @@ Here is how the `wire` function looks like:
 export default function wire(Component, dependencies, mapper) {
   class Inject extends React.Component {
     render() {
-      var resolved = dependencies.map(this.context.get.bind(this.context));
+      var resolved = dependencies.map(
+        this.context.get.bind(this.context)
+      );
       var props = mapper(...resolved);
 
       return React.createElement(Component, props);
@@ -330,7 +332,11 @@ var Title = function(props) {
   return <h1>{ props.title }</h1>;
 };
 
-export default wire(Title, ['my-awesome-title'], title => ({ title }));
+export default wire(
+  Title,
+  ['my-awesome-title'],
+  title => ({ title })
+);
 ```
 
 *If we look at the `Title.jsx` file we'll see that the actual component and the wiring may live in different files. That way the component and the mapper function become easily unit testable.*

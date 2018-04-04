@@ -4,6 +4,7 @@
     "gitbook-cli": "2.3.2"
   },
   "scripts": {
-    "build": "./node_modules/.bin/gitbook build"
+    "build": "./node_modules/.bin/gitbook build && ./node_modules/.bin/gitbook pdf && ./node_modules/.bin/gitbook mobi && ./node_modules/.bin/gitbook epub",
+    "build-pdf": "./node_modules/.bin/gitbook pdf"
   }
 }

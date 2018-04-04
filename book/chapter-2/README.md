@@ -1,12 +1,12 @@
 # Communication
 
-If you work with React for a couple of days you will realize that every React component is like a small system that operates on its own. It has its own state, input and output. In the following sections we will explore these characteristics.
+Every React component is like a small system that operates on its own. It has its own state, input and output. In the following section we will explore these characteristics.
 
 ![Input-Output](./communication.jpg)
 
 ## Input
 
-The input for a React component is its props. That's how we pass data to it:
+The input of a React component is its props. That's how we pass data to it:
 
 ```js
 // Title.jsx
@@ -64,18 +64,20 @@ function App() {
 
 In this example `<span>community</span>` in `App` component is `children` in `Title` component. Notice that if we don't return `{ children }` as part of the `Title`'s body the `<span>` tag will not be rendered.
 
-(prior v16.3) An indirect input to a component may be also the so called `context`. The whole React tree may have a `context` object which is accessible by every component. More about that in the [dependency injection](https://github.com/krasimir/react-in-patterns/tree/master/patterns/dependency-injection) section.
+(prior v16.3) An indirect input to a component may be also the so called `context`. The whole React tree may have a `context` object which is accessible by every component. More about that in the [dependency injection](../chapter-10/README.md) section.
 
 ## Output
 
-The first obvious output of a React component is the rendered HTML. Visually that's what we get. However, because the prop may be everything including a function we could also receive data or see a process triggered.
+The first obvious output of a React component is the rendered HTML. Visually that is what we get. However, because the prop may be everything including a function we could also send out data or trigger a process.
 
 In the following example we have a component that accepts the user's input and sends it out (`<NameField />`).
 
 ```js
 function NameField({ valueUpdated }) {
-  return <input onChange={
-    event => valueUpdated(event.target.value) } />
+  return (
+    <input
+      onChange={event => valueUpdated(event.target.value) } />
+  );
 };
 class App extends React.Component {
   constructor(props) {
@@ -86,8 +88,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <NameField valueUpdated={
-          name => this.setState({ name }) } />
+        <NameField
+          valueUpdated={ name => this.setState({ name }) } />
         Name: { this.state.name }
       </div>
     );
@@ -95,7 +97,7 @@ class App extends React.Component {
 };
 ```
 
-Very often we need an entry point of our logic. React comes with some handy lifecycle methods that may be used to trigger a process. Let's say that we have an external resource that needs to be fetched on a specific page.
+Very often we need an entry point of our logic. React comes with some handy lifecycle methods that may be used to trigger a process. For example we have an external resource that needs to be fetched on a specific page.
 
 ```js
 class ResultsPage extends React.Component {
@@ -112,8 +114,9 @@ class ResultsPage extends React.Component {
 }
 ```
 
-Let's say that we are building a search-results experience. We have a search page and we enter our criteria there. We click submit and the user goes to `/results` where we have to display the result of the search. Once we land on the results page we render some sort of a loading screen and trigger a request for fetching the results in `componentDidMount` lifecycle hook. When the data comes we pass it to a `<List>` component.
+Let's say that we are building a search-results experience. We have a search page and we enter our criteria there. We click submit and the user goes to `/results` where we have to display the result of the search. Once we land on the results page we render some sort of a loading screen and trigger a request for fetching the results in `componentDidMount` lifecycle hook. When the data comes back we pass it to a `<List>` component.
 
+<div style="page-break-after: always;"></div>
 ## Final thoughts
 
-It is nice that we may think about every React component as a black box. It has its own input, lifecycle and output. It is up to us how we compose these boxes. And maybe that is one of the advantages that React offers. Easy to abstract and easy to compose.
+It is nice that we may think about every React component as a black box. It has its own input, lifecycle and output. It is up to us to compose these boxes. And maybe that is one of the advantages that React offers. Easy to abstract and easy to compose.

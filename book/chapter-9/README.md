@@ -29,9 +29,13 @@ The `visible` property is the meta data that we mentioned above. It has nothing 
 Every time when we want to dispatch a method we have to use such objects. However, it becomes too noisy to write them over and over again. That is why there is the concept for *action creators*. An action create is a function that returns an object and may or may not accept an argument which directly related to the action properties. For example the action creator for the above action looks like this:
 
 ```js
-const changeVisibility = visible => ({ type: CHANGE_VISIBILITY, visible });
+const changeVisibility = visible => ({
+  type: CHANGE_VISIBILITY,
+  visible
+});
 
-changeVisibility(false); // { type: CHANGE_VISIBILITY, visible: false }
+changeVisibility(false);
+// { type: CHANGE_VISIBILITY, visible: false }
 ```
 
 Notice that we pass the value of the `visible` as an argument and we don't have to remember (or import) the exact type of the action. Using such helpers makes the code compact and easy to read.
@@ -98,7 +102,12 @@ We usually have a single place in our app where we use it. It is the very top co
 (2) `connect` function - it is a function that does the subscription to updates in the store and re-renders our component. It implements a [higher-order component](https://github.com/krasimir/react-in-patterns/tree/master/patterns/composition#higher-order-component). Here is its signature:
 
 ```
-connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])
+connect(
+  [mapStateToProps],
+  [mapDispatchToProps],
+  [mergeProps],
+  [options]
+)
 ```
 
 `mapStateToProps` parameter is a function that accepts the current state and must return a set of key-value pairs (an object) that are getting send as props to our React component. For example:
@@ -138,7 +147,10 @@ const CHANGE_VISIBILITY = 'CHANGE_VISIBILITY';
 
 const add = () => ({ type: ADD });
 const subtract = () => ({ type: SUBTRACT });
-const changeVisibility = visible => ({ type: CHANGE_VISIBILITY, visible });
+const changeVisibility = visible => ({
+  type: CHANGE_VISIBILITY,
+  visible
+});
 ```
 
 ### Store and its reducers
@@ -224,8 +236,12 @@ Let's first deal with the UI that manages the visibility of the counter.
 function Visibility({ changeVisibility }) {
   return (
     <div>
-      <button onClick={ () => changeVisibility(true) }>Visible</button>
-      <button onClick={ () => changeVisibility(false) }>Hidden</button>
+      <button onClick={ () => changeVisibility(true) }>
+        Visible
+      </button>
+      <button onClick={ () => changeVisibility(false) }>
+        Hidden
+      </button>
     </div>
   );
 }

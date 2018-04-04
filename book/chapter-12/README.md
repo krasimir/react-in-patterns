@@ -33,7 +33,11 @@ class Tags extends React.Component {
   render() {
     return (
       <ul>
-      { this.props.tags.map((tag, i) => <li key={ i }>{ tag } </li>) }
+      { 
+        this.props.tags.map(
+          (tag, i) => <li key={ i }>{ tag } </li>
+        )
+      }
       </ul>
     );
   }
@@ -88,7 +92,11 @@ class Tags extends React.Component {
   render() {
     return (
       <ul ref='list'>
-      { this.props.tags.map((tag, i) => <li key={ i }>{ tag } </li>) }
+      { 
+        this.props.tags.map(
+          (tag, i) => <li key={ i }>{ tag } </li>
+        )
+      }
       </ul>
     );
   }
@@ -125,7 +133,9 @@ class App extends React.Component {
           <input type='text' ref='field' />
           <button onClick={ this._addNewTag }>Add</button>
         </div>
-        <Tags tags={ this.state.tags } newTag={ this.state.newTag } />
+        <Tags
+          tags={ this.state.tags }
+          newTag={ this.state.newTag } />
       </div>
     );
   }
@@ -162,7 +172,11 @@ class Tags extends React.Component {
   render() {
     return (
       <ul ref='list'>
-      { this.props.tags.map((tag, i) => <li key={ i }>{ tag } </li>) }
+      { 
+        this.props.tags.map(
+          (tag, i) => <li key={ i }>{ tag } </li>
+        ) 
+      }
       </ul>
     );
   }

@@ -1,12 +1,14 @@
 # Event handlers
 
-React provides a series of attributes for handling events. The solution is almost the same as the one used in the standard DOM. There are some differences like using camelCase or the fact that we pass a function but overall it is pretty similar.
+React provides a series of attributes for handling events. The solution is almost the same as the one used in the standard DOM. There are some differences like using camel case or the fact that we pass a function but overall it is pretty similar.
 
 ```js
 const theLogoIsClicked = () => alert('Clicked');
 
 <Logo onClick={ theLogoIsClicked } />
-<input type='text' onChange={ event => theInputIsChanged(event.target.value) } />
+<input
+  type='text'
+  onChange={event => theInputIsChanged(event.target.value) } />
 ```
 
 Usually we handle events in the component that contains the elements dispatching the events. Like in the example below, we have a click handler and we want to run a function or a method of the same component:
@@ -26,7 +28,7 @@ class Switcher extends React.Component {
 };
 ```
 
-That's all fine because `_handleButtonClick` is a function and we indeed pass a function to the `onClick` attribute. The problem is that as it is the code doesn't keep the same context. So, if we have to use `this` inside `_handleButtonClick` we'll get an error.
+That's all fine because `_handleButtonClick` is a function and we indeed pass a function to the `onClick` attribute. The problem is that as it is the code doesn't keep the same context. So, if we have to use `this` inside `_handleButtonClick` to refer the current `Switcher` component we will get an error.
 
 ```js
 class Switcher extends React.Component {
@@ -81,14 +83,15 @@ class Switcher extends React.Component {
 
 Facebook by the way [recommend](https://facebook.github.io/react/docs/reusable-components.html#no-autobinding) the same technique while dealing with functions that need the context of the same component.
 
-The constructor is also a nice place for partially executing our handlers. Let's for example say that we have a form but want to handle every input in a single function.
+The constructor is also a nice place for partially executing our handlers. For example, we have a form but want to handle every input in a single function.
 
 ```js
 class Form extends React.Component {
   constructor(props) {
     super(props);
     this._onNameChanged = this._onFieldChange.bind(this, 'name');
-    this._onPasswordChanged = this._onFieldChange.bind(this, 'password');
+    this._onPasswordChanged =
+      this._onFieldChange.bind(this, 'password');
   }
   render() {
     return (
@@ -104,6 +107,7 @@ class Form extends React.Component {
 };
 ```
 
+<div style="page-break-after: always;"></div>
 ## Final thoughts
 
 There is not much to learn about event handling in React. The authors of the library did a good job in keeping what's already there. Since we are using HTML-like syntax it makes total sense that we have also a DOM-like event handling.

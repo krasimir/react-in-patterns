@@ -165,7 +165,9 @@ Here is how the register method looks like after the changes:
 ```js
 register: function (store) {
   if (!store || !store.update) {
-    throw new Error('You should provide a store that has an `update` method.');
+    throw new Error(
+      'You should provide a store that has an `update` method.'
+    );
   } else {
     var consumers = [];
     var subscribe = function (consumer) {
@@ -186,7 +188,9 @@ According to the basic principles of the flux architecture the stores change the
 ```js
 register: function (store) {
   if (!store || !store.update) {
-    throw new Error('You should provide a store that has an `update` method.');
+    throw new Error(
+      'You should provide a store that has an `update` method.'
+    );
   } else {
     var consumers = [];
     var change = function () {
@@ -231,7 +235,9 @@ var Dispatcher = function () {
     _stores: [],
     register: function (store) {
       if (!store || !store.update) {
-        throw new Error('You should provide a store that has an `update` method.');
+        throw new Error(
+          'You should provide a store that has an `update` method'
+        );
       } else {
         var consumers = [];
         var change = function () {
@@ -284,7 +290,10 @@ var createAction = function (type) {
     throw new Error('Please, provide action\'s type.');
   } else {
     return function (payload) {
-      return dispatcher.dispatch({ type: type, payload: payload });
+      return dispatcher.dispatch({
+        type: type,
+        payload: payload
+      });
     }
   }
 }
@@ -319,7 +328,9 @@ var Dispatcher = function () {
     _stores: [],
     register: function (store) {
       if (!store || !store.update) {
-        throw new Error('You should provide a store that has an `update` method.');
+        throw new Error(
+          'You should provide a store that has an `update` method'
+        );
       } else {
         var consumers = [];
         var change = function () {
@@ -357,7 +368,10 @@ module.exports = {
           throw new Error('Please, provide action\'s type.');
         } else {
           return function (payload) {
-            return dispatcher.dispatch({ type: type, payload: payload });
+            return dispatcher.dispatch({
+              type: type,
+              payload: payload
+            });
           }
         }
       },
@@ -397,7 +411,8 @@ const View = function (subscribeToStore, increase, decrease) {
   var value = null;
   var el = document.querySelector('#counter');
   var display = el.querySelector('span');
-  var [ increaseBtn, decreaseBtn ] = Array.from(el.querySelectorAll('button'));
+  var [ increaseBtn, decreaseBtn ] =
+    Array.from(el.querySelectorAll('button'));
 
   var render = () => display.innerHTML = value;
   var updateState = (store) => value = store.getValue();

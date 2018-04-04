@@ -9,7 +9,9 @@ class Switcher extends React.Component {
   constructor(props) {
     super(props);
     this.state = { flag: false };
-    this._onButtonClick = e => this.setState({ flag: !this.state.flag });
+    this._onButtonClick = e => this.setState({
+      flag: !this.state.flag
+    });
   }
   render() {
     return (

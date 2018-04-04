@@ -2,14 +2,10 @@
 
 One of the biggest benefits of React is composability. I personally don't know a framework that offers such an easy way to create and combine components. In this section we will explore few composition techniques which proved to work well.
 
-Let's get a simple example. Let's say that we have an application with a header and we want to place a navigation inside. We have three React components - `App`, `Header` and `Navigation`. They have to be nested into each other so we end up with the following markup:
+Let's get a simple example. Let's say that we have an application with a header and we want to place a navigation inside. We have three React components - `App`, `Header` and `Navigation`. They have to be nested into each other so we end up with the following dependencies:
 
 ```js
-<App>
-  <Header>
-    <Navigation> ... </Navigation>
-  </Header>
-</App>
+<App> -> <Header> -> <Navigation>
 ```
 
 The trivial approach for combining these components is to reference them in the places where we need them.
@@ -35,11 +31,12 @@ export default function Navigation() {
 }
 ```
 
-However, following this approach we introduced several problems:
+However, by following this approach we introduced couple of problems:
 
-* We may consider the `App` as a place where we do our main composition. The `Header` though may have other elements like a logo, search field or a slogan. It will be nice if they are passed somehow from the outside so we don't create a hard-coded dependencies. What if we need the same `Header` component but without the `Navigation`. We can't easily achieve that because we have the two bound tightly together.
+* We may consider the `App` as a place where we do our main composition. The `Header` though may have other elements like a logo, search field or a slogan. It will be nice if they are passed somehow from the `App` component so we don't create a hard-coded dependencies. What if we need the same `Header` component but without the `Navigation`. We can't easily achieve that because we have the two bound tightly together.
 * It's difficult to test. We may have some business logic in the `Header` and in order to test it we have to create an instance of the component. However, because it imports other components we will probably create instances of those components too and it becomes heavy to test. We may break our `Header` test by doing something wrong in the `Navigation` component which is totally misleading. *(Note: to some extent [shallow rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) solves this problem by rendering only the `Header` without its nested children.)*
 
+<div style="page-break-after: always;"></div>
 ## Using React's children API
 
 In React we have the handy [`children`](https://facebook.github.io/react/docs/multiple-components.html#children) prop. That's how the parent reads/accesses its children. This API will make our Header agnostic and dependency-free:
@@ -64,6 +61,7 @@ Notice also that if we don't use `{ children }` in `Header`, the `Navigation` co
 
 It now becomes easier to test because we may render the `Header` with an empty `<div>`. This will isolate the component and will let us focus on only one piece of our application.
 
+<div style="page-break-after: always;"></div>
 ## Passing a child as a prop
 
 Every React component receive props right. As we mentioned already there is no any strict rule about what these props are. We may even pass other components.
@@ -166,7 +164,8 @@ var enhanceComponent = (Component) =>
     }
   };
 
-var OriginalTitle  = ({ title, remoteTitle }) => <h1>{ title }{ remoteTitle }</h1>;
+var OriginalTitle  = ({ title, remoteTitle }) =>
+  <h1>{ title }{ remoteTitle }</h1>;
 var EnhancedTitle = enhanceComponent(OriginalTitle);
 ```
 
@@ -223,7 +222,11 @@ function App() {
   const isCompleted = todo => todo.status === 'done';
   return (
     <TodoList todos={ todos }>
-    	{ todo => isCompleted(todo) ? <b>{ todo.label }</b> : todo.label }
+      {
+        todo => isCompleted(todo) ?
+          <b>{ todo.label }</b> :
+          todo.label
+      }
     </TodoList>
   );
 }
@@ -249,7 +252,10 @@ function TodoList({ todos, render }) {
 return (
   <TodoList
     todos={ todos }
-    render={ todo => isCompleted(todo) ? <b>{ todo.label }</b> : todo.label } />
+    render={
+      todo => isCompleted(todo) ?
+        <b>{ todo.label }</b> : todo.label
+    } />
 );
 ```
 
@@ -265,7 +271,9 @@ class DataProvider extends React.Component {
   }
   render() {
     if (this.state.data === null) return null;
-    return <section>{ this.props.render(this.state.data) }</section>;
+    return (
+      <section>{ this.props.render(this.state.data) }</section>
+    );
   }
 }
 ```
@@ -279,7 +287,9 @@ class DataProvider extends React.Component {
 We do say what we want to happen but not how. That is hidden inside the `DataProvider`. These days we used this pattern at work where we had to restrict some UI to certain users having `read:products` permissions. And we used the *render prop* pattern.
 
 ```js
-<Authorize permissionsInclude={[ 'read:products' ]} render={ () => <ProductsList /> } />
+<Authorize
+  permissionsInclude={[ 'read:products' ]}
+  render={ () => <ProductsList /> } />
 ```
 
 Pretty nice and self-explanatory in a declarative fashion. `Authorize` goes to our identity provider and checks what are the permissions of the current user. If he/she is allowed to read our products we render the `ProductList`.

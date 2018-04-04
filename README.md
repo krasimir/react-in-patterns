@@ -65,3 +65,9 @@ The code samples used in the book are available [here](./code).
 * [React patterns at Planning Center Online](https://github.com/planningcenter/react-patterns)
 * [React patterns by Michael Chan](http://reactpatterns.com/)
 * [React patterns, techniques, tips and tricks](https://github.com/vasanthk/react-bits)
+
+## Building the book
+
+`yarn install && yarn build`
+
+*To make the ebook generating possible install [calibre](http://calibre-ebook.com/about) and `ln -s /Applications/calibre.app/Contents/MacOS/ebook-convert /usr/local/bin/`.*

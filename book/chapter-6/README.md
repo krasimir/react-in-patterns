@@ -14,7 +14,9 @@ class Clock extends React.Component {
   render() {
     const time = this._formatTime(this.state.time);
     return (
-      <h1>{ time.hours } : { time.minutes } : { time.seconds }</h1>
+      <h1>
+        { time.hours } : { time.minutes } : { time.seconds }
+      </h1>
     );
   }
   componentDidMount() {
@@ -33,7 +35,9 @@ class Clock extends React.Component {
     return { hours, minutes, seconds };
   }
   _updateTime() {
-    this.setState({ time: new Date(this.state.time.getTime() + 1000) });
+    this.setState({
+      time: new Date(this.state.time.getTime() + 1000)
+    });
   }
 };
 
@@ -82,7 +86,9 @@ export default class ClockContainer extends React.Component {
     };
   }
   _updateTime() {
-    this.setState({ time: new Date(this.state.time.getTime() + 1000) });
+    this.setState({
+      time: new Date(this.state.time.getTime() + 1000)
+    });
   }
 };
 ```
