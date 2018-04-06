@@ -1,14 +1,14 @@
 # Redux
 
-[Redux](https://redux.js.org/) is a library that acts as a state container and helps managing your application data flow. It was introduced back in 2015 at ReactEurope conference ([video](https://www.youtube.com/watch?v=xsSnOQynTHs)) by [Dan Abramov](https://twitter.com/dan_abramov). It is inspired by the [Flux architecture](https://github.com/krasimir/react-in-patterns/tree/master/patterns/flux) and has a lot in common with it. In this section we will create a small counter app using Redux alongside React.
+[Redux](https://redux.js.org/) is a library that acts as a state container and helps managing your application data flow. It was introduced back in 2015 at ReactEurope conference ([video](https://www.youtube.com/watch?v=xsSnOQynTHs)) by [Dan Abramov](https://twitter.com/dan_abramov). It is similar to [Flux architecture](https://github.com/krasimir/react-in-patterns/blob/master/book/chapter-8/README.md#flux-architecture-and-its-main-characteristics) and has a lot in common with it. In this section we will create a small counter app using Redux alongside React.
 
 ## Redux architecture and its main characteristics
 
 ![Redux architecture](./redux-architecture.jpg)
 
-Similarly to [Flux](https://github.com/krasimir/react-in-patterns/tree/master/patterns/flux) architecture we have the view components (React) dispatching an action. Same action may be dispatched by another part of our system. Like a bootstrap logic for example. This action is dispatched not to a central hub but directly to the store. We are saying "store" not "stores" because there is only one in Redux. That is one of the big differences between Flux and Redux. The logic that decided how our data changes lives in pure functions called reducers. Once the store receives an action it asks the reducers about the new version of the state by sending the current state and the given action. Then in immutable fashion the reducer needs to return the new state. The store handles from there and updates its internal state. As a final step, the wired to store React components get re-rendered.
+Similarly to [Flux](https://github.com/krasimir/react-in-patterns/blob/master/book/chapter-8/README.md) architecture we have the view components (React) dispatching an action. Same action may be dispatched by another part of our system. Like a bootstrap logic for example. This action is dispatched not to a central hub but directly to the store. We are saying "store" not "stores" because there is only one in Redux. That is one of the big differences between Flux and Redux. The logic that decided how our data changes lives in pure functions called reducers. Once the store receives an action it asks the reducers about the new version of the state by sending the current state and the given action. Then in immutable fashion the reducer needs to return the new state. The store continues from there and updates its internal state. As a final step, the wired to the store React component gets re-rendered.
 
-The concept is pretty linear and again follows the [one-direction data flow](https://github.com/krasimir/react-in-patterns/tree/master/patterns/one-direction-data-flow). Let's talk about all these pieces and introduce a couple of new terms that support the work of the Redux pattern.
+The concept is pretty linear and again follows the [one-direction data flow](https://github.com/krasimir/react-in-patterns/blob/master/book/chapter-7/README.md). Let's talk about all these pieces and introduce a couple of new terms that support the work of the Redux pattern.
 
 ### Actions
 
@@ -26,7 +26,7 @@ It is a good practice that we create constants like `CHANGE_VISIBILITY` for our 
 
 The `visible` property is the meta data that we mentioned above. It has nothing to do with Redux. It means something in the context of the application.
 
-Every time when we want to dispatch a method we have to use such objects. However, it becomes too noisy to write them over and over again. That is why there is the concept for *action creators*. An action create is a function that returns an object and may or may not accept an argument which directly related to the action properties. For example the action creator for the above action looks like this:
+Every time when we want to dispatch a method we have to use such objects. However, it becomes too noisy to write them over and over again. That is why there is the concept of *action creators*. An action creator is a function that returns an object and may or may not accept an argument which directly relates to the action properties. For example the action creator for the above action looks like this:
 
 ```js
 const changeVisibility = visible => ({
@@ -64,9 +64,9 @@ In the typical React application we usually don't use `getState` and `subscribe`
 
 ### Reducer
 
-The reducer function is probably the most beautiful part of Redux. Even before that I was interested in writing pure functions with an immutability in mind but Redux forced me to do it. There are two characteristics of the reducer that are quite important and without them we basically have a broken pattern.
+The reducer function is probably the most *beautiful* part of Redux. Even before that I was interested in writing pure functions with an immutability in mind but Redux forced me to do it. There are two characteristics of the reducer that are quite important and without them we basically have a broken pattern.
 
-(1) It must be a pure function - it means that the function should return the exact same output for given inputs.
+(1) It must be a pure function - it means that the function should return the exact same output evert time when the same input is given.
 
 (2) It should have no side effects - stuff like accessing a global variable, making an async call or waiting for a promise to resolve have no place in here.
 
@@ -87,9 +87,9 @@ There are no side effects and we return a brand new object every time. We accumu
 
 ### Wiring to React components
 
-If we talk about Redux in the context of React we almost always mean [react-redux](https://github.com/reactjs/react-redux) module. It provides two things that help wire Redux to our components.
+If we talk about Redux in the context of React we almost always mean [react-redux](https://github.com/reactjs/react-redux) module. It provides two things that help connecting Redux to our components.
 
-(1) `<Provider>` component - it's a component that accepts our store and makes it available for the children down the React tree. For example:
+(1) `<Provider>` component - it's a component that accepts our store and makes it available for the children down the React tree via the React's context API. For example:
 
 ```js
 <Provider store={ myStore }>
@@ -97,9 +97,9 @@ If we talk about Redux in the context of React we almost always mean [react-redu
 </Provider>
 ```
 
-We usually have a single place in our app where we use it. It is the very top composition bit.
+We usually have a single place in our app where we use it.
 
-(2) `connect` function - it is a function that does the subscription to updates in the store and re-renders our component. It implements a [higher-order component](https://github.com/krasimir/react-in-patterns/tree/master/patterns/composition#higher-order-component). Here is its signature:
+(2) `connect` function - it is a function that does the subscribing for updates in the store and re-renders our component. It implements a [higher-order component](https://github.com/krasimir/react-in-patterns/blob/master/book/chapter-4/README.md#higher-order-component). Here is its signature:
 
 ```
 connect(
@@ -126,7 +126,7 @@ const mapDispatchToProps = dispatch => ({
 });
 ```
 
-`mergeProps` combines both `mapStateToProps` and `mapDispatchToProps` and the props send to the component and gives us the opportunity to accumulate better props. Like for example if we need to fire two actions we may combine them to a single prop and send that to React's component. `options` accepts couple of settings that control how how the connection works.
+`mergeProps` combines both `mapStateToProps` and `mapDispatchToProps` and the props send to the component and gives us the opportunity to accumulate better props. Like for example if we need to fire two actions we may combine them to a single prop and send that to React. `options` accepts couple of settings that control how how the connection works.
 
 ## Simple counter app using Redux
 
@@ -155,7 +155,7 @@ const changeVisibility = visible => ({
 
 ### Store and its reducers
 
-There is something that we didn't talk about while explaining the store and reducers. We usually have more then one reducer because we want to manage multiple things. The store is only one and we in theory have only one state object. What happens in most of the apps running in production is that the application state is a composition of slices. Every slice represents a part of our system. In this very small example we have counting and visibility slices. So our initial state looks like that:
+There is something that we didn't talk about while explaining the store and reducers. We usually have more then one reducer because we want to manage multiple things. The store is one though and we in theory have only one state object. What happens in most of the apps running in production is that the application state is a composition of slices. Every slice represents a part of our system. In this very small example we have counting and visibility slices. So our initial state looks like that:
 
 ```js
 const initialState = {
@@ -219,7 +219,7 @@ const rootReducer = combineReducers({
 
 ### Selectors
 
-Before moving to the React components we have to mention the concept of a *selector*. From the previous section we know that our state is usually divided into different parts. We have dedicated reducers to update the data but when it comes to fetching it we still have a single object. Here is the place where the selectors come in handy. The selector is a function that accepts the whole state object and extracts only the information that we need. For example for our small app we need two of those:
+Before moving to the React components we have to mention the concept of a *selector*. From the previous section we know that our state is usually divided into different parts. We have dedicated reducers to update the data but when it comes to fetching it we still have a single object. Here is the place where the selectors come in handy. The selector is a function that accepts the whole state object and extracts only the information that we need. For example in our small app we need two of those:
 
 ```js
 const getCounterValue = state => state.counter.value;
@@ -254,9 +254,9 @@ const VisibilityConnected = connect(
 )(Visibility);
 ```
 
-We have two buttons `Visible` and `Hidden`. They both fire `CHANGE_VISIBILITY` action but the first one passes `true` as a value while the second one `false`. What's interesting in the here is the `VisibilityConnected` component class. It gets created as a result of the wiring done via Redux's `connect`. Notice that we pass `null` as `mapStateToProps` because we don't need any of the data in the store. We just need to `dispatch` an action.
+We have two buttons `Visible` and `Hidden`. They both fire `CHANGE_VISIBILITY` action but the first one passes `true` as a value while the second one `false`. The `VisibilityConnected` component class gets created as a result of the wiring done via Redux's `connect`. Notice that we pass `null` as `mapStateToProps` because we don't need any of the data in the store. We just need to `dispatch` an action.
 
-The second component is slightly more complicated. It is named `Counter` and renders two buttons and the counter number.
+The second component is slightly more complicated. It is named `Counter` and renders two buttons and the counter value.
 
 ```js
 function Counter({ value, add, subtract }) {
@@ -304,8 +304,10 @@ We again need to `connect` our component because we want to control the visibili
 
 ## Final thoughts
 
-Redux is an wonderful pattern. Over the years the JavaScript community developed the idea and enhanced it with couple of new terms. I think a typical redux application looks more like this:
+Redux is a wonderful pattern. Over the years the JavaScript community developed the idea and enhanced it with couple of new terms. I think a typical redux application looks more like this:
 
 ![Redux architecture](redux-reallife.jpg)
 
-And we didn't even mention the side effects management. It is a whole new story with its own ideas and solutions. We can conclude that Redux itself is a pretty simple pattern. It teaches very useful techniques but unfortunately it is very often not enough. Sooner or later we have to introduce more concepts/patterns. Which of course is not that bad. We just have to plan for it.
+*By the way we didn't mention the side effects management. It is a whole new story with its own ideas and solutions.*
+
+We can conclude that Redux itself is a pretty simple pattern. It teaches very useful techniques but unfortunately it is very often not enough. Sooner or later we have to introduce more concepts/patterns. Which of course is not that bad. We just have to plan for it.
