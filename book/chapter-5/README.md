@@ -14,7 +14,7 @@ class App extends React.Component {
 };
 ```
 
-The result of this code is an input element that we can type in but the value stays the same - `'hello'`. It is never updated because we have a single source of truth - the `App`'s component state. To make the input works as expected we have to add an `onChange` handler and update the state (the single source of truth). Which will trigger a new rendering cycle and we will see our updates.
+The result of this code is an input element that we can focus but can't change. It is never updated because we have a single source of truth - the `App`'s component state. To make the input works as expected we have to add an `onChange` handler and update the state (the single source of truth). Which will trigger a new rendering cycle and we will see what we typed.
 
 ```js
 class App extends React.Component {
@@ -37,9 +37,7 @@ class App extends React.Component {
 };
 ```
 
-The `<input>` element is still *controlled* but now we see the screen updating while we type.
-
-On the opposite side is the *uncontrolled* input where we let the browser handles the user's updates. We may still provide an initial value by using the `defaultValue` prop.
+On the opposite side is the *uncontrolled* input where we let the browser handles the user's updates. We may still provide an initial value by using the `defaultValue` prop but after that the browser is responsible for keeping the state of the input.
 
 ```js
 class App extends React.Component {
@@ -53,7 +51,7 @@ class App extends React.Component {
 };
 ```
 
-That is nice but that `<input>` above is a little bit useless because the user updates the input's value but our component has no idea about that. We then have to use [`Refs`](https://reactjs.org/docs/glossary.html#refs) to get an access to the actual element.
+That `<input>` element above is a little bit useless because the user updates the value but our component has no idea about that. We then have to use [`Refs`](https://reactjs.org/docs/glossary.html#refs) to get an access to the actual element.
 
 ```js
 class App extends React.Component {
@@ -83,6 +81,6 @@ The `ref` prop receives a string or a callback. The code above uses a callback a
 
 ## Final thoughts
 
-*controlled* versus *uncontrolled* inputs is very often underrated. However I believe that it is a fundamental decision because it dictates the data flow in the React component. I personally thing that *uncontrolled* inputs are kind of an anti-pattern and try to avoid them if possible.
+*controlled* versus *uncontrolled* inputs is very often underrated. However I believe that it is a fundamental decision because it dictates the data flow in the React component. I personally think that *uncontrolled* inputs are kind of an anti-pattern and I'm trying to avoid them when possible.
 
 

@@ -2,25 +2,23 @@
 
 I'm obsessed by making my code simpler. I didn't say *smaller* because having less code doesn't mean that is simple and easy to work with. I believe that big part of the problems in the software industry come from the unnecessary complexity. Complexity which is a result of our own abstractions. You know, we (the programmers) like to abstract. We like placing things in black boxes and hope that these boxes work together.
 
-[Flux](http://facebook.github.io/flux/) is an architectural design pattern for building user interfaces. It was introduced by Facebook at their [F8](https://youtu.be/nYkdrAPrdcw?t=568) conference. Since then, lots of companies adopted the idea and it seems like a good pattern for building front-end apps. Flux is very often used with [React](http://facebook.github.io/react/). Another library released by Facebook. I myself use React+Flux/Redux in my [daily job](http://antidote.me/) and I could say that the simplicity is one of the main benefits. This combination helps creating apps faster and at the same time keeps the code well organized.
+[Flux](http://facebook.github.io/flux/) is an architectural design pattern for building user interfaces. It was introduced by Facebook at their [F8](https://youtu.be/nYkdrAPrdcw?t=568) conference. Since then, lots of companies adopted the idea and it seems like a good pattern for building front-end apps. Flux is very often used with [React](http://facebook.github.io/react/). Another library released by Facebook. I myself use React+Flux/Redux in my [daily job](http://antidote.me/) and I could say that it is simple and really flexible. The pattern helps creating apps faster and at the same time keeps the code well organized.
 
 ## Flux architecture and its main characteristics
 
 ![Basic flux architecture](./fluxiny_basic_flux_architecture.jpg)
 
-The main actor in this pattern is the *dispatcher*. It acts as a hub for all the events in the system. Its job is to receive notifications that we call *actions* and pass them to all the *stores*. The store decides if it is interested or not and reacts by changing its internal state. That change is triggering re-rendering of the *views* which are (in our case) React components. If we have to compare Flux to the well known MVC we may say that the store is similar to the model. It keeps the data and its mutations.
+The main actor in this pattern is the *dispatcher*. It acts as a hub for all the events in the system. Its job is to receive notifications that we call *actions* and pass them to all the *stores*. The store decides if it is interested or not and reacts by changing its internal state/data. That change is triggering re-rendering of the *views* which are (in our case) React components. If we have to compare Flux to the well known MVC we may say that the store is similar to the model. It keeps the data and its mutations.
 
-The actions are coming to the dispatcher either from the views or from other part of the system like services. For example a module that performs a HTTP request. When it receives the result it may fire an action saying that the request was successful.
-
-A wrong data flow is one of the biggest pitfalls in flux. For example, we may have an access to the store in our views but we should never call store methods that mutate its internal state. This should only happen via actions. Or we may end up with a store that receives an action and dispatches another one.
+The actions are coming to the dispatcher either from the views or from other parts of the system, like services. For example a module that performs a HTTP request. When it receives the result it may fire an action saying that the request was successful.
 
 ## Implementing a Flux architecture
 
-As every other popular concept Flux also has some [variations](https://medium.com/social-tables-tech/we-compared-13-top-flux-implementations-you-won-t-believe-who-came-out-on-top-1063db32fe73). Very often to understand something we have to implement it ourself. In the next few sections we will create a library that provides helpers for building the Flux pattern.
+As every other popular concept Flux also has some [variations](https://medium.com/social-tables-tech/we-compared-13-top-flux-implementations-you-won-t-believe-who-came-out-on-top-1063db32fe73). Very often to understand something we have to implement it. In the next few sections we will create a library that provides helpers for building the Flux pattern.
 
 ### The dispatcher
 
-In most of the cases we need a single dispatcher. Because it acts as a glue for the rest of the parts it makes sense that we have only one. There are two inputs to the dispatcher - actions and stores. The actions are simply forwarded to the stores so we don't necessary have to keep them. The stores however should be tracked inside the dispatcher so we can loop through them:
+In most of the cases we need a single dispatcher. Because it acts as a glue for the rest of the parts it makes sense that we have only one. The dispatcher needs to know about two things - actions and stores. The actions are simply forwarded to the stores so we don't necessary have to keep them. The stores however should be tracked inside the dispatcher so we can loop through them:
 
 ![the dispatcher](./fluxiny_the_dispatcher.jpg)
 
@@ -71,7 +69,7 @@ Some of the flux implementations available out there provide a helper function t
 Framework.attachToStore(view, store);
 ```
 
-However, I don't quite like this approach. To make `attachStore` works we expect to see a specific API in the view and in the store. We kind of strictly define new public methods. Or in other words we say "Your views and store should have such APIs so we are able to wire them together". If we go down this road then we will probably define our own base classes which could be extended so we don't bother the developer with Flux details. Then we say "All your classes should extend our classes". This doesn't sound good either because the developer may decide to switch to another Flux provider and he/she has to amend everything.
+However, I don't quite like this approach. To make `attachStore` works we expect to see a specific API in the view and in the store. We kind of strictly define new public methods. Or in other words we say "Your views and store should have such APIs so we are able to wire them together". If we go down this road then we will probably define our own base classes which could be extended so we don't bother the developer with Flux details. Then we say "All your classes should extend our classes". This doesn't sound good either because the developer may decide to switch to another Flux provider and has to amend everything.
 
 #### With a mixin
 
@@ -84,11 +82,11 @@ var View = React.createClass({
 });
 ```
 
-That's a "nice" way to define behavior of existing React component. So, in theory we may create a mixin that does the bounding for us. To be honest, I don't think that this is a good idea too. And [it looks](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750) like it's not only me. My reason of not liking mixins is that they modify the components in a non-predictable way. I have no idea what is going on behind the scenes. So I'm crossing this option.
+That's a "nice" way to define behavior of existing React component. So, in theory we may create a mixin that does the bounding for us. To be honest, I don't think that this is a good idea. And [it looks](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750) like it's not only me. My reason of not liking mixins is that they modify the components in a non-predictable way. I have no idea what is going on behind the scenes. So I'm crossing this option.
 
 #### Using a context
 
-Another technique that may answer to the question is React's [context](https://facebook.github.io/react/docs/context.html). It's a way to pass props to child components without the need to specify them in every level of the tree. Facebook suggests context in the cases where we have data that has to reach deeply nested components.
+Another technique that may answer the question is React's [context](https://facebook.github.io/react/docs/context.html). It is a way to pass props to child components without the need to specify them in every level of the tree. Facebook suggests context in the cases where we have data that has to reach deeply nested components.
 
 > Occasionally, you want to pass data through the component tree without having to pass the props down manually at every level. React's "context" feature lets you do this.
 
@@ -96,7 +94,7 @@ I see similarity with the mixins here. The context is defined somewhere at the t
 
 #### Higher-Order components concept
 
-Higher-Order components pattern is [introduced](https://gist.github.com/sebmarkbage/ef0bf1f338a7182b6775) by Sebastian Markb&#229;ge and it's about creating a wrapper component that returns ours. However, while doing it it has the opportunity to send properties or apply additional logic. For example:
+Higher-Order components pattern is [introduced](https://gist.github.com/sebmarkbage/ef0bf1f338a7182b6775) by Sebastian Markb&#229;ge and it's about creating a wrapper component that returns ours. While doing it it has the opportunity to send properties or apply additional logic. For example:
 
 ```js
 function attachToStore(Component, store, consumer) {
@@ -136,7 +134,7 @@ ProfilePage = connectToStores(MyView, store, (props, store) => ({
 
 ```
 
-That is an interesting pattern because it shifts the responsibilities. It is the view fetching data from the store and not the store pushing something to the view. This of course has its own pros and cons. It is nice because it makes the store dummy. A store that only mutates the data and says "Hey, my state is changed". It is not responsible for sending anything to anyone. The downside of this approach is maybe the fact that we have one more component (the wrapper) involved. We also need the three bits - view, store and consumer to be in one place so we can fulfill the connection.
+That is an interesting pattern because it shifts the responsibilities. It is the view fetching data from the store and not the store pushing something to the view. This of course has its own pros and cons. It is nice because it makes the store dummy. A store that only mutates the data and says "Hey, my state is changed". It is not responsible for sending anything to anyone. The downside of this approach is maybe the fact that we have one more component (the wrapper) involved. We also need the three things - view, store and consumer to be in one place so we can establish the connection.
 
 #### My choice
 

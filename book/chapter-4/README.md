@@ -59,12 +59,12 @@ export default function Header({ children }) {
 
 Notice also that if we don't use `{ children }` in `Header`, the `Navigation` component will never be rendered.
 
-It now becomes easier to test because we may render the `Header` with an empty `<div>`. This will isolate the component and will let us focus on only one piece of our application.
+It now becomes easier to test because we may render the `Header` with an empty `<div>`. This will isolate the component and will let us focus on one piece of our application.
 
 <div style="page-break-after: always;"></div>
 ## Passing a child as a prop
 
-Every React component receive props right. As we mentioned already there is no any strict rule about what these props are. We may even pass other components.
+Every React component receives props. As we mentioned already there is no any strict rule about what these props are. We may even pass other components.
 
 ```js
 const Title = function () {
@@ -87,13 +87,13 @@ function App() {
 };
 ```
 
-This technique is useful when a component like `Header` above needs to decide the order of its children but that's the only one decision that it takes.
+This technique is useful when a component like `Header` needs to take decisions about its children but don't bother about what they actually are. A simple example is a visibility component that hides its children based on a specific condition.
 
 ## Higher-order component
 
 For a long period of time higher-order components were the most popular way to enhance and compose React elements. They look really similar to the [decorator design pattern](http://robdodson.me/javascript-design-patterns-decorator/) because we have component wrapping and enhancing.
 
-On the technical side the higher-order component is a function that accepts our original component and returns an enhanced/populated version of it. The most trivial example is as follows:
+On the technical side the higher-order component is usually a function that accepts our original component and returns an enhanced/populated version of it. The most trivial example is as follows:
 
 ```js
 var enhanceComponent = (Component) =>
@@ -136,9 +136,9 @@ var OriginalTitle  = ({ title }) => <h1>{ title }</h1>;
 var EnhancedTitle = enhanceComponent(OriginalTitle);
 ```
 
-The knowledge for the `appTitle` is hidden into the higher-order component. `OriginalTitle` knows only that it receives a `prop` called `title`. It has no idea that this is coming from a configuration file. That's a huge advantage because allows us to isolate pieces of our system. It also helps with the testing of the component because we mock easily.
+The knowledge for the `appTitle` is hidden into the higher-order component. `OriginalTitle` knows only that it receives a `prop` called `title`. It has no idea that this is coming from a configuration file. That's a huge advantage because it allows us to isolate blocks. It also helps with the testing of the component because we can create mocks easily.
 
-Another characteristic of this pattern is that we have a nice buffer for additional logic. What if our `OriginalTitle` needs data also from a remote server. We may query this data in the higher-order component and again send it as a prop.
+Another characteristic of this pattern is that we have a nice buffer for additional logic. For example, if our `OriginalTitle` needs data also from a remote server. We may query this data in the higher-order component and again send it as a prop.
 
 ```js
 var enhanceComponent = (Component) =>
@@ -169,7 +169,7 @@ var OriginalTitle  = ({ title, remoteTitle }) =>
 var EnhancedTitle = enhanceComponent(OriginalTitle);
 ```
 
-Again, the `OriginalTitle` knows that it receives two props and has to render them next to each other. Its only concern is the how the data looks like not where it comes from and how.
+Again, the `OriginalTitle` knows that it receives two props and has to render them next to each other. Its only concern is how the data looks like not where it comes from and how.
 
 *[Dan Abramov](https://github.com/gaearon) made a really [good point](https://github.com/krasimir/react-in-patterns/issues/12) that the actual creation of the higher-order component (i.e. calling a function like `enhanceComponent`) should happen at a component definition level. Or in other words, it's a bad practice to do it inside another React component because it may be slow and lead to performance issues.*
 
@@ -198,7 +198,7 @@ function App() {
 }
 ```
 
-This may look weird but in fact is really helpful. Like for example when we have some knowledge in the parent component and don't necessary want to send it down to children. The example below prints a list of TODOs. The `App` component has all the data and knows how to determine whether a TODO is completed or not. The `TodoList` component simply encapsulate the needed HTML markup.
+This may look weird but in fact is really powerful. Like for example when we have some knowledge in the parent component and don't necessary want to send it down to children. The example below prints a list of TODOs. The `App` component has all the data and knows how to determine whether a TODO is completed or not. The `TodoList` component simply encapsulate the needed HTML markup.
 
 ```js
 function TodoList({ todos, children }) {
@@ -296,4 +296,4 @@ Pretty nice and self-explanatory in a declarative fashion. `Authorize` goes to o
 
 ## Final thoughts
 
-I believe that the React's high levels of adoption happens because the library provides nice mechanisms for composition. Did you wonder why HTML is still here. It was created in the dawn of the internet and we still use it. That is because is highly composable. React and its JSX looks like HTML on steroids and as such it comes with the same capabilities. So, make sure that you master the composition because that is one of the biggest benefits of React.
+Did you wonder why HTML is still here. It was created in the dawn of the internet and we still use it. That is because is highly composable. React and its JSX looks like HTML on steroids and as such it comes with the same capabilities. So, make sure that you master the composition because that is one of the biggest benefits of React.

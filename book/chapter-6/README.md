@@ -55,7 +55,7 @@ There are couple of things happening in our component. It looks like it has too 
 
 ## Extracting the container
 
-Containers know about data, its shape and where it comes from. They know details about how the things work or the so called *business logic*. They receive information and format it so it is easy to use by the presentational component. Very often we use [higher-order components](https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components) to create containers.
+Containers know about data, its shape and where it comes from. They know details about how the things work or the so called *business logic*. They receive information and format it so like is easy to be used by the presentational component. Very often we use [higher-order components](https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components) to create containers because they provide a buffer space where we can insert custom logic.
 
 Here's how our `ClockContainer` looks like:
 
@@ -93,7 +93,7 @@ export default class ClockContainer extends React.Component {
 };
 ```
 
-It still accepts `time` (a date object), does the `setInterval` loop and knows details about the data (`getHours`, `getMinutes` and `getSeconds`). In the end renders the presentational component and passes three numbers for hours, minutes and seconds. There is nothing about how the things look like. Only business logic.
+It still accepts `time` (a date object), does the `setInterval` loop and knows details about the data (`getHours`, `getMinutes` and `getSeconds`). In the end renders the presentational component and passes three numbers for hours, minutes and seconds. There is nothing about how the things look like. Only *business logic*.
 
 ## Presentational component
 
@@ -116,36 +116,12 @@ export default function Clock(props) {
 
 ## Benefits
 
-Splitting the components in containers and presentation increases the reusability of the components. Our `Clock` function/component may exist in application that doesn't change the time or it's not working with JavaScript's [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)  objects. That's because it's pretty *dummy*. No details about the data.
+Splitting the components in containers and presentation increases the reusability of the components. Our `Clock` function/component may exist in application that doesn't change the time or it's not working with JavaScript's [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) object. That's because it is pretty *dummy*. No details about the data are required.
 
-The nice thing about containers is that they encapsulate logic and may inject data into different renderers. Very often a file that exports a container is not exposing a class directly but a function. For example, instead of using
+The containers encapsulate logic and we may use them together with different renderers because they don't leak information about the visual part. The approach that we took above is a good example of how the container doesn't care about how the things look like. We may easily switch from digital to analog clock and the only one change will be to replace the `<Clock>` component in the `render` method.
 
-```js
-import Clock from './Clock.jsx';
-
-export default class ClockContainer extends React.Component {
-  render() {
-    return <Clock />;
-  }
-}
-```
-
-we may export a function that accepts the presentational component or in other words higher-order component.
-
-```js
-export default function(ClockComponent) {
-  return class Container extends React.Component {
-    render() {
-      return <ClockComponent />;
-    }
-  }
-}
-```
-
-Using this technique our container is really flexible in rendering its result. It will be really helpful if we want to switch from digital to analog clock representation for example.
-
-Even the testing becomes easier because we have to think less for our components. Containers are not concern with UI and very often the actions that trigger logic are controlled with callbacks. Presentational components are just about rendering the incoming props and their unit tests are more or less checking if the right callback is called if something is clicked/filled in.
+Even the testing becomes easier because the components have less responsibilities. Containers are not concern with UI. Presentational components are pure renderers and it is enough to run expectations on the resulted markup.
 
 ## Final thoughts
 
-React is unique in that sense that it is considered a view layer but at the same time it is a lot about UI logic too. The concept of container and presentation is not new at all but it fits really nicely with React. It makes our applications better structured and easy to manage.
+The concept of container and presentation is not new at all but it fits really nicely with React. It makes our applications better structured, easy to manage and scale.
