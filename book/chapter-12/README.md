@@ -66,7 +66,7 @@ The entry point is our `App` class. It uses the `Tags` component that displays a
 
 ## Force a single-render
 
-The very first thing that we have to do is to force a single-render of the `Tags` component. That's because when React adds the elements in the actual DOM we want to pass the control of them to jQuery. If we skip this both React and jQuery will work on same DOM elements without knowing for each other. To achieve a single-render we have to use the lifecycle method `shouldComponentUpdate` like so:
+The very first thing that we have to do is to force a single-render of the `Tags` component. That is because when React adds the elements in the actual DOM we want to pass the control of them to jQuery. If we skip this both React and jQuery will work on same DOM elements without knowing for each other. To achieve a single-render we have to use the lifecycle method `shouldComponentUpdate` like so:
 
 ```jsx
 class Tags extends React.Component {
@@ -76,7 +76,7 @@ class Tags extends React.Component {
   ...
 ```
 
-By always returning `false` here we are saying that our component will never re-render. If defined `shouldComponentUpdate` is used by React to understand whether to trigger `render` or not. That's ideal for our case because we want to place the markup on the page using React but we don't want to rely on it after that.
+By always returning `false` here we are saying that our component will never re-render. If defined `shouldComponentUpdate` is used by React to understand whether to trigger `render` or not. That is ideal for our case because we want to place the markup on the page using React but we don't want to rely on it after that.
 
 ## Initializing the plugin
 
