@@ -12,6 +12,7 @@ export default function Title(props) {
 
 // Header.jsx
 import Title from './Title.jsx';
+
 export default function Header() {
   return (
     <header>
@@ -22,6 +23,7 @@ export default function Header() {
 
 // App.jsx
 import Header from './Header.jsx';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -39,13 +41,13 @@ We already saw how the [higher-order component](https://github.com/krasimir/reac
 
 ```js
 // inject.jsx
-var title = 'React in patterns';
+const title = 'React in patterns';
+
 export default function inject(Component) {
   return class Injector extends React.Component {
     render() {
       return (
         <Component
-          {...this.state}
           {...this.props}
           title={ title }
         />
@@ -76,8 +78,9 @@ The `title` is hidden in a middle layer (higher-order component) where we pass i
 React has the concept of [*context*](https://facebook.github.io/react/docs/context.html). The *context* is something that every React component has access to. It's something like an [event bus](https://github.com/krasimir/EventBus) but for data. A single *store* which we access from everywhere.
 
 ```js
-// a place where we'll define the context
+// a place where we will define the context
 var context = { title: 'React in patterns' };
+
 class App extends React.Component {
   getChildContext() {
     return context;
@@ -100,7 +103,7 @@ Inject.contextTypes = {
 };
 ```
 
-Notice that we have to specify the exact signature of the context object. With `childContextTypes` and `contextTypes`. If those are not specified then the `context` object will be empty. That may be a little bit frustrating because we may have lots of stuff to put there. That's why it is a good practice that our `context` is not just a plain object but it has an interface that allows us to store and retrieve data. For example:
+Notice that we have to specify the exact signature of the context object. With `childContextTypes` and `contextTypes`. If those are not specified then the `context` object will be empty. That may be a little bit frustrating because we may have lots of stuff to put there. That is why it is a good practice that our `context` is not just a plain object but it has an interface that allows us to store and retrieve data. For example:
 
 ```js
 // dependencies.js
@@ -152,7 +155,7 @@ Title.contextTypes = {
 };
 ```
 
-Ideally we don't want to specify the `contextTypes` every time when we need an access to the context. This detail may be wrapped again in a higher-order component. And even more, we may write an utility function that is more descriptive and helps us declare the exact wiring. I.e instead of accessing the context directly with `this.context.get('title')` we ask the higher-order component to get what we need and to pass it as props to our component. For example:
+Ideally we don't want to specify the `contextTypes` every time when we need an access to the context. This detail may be wrapped again in a higher-order component. And even better, we may write an utility function that is more descriptive and helps us declare the exact wiring. I.e instead of accessing the context directly with `this.context.get('title')` we ask the higher-order component to get what we need and pass it as props to our component. For example:
 
 ```js
 // Title.jsx
@@ -167,7 +170,7 @@ export default wire(Title, ['title'], function resolve(title) {
 });
 ```
 
-The `wire` function accepts a React component, then an array with all the needed dependencies (which are `register`ed already) and then a function which I like to call `mapper`. It receives what is stored in the context as a raw data and returns an object which is the actual React props for our component (`Title`). In this example we just pass what we get - a `title` string variable. However, in a real app this could be a collection of data stores, configuration or something else.
+The `wire` function accepts a React component, then an array with all the needed dependencies (which are `register`ed already) and then a function which I like to call `mapper`. It receives what is stored in the context as a raw data and returns an object which is later used as props for our component (`Title`). In this example we just pass what we get - a `title` string variable. However, in a real app this could be a collection of data stores, configuration or something else.
 
 Here is how the `wire` function looks like:
 
@@ -196,7 +199,7 @@ export default function wire(Component, dependencies, mapper) {
 
 ## Using React's context (v. 16.3 and above)
 
-For years the context API was not really recommended by Facebook. They mention in the official docs that the API is not stable and may change. And that is exactly what happened. In the 16.3 version we got a new one which I think is more natural and easy to work with.
+For years the context API was not really recommended by Facebook. They mentioned in the official docs that the API is not stable and may change. And that is exactly what happened. In the version 16.3 we got a new one which I think is more natural and easy to work with.
 
 Let's use the same example with the string that needs to reach a `<Title>` component.
 
@@ -212,7 +215,7 @@ export const Provider = Context.Provider;
 export const Consumer = Context.Consumer;
 ```
 
-`createContext` returns an object that has `.Provider` and `.Consumer` properties. Those are actually valid React classes. The provider accepts our context in the form of a `value` prop. The consumer is used to access the context and basically read data from it. And because they usually live in different files it is a good idea to create a single place for their initialization. 
+`createContext` returns an object that has `.Provider` and `.Consumer` properties. Those are actually valid React classes. The `Provider` accepts our context in the form of a `value` prop. The consumer is used to access the context and basically read data from it. And because they usually live in different files it is a good idea to create a single place for their initialization. 
 
 Let's say that our `App` component is the root of our tree. At that place we have to pass the context.
 
@@ -246,9 +249,9 @@ function Title() {
 }
 ```
 
-Notice that the `Consumer` class uses the function as children (render prop) pattern to deliver the context. 
+*Notice that the `Consumer` class uses the function as children (render prop) pattern to deliver the context.*
 
-The new API feels easier to understand and eliminates the boilerplate. It is still pretty new but I think it worth trying. It opens a whole new range of possibilities.
+The new API feels easier to understand and eliminates the boilerplate. It is still pretty new but looks promising. It opens a whole new range of possibilities.
 
 ## Using the module system
 
@@ -343,4 +346,4 @@ export default wire(
 
 ## Final thoughts
 
-Dependency injection is a tough problem. Especially in JavaScript. Lots of people didn't realize but putting a proper dependency management is a key process.
+Dependency injection is a tough problem. Especially in JavaScript. Lots of people didn't realize that but putting a proper dependency management is a key process of every development cycle. JavaScript ecosystem offers different tools and we as developers should pick the one that fits in our needs.
