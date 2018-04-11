@@ -36,7 +36,8 @@ However, by following this approach we introduced couple of problems:
 * We may consider the `App` as a place where we do our main composition. The `Header` though may have other elements like a logo, search field or a slogan. It will be nice if they are passed somehow from the `App` component so we don't create a hard-coded dependencies. What if we need the same `Header` component but without the `Navigation`. We can't easily achieve that because we have the two bound tightly together.
 * It's difficult to test. We may have some business logic in the `Header` and in order to test it we have to create an instance of the component. However, because it imports other components we will probably create instances of those components too and it becomes heavy to test. We may break our `Header` test by doing something wrong in the `Navigation` component which is totally misleading. *(Note: to some extent [shallow rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) solves this problem by rendering only the `Header` without its nested children.)*
 
-<div style="page-break-after: always;"></div>
+<div style="page-break-before: always;"></div>
+
 ## Using React's children API
 
 In React we have the handy [`children`](https://facebook.github.io/react/docs/multiple-components.html#children) prop. That's how the parent reads/accesses its children. This API will make our Header agnostic and dependency-free:
@@ -61,7 +62,8 @@ Notice also that if we don't use `{ children }` in `Header`, the `Navigation` co
 
 It now becomes easier to test because we may render the `Header` with an empty `<div>`. This will isolate the component and will let us focus on one piece of our application.
 
-<div style="page-break-after: always;"></div>
+<div style="page-break-before: always;"></div>
+
 ## Passing a child as a prop
 
 Every React component receives props. As we mentioned already there is no any strict rule about what these props are. We may even pass other components.
@@ -88,6 +90,8 @@ function App() {
 ```
 
 This technique is useful when a component like `Header` needs to take decisions about its children but don't bother about what they actually are. A simple example is a visibility component that hides its children based on a specific condition.
+
+<div style="page-break-before: always;"></div>
 
 ## Higher-order component
 
@@ -140,6 +144,8 @@ The knowledge for the `appTitle` is hidden into the higher-order component. `Ori
 
 Another characteristic of this pattern is that we have a nice buffer for additional logic. For example, if our `OriginalTitle` needs data also from a remote server. We may query this data in the higher-order component and again send it as a prop.
 
+<div style="page-break-before: always;"></div>
+
 ```js
 var enhanceComponent = (Component) =>
   class Enhance extends React.Component {
@@ -173,6 +179,8 @@ Again, the `OriginalTitle` knows that it receives two props and has to render th
 
 *[Dan Abramov](https://github.com/gaearon) made a really [good point](https://github.com/krasimir/react-in-patterns/issues/12) that the actual creation of the higher-order component (i.e. calling a function like `enhanceComponent`) should happen at a component definition level. Or in other words, it's a bad practice to do it inside another React component because it may be slow and lead to performance issues.*
 
+<br /><br /><br />
+
 ## Function as a children, render prop
 
 Last couple of months the React community started shifting in an interesting direction. So far in our examples the `children` prop was a React component. There is however a new pattern gaining popularity in which the same `children` prop is a JSX expression. Let's start by passing a simple object.
@@ -199,6 +207,8 @@ function App() {
 ```
 
 This may look weird but in fact is really powerful. Like for example when we have some knowledge in the parent component and don't necessary want to send it down to children. The example below prints a list of TODOs. The `App` component has all the data and knows how to determine whether a TODO is completed or not. The `TodoList` component simply encapsulate the needed HTML markup.
+
+<br /><br /><br /><br /><br />
 
 ```js
 function TodoList({ todos, children }) {
@@ -235,6 +245,8 @@ function App() {
 Notice how the `App` component doesn't expose the structure of the data. `TodoList` has no idea that there is `label` or `status` properties.
 
 The so called *render prop* pattern is almost the same except that we use a prop and not `children` for rendering the todo.
+
+<br />
 
 ```js
 function TodoList({ todos, render }) {

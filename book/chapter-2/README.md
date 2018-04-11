@@ -72,6 +72,7 @@ The first obvious output of a React component is the rendered HTML. Visually tha
 
 In the following example we have a component that accepts the user's input and sends it out (`<NameField />`).
 
+<div style="page-break-after: always;"></div>
 ```js
 function NameField({ valueUpdated }) {
   return (
@@ -116,7 +117,6 @@ class ResultsPage extends React.Component {
 
 Let's say that we are building a search-results experience. We have a search page and we enter our criteria there. We click submit and the user goes to `/results` where we have to display the result of the search. Once we land on the results page we render some sort of a loading screen and trigger a request for fetching the results in `componentDidMount` lifecycle hook. When the data comes back we pass it to a `<List>` component.
 
-<div style="page-break-after: always;"></div>
 ## Final thoughts
 
 It is nice that we may think about every React component as a black box. It has its own input, lifecycle and output. It is up to us to compose these boxes. And maybe that is one of the advantages that React offers. Easy to abstract and easy to compose.

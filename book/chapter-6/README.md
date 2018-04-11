@@ -101,6 +101,8 @@ Presentational components are concerned with how the things look. They have the 
 
 In our case the presentational component contains only the two-digits check and returns the `<h1>` tag:
 
+<br /><br /><br /><br /><br />
+
 ```js
 // Clock/Clock.jsx
 export default function Clock(props) {
