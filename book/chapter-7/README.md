@@ -92,6 +92,8 @@ All this leads to managing two states instead of one. What if the `Store` change
 
 One-way direction data flow solves this problem. It eliminates the multiple places where we manage states and deals with only one which is usually the store. To achieve that we have to tweak our `Store` object a little bit. We need logic that allows us to subscribe for changes:
 
+<br /><br /><br /><br /><br /><br /><br /><br />
+
 ```js
 var Store = {
   _handlers: [],
@@ -132,6 +134,8 @@ class App extends React.Component {
 ```
 
 Because of this change the `Switcher` becomes really simple. We don't need the internal state and the component may be written as a stateless function.
+
+<br />
 
 ```js
 function Switcher({ value, onChange }) {

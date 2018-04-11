@@ -46,6 +46,8 @@ We have some basic styles in `theme` and with mix them with what is in `paragrap
 
 Here is a quick example to get an idea how it works:
 
+<br /><br /><br />
+
 ```js
 /* style.css */
 .title {

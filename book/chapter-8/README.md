@@ -54,6 +54,8 @@ register: function (store) {
 }
 ```
 
+<br />
+
 ### Bounding the views and the stores
 
 The next logical step is to connect our views to the stores so we re-render when the state in the stores is changed.
@@ -70,6 +72,8 @@ Framework.attachToStore(view, store);
 ```
 
 However, I don't quite like this approach. To make `attachStore` works we expect to see a specific API in the view and in the store. We kind of strictly define new public methods. Or in other words we say "Your views and store should have such APIs so we are able to wire them together". If we go down this road then we will probably define our own base classes which could be extended so we don't bother the developer with Flux details. Then we say "All your classes should extend our classes". This doesn't sound good either because the developer may decide to switch to another Flux provider and has to amend everything.
+
+<br /><br />
 
 #### With a mixin
 
@@ -227,6 +231,8 @@ var subscribe = function (consumer, noInit) {
 
 Of course sometimes this is not needed so we added a flag which is by default falsy. Here is the final version of our dispatcher:
 
+<div style="page-break-before: always;"></div>
+
 ```js
 var Dispatcher = function () {
   return {
@@ -319,6 +325,7 @@ var createSubscriber = function (store) {
 
 And instead of exporting the dispatcher we may export only these two functions `createAction` and `createSubscriber`. Here is how the final code looks like:
 
+<div style="page-break-before: always;"></div>
 
 ```js
 var Dispatcher = function () {
@@ -427,6 +434,8 @@ It accepts a store subscriber function and two action function for increasing an
 After that we define a `render` function which puts the value inside the `span` tag. `updateState` will be called every time when the store changes. So, we pass these two functions to `subscribeToStore` because we want to get the view updated and we want to get an initial rendering. Remember how our consumers are called at least once by default.
 
 The last bit is calling the action functions when we press the buttons.
+
+<br /><br /><br />
 
 ### The store
 

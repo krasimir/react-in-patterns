@@ -2,6 +2,8 @@
 
 [Redux](https://redux.js.org/) is a library that acts as a state container and helps managing your application data flow. It was introduced back in 2015 at ReactEurope conference ([video](https://www.youtube.com/watch?v=xsSnOQynTHs)) by [Dan Abramov](https://twitter.com/dan_abramov). It is similar to [Flux architecture](https://github.com/krasimir/react-in-patterns/blob/master/book/chapter-8/README.md#flux-architecture-and-its-main-characteristics) and has a lot in common with it. In this section we will create a small counter app using Redux alongside React.
 
+<div style="page-break-before: always;"></div>
+
 ## Redux architecture and its main characteristics
 
 ![Redux architecture](./redux-architecture.jpg)
@@ -128,6 +130,8 @@ const mapDispatchToProps = dispatch => ({
 
 `mergeProps` combines both `mapStateToProps` and `mapDispatchToProps` and the props send to the component and gives us the opportunity to accumulate better props. Like for example if we need to fire two actions we may combine them to a single prop and send that to React. `options` accepts couple of settings that control how how the connection works.
 
+<br />
+
 ## Simple counter app using Redux
 
 Let's create a simple counter app that uses all the APIs above.
@@ -228,6 +232,8 @@ const getVisibility = state => state.visible;
 
 A counter app is too small to see the real power of writing such helpers. However, in a big project is quite different. And it is not just about saving a few lines of code. Neither is about readability. Selectors come with these stuff but they are also contextual and may contain logic. Since they have access to the whole state they are able to answer business logic related questions. Like for example "Is the user authorize to do X while being on page Y". This may be done in a single selector.
 
+<div style="page-break-before: always;"></div>
+
 ### React components
 
 Let's first deal with the UI that manages the visibility of the counter.
@@ -257,6 +263,8 @@ const VisibilityConnected = connect(
 We have two buttons `Visible` and `Hidden`. They both fire `CHANGE_VISIBILITY` action but the first one passes `true` as a value while the second one `false`. The `VisibilityConnected` component class gets created as a result of the wiring done via Redux's `connect`. Notice that we pass `null` as `mapStateToProps` because we don't need any of the data in the store. We just need to `dispatch` an action.
 
 The second component is slightly more complicated. It is named `Counter` and renders two buttons and the counter value.
+
+<br /><br /><br />
 
 ```js
 function Counter({ value, add, subtract }) {

@@ -82,6 +82,8 @@ By always returning `false` here we are saying that our component will never re-
 
 React gives us an [API](https://facebook.github.io/react/docs/refs-and-the-dom.html) for accessing actual DOM nodes. We have to use the `ref` attribute on a node and later reach that node via `this.refs`. `componentDidMount` is the proper lifecycle method for initializing the *tag-it* plugin. That's because we get it called when React mounts the result of the `render` method.
 
+<br /><br /><br />
+
 ```jsx
 class Tags extends React.Component {
   ...
@@ -110,6 +112,8 @@ The code above together with `shouldComponentUpdate` leads to React rendering th
 Let's say that we want to programmatically add a new tag to the already running *tag-it* field. Such action will be triggered by the React component and needs to use the jQuery API. We have to find a way to communicate data to `Tags` component but still keep the single-render approach.
 
 To illustrate the whole process we will add an input field to the `App` class and a button which if clicked will pass a string to `Tags` component.
+
+<br /><br />
 
 ```jsx
 class App extends React.Component {
@@ -143,6 +147,8 @@ class App extends React.Component {
 ```
 
 We use the internal state as a data storage for the value of the newly added field. Every time when we click the button we update the state and trigger re-rendering of `Tags` component. However, because of `shouldComponentUpdate` we have no any updates on the screen. The only one change is that we get a new value of the `newTag` prop which may be captured via another lifecycle method - `componentWillReceiveProps`:
+
+<br /><br /><br />
 
 ```jsx
 class Tags extends React.Component {
@@ -182,6 +188,8 @@ class Tags extends React.Component {
   }
 };
 ```
+
+<br /><br />
 
 ## Final thoughts
 
