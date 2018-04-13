@@ -26,7 +26,7 @@
   * [Redux architecture and its main characteristics](chapter-9/README.md#redux-architecture-and-its-main-characteristics)
   * [Simple counter app using Redux](chapter-9/README.md#simple-counter-app-using-redux)
 
-### MISC
+### Good to know
 
 * [Dependency injection](chapter-10/README.md)
   * [Using React's context (prior v. 16.3)](chapter-10/README.md#using-reacts-context-prior-v-163)
@@ -38,3 +38,7 @@
   * [CSS modules](chapter-11/README.md#css-modules)
   * [Styled-components](chapter-11/README.md#styled-components)
 * [Integration of third-party libraries](chapter-12/README.md)
+
+### Summary
+
+* [Summary](chapter-13/README.md)

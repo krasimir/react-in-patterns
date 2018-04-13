@@ -96,6 +96,8 @@ Another technique that may answer the question is React's [context](https://face
 
 I see similarity with the mixins here. The context is defined somewhere at the top and magically serves props for all the children below. It's not immediately clear where the data comes from.
 
+<br /><br /><br />
+
 #### Higher-Order components concept
 
 Higher-Order components pattern is [introduced](https://gist.github.com/sebmarkbage/ef0bf1f338a7182b6775) by Sebastian Markb&#229;ge and it's about creating a wrapper component that returns ours. While doing it it has the opportunity to send properties or apply additional logic. For example:
@@ -231,7 +233,7 @@ var subscribe = function (consumer, noInit) {
 
 Of course sometimes this is not needed so we added a flag which is by default falsy. Here is the final version of our dispatcher:
 
-<div style="page-break-before: always;"></div>
+<span class="new-page"></span>
 
 ```js
 var Dispatcher = function () {
@@ -269,6 +271,8 @@ var Dispatcher = function () {
   }
 };
 ```
+
+<span class="new-page"></span>
 
 ## The actions
 
@@ -324,8 +328,6 @@ var createSubscriber = function (store) {
 ```
 
 And instead of exporting the dispatcher we may export only these two functions `createAction` and `createSubscriber`. Here is how the final code looks like:
-
-<div style="page-break-before: always;"></div>
 
 ```js
 var Dispatcher = function () {
@@ -395,6 +397,8 @@ If we add the support of AMD, CommonJS and global usage we end up with 66 lines 
 
 We have a module that provides two helpers for building a Flux project. Let's write a simple counter app that doesn't involve React so we see the pattern in action.
 
+<span class="new-page"></span>
+
 ### The markup
 
 We'll need some UI to interact with it so:
@@ -434,8 +438,6 @@ It accepts a store subscriber function and two action function for increasing an
 After that we define a `render` function which puts the value inside the `span` tag. `updateState` will be called every time when the store changes. So, we pass these two functions to `subscribeToStore` because we want to get the view updated and we want to get an initial rendering. Remember how our consumers are called at least once by default.
 
 The last bit is calling the action functions when we press the buttons.
-
-<br /><br /><br />
 
 ### The store
 

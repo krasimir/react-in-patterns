@@ -113,7 +113,7 @@ Let's say that we want to programmatically add a new tag to the already running 
 
 To illustrate the whole process we will add an input field to the `App` class and a button which if clicked will pass a string to `Tags` component.
 
-<br /><br />
+<br />
 
 ```jsx
 class App extends React.Component {
@@ -189,7 +189,7 @@ class Tags extends React.Component {
 };
 ```
 
-<br /><br />
+<br />
 
 ## Final thoughts
 

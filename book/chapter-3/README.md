@@ -61,7 +61,7 @@ What we normally do is to use `bind`:
 
 However, this means that the `bind` function is called again and again because we may render the button many times. A better approach would be to create the bindings in the constructor of the component:
 
-<div style="page-break-before: always;"></div>
+<span class="new-page"></span>
 
 ```js
 class Switcher extends React.Component {
@@ -87,7 +87,7 @@ Facebook by the way [recommend](https://facebook.github.io/react/docs/reusable-c
 
 The constructor is also a nice place for partially executing our handlers. For example, we have a form but want to handle every input in a single function.
 
-<div style="page-break-before: always;"></div>
+<span class="new-page"></span>
 
 ```js
 class Form extends React.Component {

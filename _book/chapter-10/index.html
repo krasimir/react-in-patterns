@@ -386,7 +386,7 @@
 
     
         
-        <li class="header">MISC</li>
+        <li class="header">Good to know</li>
         
         
     
@@ -534,6 +534,26 @@
     
 
     
+        
+        <li class="header">Summary</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../chapter-13/">
+            
+                <a href="../chapter-13/">
+            
+                    
+                    Summary
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
 
     <li class="divider"></li>
 
@@ -587,6 +607,7 @@
 
 <span class="hljs-comment">// Header.jsx</span>
 <span class="hljs-keyword">import</span> Title <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./Title.jsx&apos;</span>;
+
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Header</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">return</span> (
     &lt;header&gt;
@@ -597,6 +618,7 @@
 
 // App.jsx
 import Header from &apos;./Header.jsx&apos;;
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -610,13 +632,13 @@ class App extends React.Component {
 <p>The string &quot;React in patterns&quot; should somehow reach the <code>Title</code> component. The direct way of doing this is to pass it from <code>App</code> to <code>Header</code> and then <code>Header</code> pass it down to <code>Title</code>. However, this may work for these three components but what happens if there are multiple properties and deeper nesting. Lots of components will act as proxy passing properties to their children.</p>
 <p>We already saw how the <a href="https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components" target="_blank">higher-order component</a> may be used to inject data. Let&apos;s use the same technique to inject the <code>title</code> variable:</p>
 <pre><code class="lang-js"><span class="hljs-comment">// inject.jsx</span>
-<span class="hljs-keyword">var</span> title = <span class="hljs-string">&apos;React in patterns&apos;</span>;
+<span class="hljs-keyword">const</span> title = <span class="hljs-string">&apos;React in patterns&apos;</span>;
+
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">inject</span>(<span class="hljs-params">Component</span>) </span>{
   <span class="hljs-keyword">return</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Injector</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
     render() {
       <span class="hljs-keyword">return</span> (
         &lt;Component
-          {...this.state}
           {...this.props}
           title={ title }
         /&gt;
@@ -642,8 +664,9 @@ export default function Header() {
 <p>The <code>title</code> is hidden in a middle layer (higher-order component) where we pass it as a prop to the original <code>Title</code> component. That&apos;s all nice but it solves only half of the problem. Now we don&apos;t have to pass the <code>title</code> down the tree but how this data reaches the <code>inject.jsx</code> helper.</p>
 <h2 id="using-reacts-context-prior-v-163">Using React&apos;s context (prior v. 16.3)</h2>
 <p>React has the concept of <a href="https://facebook.github.io/react/docs/context.html" target="_blank"><em>context</em></a>. The <em>context</em> is something that every React component has access to. It&apos;s something like an <a href="https://github.com/krasimir/EventBus" target="_blank">event bus</a> but for data. A single <em>store</em> which we access from everywhere.</p>
-<pre><code class="lang-js"><span class="hljs-comment">// a place where we&apos;ll define the context</span>
+<pre><code class="lang-js"><span class="hljs-comment">// a place where we will define the context</span>
 <span class="hljs-keyword">var</span> context = { title: <span class="hljs-string">&apos;React in patterns&apos;</span> };
+
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   getChildContext() {
     <span class="hljs-keyword">return</span> context;
@@ -665,7 +688,7 @@ Inject.contextTypes = {
   title: React.PropTypes.string
 };
 </code></pre>
-<p>Notice that we have to specify the exact signature of the context object. With <code>childContextTypes</code> and <code>contextTypes</code>. If those are not specified then the <code>context</code> object will be empty. That may be a little bit frustrating because we may have lots of stuff to put there. That&apos;s why it is a good practice that our <code>context</code> is not just a plain object but it has an interface that allows us to store and retrieve data. For example:</p>
+<p>Notice that we have to specify the exact signature of the context object. With <code>childContextTypes</code> and <code>contextTypes</code>. If those are not specified then the <code>context</code> object will be empty. That may be a little bit frustrating because we may have lots of stuff to put there. That is why it is a good practice that our <code>context</code> is not just a plain object but it has an interface that allows us to store and retrieve data. For example:</p>
 <pre><code class="lang-js"><span class="hljs-comment">// dependencies.js</span>
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
   data: {},
@@ -709,7 +732,7 @@ Title.contextTypes = {
   register: React.PropTypes.func
 };
 </code></pre>
-<p>Ideally we don&apos;t want to specify the <code>contextTypes</code> every time when we need an access to the context. This detail may be wrapped again in a higher-order component. And even more, we may write an utility function that is more descriptive and helps us declare the exact wiring. I.e instead of accessing the context directly with <code>this.context.get(&apos;title&apos;)</code> we ask the higher-order component to get what we need and to pass it as props to our component. For example:</p>
+<p>Ideally we don&apos;t want to specify the <code>contextTypes</code> every time when we need an access to the context. This detail may be wrapped again in a higher-order component. And even better, we may write an utility function that is more descriptive and helps us declare the exact wiring. I.e instead of accessing the context directly with <code>this.context.get(&apos;title&apos;)</code> we ask the higher-order component to get what we need and pass it as props to our component. For example:</p>
 <pre><code class="lang-js"><span class="hljs-comment">// Title.jsx</span>
 <span class="hljs-keyword">import</span> wire <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./wire&apos;</span>;
 
@@ -721,12 +744,14 @@ Title.contextTypes = {
   <span class="hljs-keyword">return</span> { title };
 });
 </code></pre>
-<p>The <code>wire</code> function accepts a React component, then an array with all the needed dependencies (which are <code>register</code>ed already) and then a function which I like to call <code>mapper</code>. It receives what is stored in the context as a raw data and returns an object which is the actual React props for our component (<code>Title</code>). In this example we just pass what we get - a <code>title</code> string variable. However, in a real app this could be a collection of data stores, configuration or something else.</p>
+<p>The <code>wire</code> function accepts a React component, then an array with all the needed dependencies (which are <code>register</code>ed already) and then a function which I like to call <code>mapper</code>. It receives what is stored in the context as a raw data and returns an object which is later used as props for our component (<code>Title</code>). In this example we just pass what we get - a <code>title</code> string variable. However, in a real app this could be a collection of data stores, configuration or something else.</p>
 <p>Here is how the <code>wire</code> function looks like:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">wire</span>(<span class="hljs-params">Component, dependencies, mapper</span>) </span>{
   <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Inject</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
     render() {
-      <span class="hljs-keyword">var</span> resolved = dependencies.map(<span class="hljs-keyword">this</span>.context.get.bind(<span class="hljs-keyword">this</span>.context));
+      <span class="hljs-keyword">var</span> resolved = dependencies.map(
+        <span class="hljs-keyword">this</span>.context.get.bind(<span class="hljs-keyword">this</span>.context)
+      );
       <span class="hljs-keyword">var</span> props = mapper(...resolved);
 
       <span class="hljs-keyword">return</span> React.createElement(Component, props);
@@ -742,7 +767,7 @@ Title.contextTypes = {
 </code></pre>
 <p><code>Inject</code> is a higher-order component that gets access to the context and retrieves all the items listed under <code>dependencies</code> array. The <code>mapper</code> is a function receiving the <code>context</code> data and transforms it to props for our component.</p>
 <h2 id="using-reacts-context-v-163-and-above">Using React&apos;s context (v. 16.3 and above)</h2>
-<p>For years the context API was not really recommended by Facebook. They mention in the official docs that the API is not stable and may change. And that is exactly what happened. In the 16.3 version we got a new one which I think is more natural and easy to work with.</p>
+<p>For years the context API was not really recommended by Facebook. They mentioned in the official docs that the API is not stable and may change. And that is exactly what happened. In the version 16.3 we got a new one which I think is more natural and easy to work with.</p>
 <p>Let&apos;s use the same example with the string that needs to reach a <code>&lt;Title&gt;</code> component.</p>
 <p>We will start by defining a file that will contain our context initialization:</p>
 <pre><code class="lang-js"><span class="hljs-comment">// context.js</span>
@@ -753,7 +778,7 @@ Title.contextTypes = {
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Provider = Context.Provider;
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> Consumer = Context.Consumer;
 </code></pre>
-<p><code>createContext</code> returns an object that has <code>.Provider</code> and <code>.Consumer</code> properties. Those are actually valid React classes. The provider accepts our context in the form of a <code>value</code> prop. The consumer is used to access the context and basically read data from it. And because they usually live in different files it is a good idea to create a single place for their initialization. </p>
+<p><code>createContext</code> returns an object that has <code>.Provider</code> and <code>.Consumer</code> properties. Those are actually valid React classes. The <code>Provider</code> accepts our context in the form of a <code>value</code> prop. The consumer is used to access the context and basically read data from it. And because they usually live in different files it is a good idea to create a single place for their initialization. </p>
 <p>Let&apos;s say that our <code>App</code> component is the root of our tree. At that place we have to pass the context.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">import</span> { Provider } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./context&apos;</span>;
 
@@ -780,8 +805,8 @@ Title.contextTypes = {
   );
 }
 </code></pre>
-<p>Notice that the <code>Consumer</code> class uses the function as children (render prop) pattern to deliver the context. </p>
-<p>The new API feels easier to understand and eliminates the boilerplate. It is still pretty new but I think it worth trying. It opens a whole new range of possibilities.</p>
+<p><em>Notice that the <code>Consumer</code> class uses the function as children (render prop) pattern to deliver the context.</em></p>
+<p>The new API feels easier to understand and eliminates the boilerplate. It is still pretty new but looks promising. It opens a whole new range of possibilities.</p>
 <h2 id="using-the-module-system">Using the module system</h2>
 <p>If we don&apos;t want to use the context there are a couple of other ways to achieve the injection. They are not exactly React specific but worth mentioning. One of them is using the module system.</p>
 <p>As we know the typical module system in JavaScript has a caching mechanism. It&apos;s nicely noted in the <a href="https://nodejs.org/api/modules.html#modules_caching" target="_blank">Node&apos;s documentation</a>:</p>
@@ -822,6 +847,7 @@ Title.contextTypes = {
 </span></code></pre>
 <p>We&apos;ll store the dependencies in <code>dependencies</code> global variable (it&apos;s global for our module, not for the whole application). We then export two functions <code>register</code> and <code>fetch</code> that write and read entries. It looks a little bit like implementing setter and getter against a simple JavaScript object. Then we have the <code>wire</code> function that accepts our React component and returns a <a href="https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components" target="_blank">higher-order component</a>. In the constructor of that component we are resolving the dependencies and later while rendering the original component we pass them as props. We follow the same pattern where we describe what we need (<code>deps</code> argument) and extract the needed props with a <code>mapper</code> function.</p>
 <p>Having the <code>di.jsx</code> helper we are again able to register our dependencies at the entry point of our application (<code>app.jsx</code>) and inject them wherever (<code>Title.jsx</code>) we need.</p>
+<p><span class="new-page"></span></p>
 <pre><code class="lang-js"><span class="hljs-comment">// app.jsx</span>
 <span class="hljs-keyword">import</span> Header <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./Header.jsx&apos;</span>;
 <span class="hljs-keyword">import</span> { register } <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./di.jsx&apos;</span>;
@@ -854,11 +880,15 @@ var Title = function(props) {
   return &lt;h1&gt;{ props.title }&lt;/h1&gt;;
 };
 
-export default wire(Title, [&apos;my-awesome-title&apos;], title =&gt; ({ title }));
+export default wire(
+  Title,
+  [&apos;my-awesome-title&apos;],
+  title =&gt; ({ title })
+);
 </code></pre>
 <p><em>If we look at the <code>Title.jsx</code> file we&apos;ll see that the actual component and the wiring may live in different files. That way the component and the mapper function become easily unit testable.</em></p>
 <h2 id="final-thoughts">Final thoughts</h2>
-<p>Dependency injection is a tough problem. Especially in JavaScript. Lots of people didn&apos;t realize but putting a proper dependency management is a key process.</p>
+<p>Dependency injection is a tough problem. Especially in JavaScript. Lots of people didn&apos;t realize that but putting a proper dependency management is a key process of every development cycle. JavaScript ecosystem offers different tools and we as developers should pick the one that fits in our needs.</p>
 
                                 
                                 </section>
@@ -902,7 +932,7 @@ export default wire(Title, [&apos;my-awesome-title&apos;], title =&gt; ({ title 
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Dependency injection","level":"4.1","depth":1,"next":{"title":"Using React's context (prior v. 16.3)","level":"4.1.1","depth":2,"anchor":"#using-reacts-context-prior-v-163","path":"chapter-10/README.md","ref":"chapter-10/README.md#using-reacts-context-prior-v-163","articles":[]},"previous":{"title":"Simple counter app using Redux","level":"3.3.2","depth":2,"anchor":"#simple-counter-app-using-redux","path":"chapter-9/README.md","ref":"chapter-9/README.md#simple-counter-app-using-redux","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-10/README.md","mtime":"2018-04-02T15:49:45.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-03T13:51:55.802Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Dependency injection","level":"4.1","depth":1,"next":{"title":"Using React's context (prior v. 16.3)","level":"4.1.1","depth":2,"anchor":"#using-reacts-context-prior-v-163","path":"chapter-10/README.md","ref":"chapter-10/README.md#using-reacts-context-prior-v-163","articles":[]},"previous":{"title":"Simple counter app using Redux","level":"3.3.2","depth":2,"anchor":"#simple-counter-app-using-redux","path":"chapter-9/README.md","ref":"chapter-9/README.md#simple-counter-app-using-redux","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"//*[@class='new-page']","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-10/README.md","mtime":"2018-04-13T15:09:34.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-13T15:53:00.177Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

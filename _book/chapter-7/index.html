@@ -386,7 +386,7 @@
 
     
         
-        <li class="header">MISC</li>
+        <li class="header">Good to know</li>
         
         
     
@@ -534,6 +534,26 @@
     
 
     
+        
+        <li class="header">Summary</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../chapter-13/">
+            
+                <a href="../chapter-13/">
+            
+                    
+                    Summary
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
 
     <li class="divider"></li>
 
@@ -578,13 +598,15 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="one-way-direction-data-flow">One-way direction data flow</h1>
-<p>One-way direction data flow is a pattern that works nicely with React. It is around the idea that the components do not modify the data that they receive. They only listen for changes in this data and maybe provide the new value but they do not update the actual data. This update happens following another mechanism in another place and the component just gets re-rendered with the new value.</p>
-<p>Let&apos;s for example get a simple <code>Switcher</code> component that contains a button. We click it to enable a flag in the system.</p>
+<p>One-way direction data flow is a pattern that works nicely with React. It is around the idea that the components do not modify the data that they receive. They only listen for changes of this data and maybe provide the new value but they do not update the actual data. This update happens following another mechanism in another place and the component just gets re-rendered with the new value.</p>
+<p>Let&apos;s for example get a simple <code>Switcher</code> component that contains a button. If we click it we have to enable a flag in the system.</p>
 <pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Switcher</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   <span class="hljs-keyword">constructor</span>(props) {
     <span class="hljs-keyword">super</span>(props);
     <span class="hljs-keyword">this</span>.state = { flag: <span class="hljs-literal">false</span> };
-    <span class="hljs-keyword">this</span>._onButtonClick = e =&gt; <span class="hljs-keyword">this</span>.setState({ flag: !<span class="hljs-keyword">this</span>.state.flag });
+    <span class="hljs-keyword">this</span>._onButtonClick = e =&gt; <span class="hljs-keyword">this</span>.setState({
+      flag: !<span class="hljs-keyword">this</span>.state.flag
+    });
   }
   render() {
     <span class="hljs-keyword">return</span> (
@@ -634,9 +656,9 @@
   <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Switcher</span> <span class="hljs-attr">onChange</span>=<span class="hljs-string">{</span> <span class="hljs-attr">Store.set.bind</span>(<span class="hljs-attr">Store</span>) } /&gt;</span>;
 };
 </span></code></pre>
-<p>Our <code>Store</code> object is a <a href="https://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript" target="_blank">singleton</a> where we have helpers for setting and getting the value of the <code>_flag</code> property. By passing the getter to the component we are able to update the data externally. More or less our application workflow looks like that:</p>
+<p>Our <code>Store</code> object is a <a href="https://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript" target="_blank">singleton</a> where we have helpers for setting and getting the value of the <code>_flag</code> property. By passing the getter to the <code>Switcher</code> we are able to update the data externally. More or less our application workflow looks like that:</p>
 <p><img src="one-direction-1.jpg" alt="one-direction data flow"></p>
-<p>Let&apos;s assume that we are saving the flag value to a back-end service via the <code>Store</code>. When the user comes back we have to set a proper initial state. If the user left the flag as <code>true</code> we have to show <em>&quot;lights on&quot;</em> and not the default <em>&quot;lights off&quot;</em>. Now it gets tricky because we have the data knowledge in two places. The UI and the <code>Store</code> have their own states. We have to communicate in both directions from the store to the switcher and from the switcher to the store.</p>
+<p>Let&apos;s assume that we are saving the flag value to a back-end service via the <code>Store</code>. When the user comes back we have to set a proper initial state. If the user left the flag as <code>true</code> we have to show <em>&quot;lights on&quot;</em> and not the default <em>&quot;lights off&quot;</em>. Now it gets tricky because we have the data in two places. The UI and the <code>Store</code> have their own states. We have to communicate in both directions from the store to the switcher and from the switcher to the store.</p>
 <pre><code class="lang-js"><span class="hljs-comment">// ... in App component</span>
 &lt;Switcher
   value={ Store.get() }
@@ -651,7 +673,8 @@
 <p>Our workflow changes to the following:</p>
 <p><img src="one-direction-2.jpg" alt="one-direction data flow"></p>
 <p>All this leads to managing two states instead of one. What if the <code>Store</code> changes its value based on other actions in the system. We have to propagate that change to the <code>Switcher</code> and we increase the complexity of our app.</p>
-<p>One-way direction data flow solves this problem. It eliminates the multiple states and deals with only one which is usually inside the store. To achieve that we have to tweak our <code>Store</code> object a little bit. We need logic that allows us to subscribe for changes:</p>
+<p>One-way direction data flow solves this problem. It eliminates the multiple places where we manage states and deals with only one which is usually the store. To achieve that we have to tweak our <code>Store</code> object a little bit. We need logic that allows us to subscribe for changes:</p>
+<p><span class="new-page"></span></p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> Store = {
   _handlers: [],
   _flag: <span class="hljs-string">&apos;&apos;</span>,
@@ -694,9 +717,13 @@
     <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
   );
 };
-</code></pre>
+
+<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Switcher</span>
+  <span class="hljs-attr">value</span>=<span class="hljs-string">{</span> <span class="hljs-attr">Store.get</span>() }
+  <span class="hljs-attr">onChange</span>=<span class="hljs-string">{</span> <span class="hljs-attr">Store.set.bind</span>(<span class="hljs-attr">Store</span>) } /&gt;</span>
+</span></code></pre>
 <h2 id="final-thoughts">Final thoughts</h2>
-<p>The benefit that comes with this pattern is that our components become dummy representation of the store&apos;s data. There is only one source of truth and this makes the development easier.</p>
+<p>The benefit that comes with this pattern is that our components become dummy representation of the store&apos;s data. There is only one source of truth and this makes the development easier. If you are going to take one thing from this book I would prefer to be this chapter. The one-direction data flow drastically changed the way of how I think when designing a feature so I believe it will have the same effect on you.</p>
 
                                 
                                 </section>
@@ -740,7 +767,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"One direction data flow","level":"3.1","depth":1,"next":{"title":"Flux","level":"3.2","depth":1,"path":"chapter-8/README.md","ref":"chapter-8/README.md","articles":[{"title":"Flux architecture and its main characteristics","level":"3.2.1","depth":2,"anchor":"#flux-architecture-and-its-main-characteristics","path":"chapter-8/README.md","ref":"chapter-8/README.md#flux-architecture-and-its-main-characteristics","articles":[]},{"title":"Implementing a Flux architecture","level":"3.2.2","depth":2,"anchor":"#implementing-a-flux-architecture","path":"chapter-8/README.md","ref":"chapter-8/README.md#implementing-a-flux-architecture","articles":[]}]},"previous":{"title":"Presentational and container components","level":"2.5","depth":1,"path":"chapter-6/README.md","ref":"chapter-6/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-7/README.md","mtime":"2018-04-02T15:48:55.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-03T13:51:55.802Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"One direction data flow","level":"3.1","depth":1,"next":{"title":"Flux","level":"3.2","depth":1,"path":"chapter-8/README.md","ref":"chapter-8/README.md","articles":[{"title":"Flux architecture and its main characteristics","level":"3.2.1","depth":2,"anchor":"#flux-architecture-and-its-main-characteristics","path":"chapter-8/README.md","ref":"chapter-8/README.md#flux-architecture-and-its-main-characteristics","articles":[]},{"title":"Implementing a Flux architecture","level":"3.2.2","depth":2,"anchor":"#implementing-a-flux-architecture","path":"chapter-8/README.md","ref":"chapter-8/README.md#implementing-a-flux-architecture","articles":[]}]},"previous":{"title":"Presentational and container components","level":"2.5","depth":1,"path":"chapter-6/README.md","ref":"chapter-6/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"//*[@class='new-page']","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-7/README.md","mtime":"2018-04-12T15:58:50.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-13T15:53:00.177Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

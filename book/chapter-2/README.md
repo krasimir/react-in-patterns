@@ -72,7 +72,8 @@ The first obvious output of a React component is the rendered HTML. Visually tha
 
 In the following example we have a component that accepts the user's input and sends it out (`<NameField />`).
 
-<div style="page-break-after: always;"></div>
+<span class="new-page"></span>
+
 ```js
 function NameField({ valueUpdated }) {
   return (

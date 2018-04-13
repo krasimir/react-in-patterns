@@ -302,6 +302,8 @@ We'll store the dependencies in `dependencies` global variable (it's global for 
 
 Having the `di.jsx` helper we are again able to register our dependencies at the entry point of our application (`app.jsx`) and inject them wherever (`Title.jsx`) we need.
 
+<span class="new-page"></span>
+
 ```js
 // app.jsx
 import Header from './Header.jsx';

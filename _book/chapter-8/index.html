@@ -386,7 +386,7 @@
 
     
         
-        <li class="header">MISC</li>
+        <li class="header">Good to know</li>
         
         
     
@@ -534,6 +534,26 @@
     
 
     
+        
+        <li class="header">Summary</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../chapter-13/">
+            
+                <a href="../chapter-13/">
+            
+                    
+                    Summary
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
 
     <li class="divider"></li>
 
@@ -579,16 +599,15 @@
                                 
                                 <h1 id="flux">Flux</h1>
 <p>I&apos;m obsessed by making my code simpler. I didn&apos;t say <em>smaller</em> because having less code doesn&apos;t mean that is simple and easy to work with. I believe that big part of the problems in the software industry come from the unnecessary complexity. Complexity which is a result of our own abstractions. You know, we (the programmers) like to abstract. We like placing things in black boxes and hope that these boxes work together.</p>
-<p><a href="http://facebook.github.io/flux/" target="_blank">Flux</a> is an architectural design pattern for building user interfaces. It was introduced by Facebook at their <a href="https://youtu.be/nYkdrAPrdcw?t=568" target="_blank">F8</a> conference. Since then, lots of companies adopted the idea and it seems like a good pattern for building front-end apps. Flux is very often used with <a href="http://facebook.github.io/react/" target="_blank">React</a>. Another library released by Facebook. I myself use React+Flux/Redux in my <a href="http://antidote.me/" target="_blank">daily job</a> and I could say that the simplicity is one of the main benefits. This combination helps creating apps faster and at the same time keeps the code well organized.</p>
+<p><a href="http://facebook.github.io/flux/" target="_blank">Flux</a> is an architectural design pattern for building user interfaces. It was introduced by Facebook at their <a href="https://youtu.be/nYkdrAPrdcw?t=568" target="_blank">F8</a> conference. Since then, lots of companies adopted the idea and it seems like a good pattern for building front-end apps. Flux is very often used with <a href="http://facebook.github.io/react/" target="_blank">React</a>. Another library released by Facebook. I myself use React+Flux/Redux in my <a href="http://antidote.me/" target="_blank">daily job</a> and I could say that it is simple and really flexible. The pattern helps creating apps faster and at the same time keeps the code well organized.</p>
 <h2 id="flux-architecture-and-its-main-characteristics">Flux architecture and its main characteristics</h2>
 <p><img src="fluxiny_basic_flux_architecture.jpg" alt="Basic flux architecture"></p>
-<p>The main actor in this pattern is the <em>dispatcher</em>. It acts as a hub for all the events in the system. Its job is to receive notifications that we call <em>actions</em> and pass them to all the <em>stores</em>. The store decides if it is interested or not and reacts by changing its internal state. That change is triggering re-rendering of the <em>views</em> which are (in our case) React components. If we have to compare Flux to the well known MVC we may say that the store is similar to the model. It keeps the data and its mutations.</p>
-<p>The actions are coming to the dispatcher either from the views or from other part of the system like services. For example a module that performs a HTTP request. When it receives the result it may fire an action saying that the request was successful.</p>
-<p>A wrong data flow is one of the biggest pitfalls in flux. For example, we may have an access to the store in our views but we should never call store methods that mutate its internal state. This should only happen via actions. Or we may end up with a store that receives an action and dispatches another one.</p>
+<p>The main actor in this pattern is the <em>dispatcher</em>. It acts as a hub for all the events in the system. Its job is to receive notifications that we call <em>actions</em> and pass them to all the <em>stores</em>. The store decides if it is interested or not and reacts by changing its internal state/data. That change is triggering re-rendering of the <em>views</em> which are (in our case) React components. If we have to compare Flux to the well known MVC we may say that the store is similar to the model. It keeps the data and its mutations.</p>
+<p>The actions are coming to the dispatcher either from the views or from other parts of the system, like services. For example a module that performs a HTTP request. When it receives the result it may fire an action saying that the request was successful.</p>
 <h2 id="implementing-a-flux-architecture">Implementing a Flux architecture</h2>
-<p>As every other popular concept Flux also has some <a href="https://medium.com/social-tables-tech/we-compared-13-top-flux-implementations-you-won-t-believe-who-came-out-on-top-1063db32fe73" target="_blank">variations</a>. Very often to understand something we have to implement it ourself. In the next few sections we will create a library that provides helpers for building the Flux pattern.</p>
+<p>As every other popular concept Flux also has some <a href="https://medium.com/social-tables-tech/we-compared-13-top-flux-implementations-you-won-t-believe-who-came-out-on-top-1063db32fe73" target="_blank">variations</a>. Very often to understand something we have to implement it. In the next few sections we will create a library that provides helpers for building the Flux pattern.</p>
 <h3 id="the-dispatcher">The dispatcher</h3>
-<p>In most of the cases we need a single dispatcher. Because it acts as a glue for the rest of the parts it makes sense that we have only one. There are two inputs to the dispatcher - actions and stores. The actions are simply forwarded to the stores so we don&apos;t necessary have to keep them. The stores however should be tracked inside the dispatcher so we can loop through them:</p>
+<p>In most of the cases we need a single dispatcher. Because it acts as a glue for the rest of the parts it makes sense that we have only one. The dispatcher needs to know about two things - actions and stores. The actions are simply forwarded to the stores so we don&apos;t necessary have to keep them. The stores however should be tracked inside the dispatcher so we can loop through them:</p>
 <p><img src="fluxiny_the_dispatcher.jpg" alt="the dispatcher"></p>
 <p>That&apos;s what I started with:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> Dispatcher = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
@@ -616,6 +635,7 @@
   }
 }
 </code></pre>
+<p><br></p>
 <h3 id="bounding-the-views-and-the-stores">Bounding the views and the stores</h3>
 <p>The next logical step is to connect our views to the stores so we re-render when the state in the stores is changed.</p>
 <p><img src="fluxiny_store_change_view.jpg" alt="Bounding the views and the stores"></p>
@@ -623,7 +643,8 @@
 <p>Some of the flux implementations available out there provide a helper function that does the job. For example:</p>
 <pre><code class="lang-js">Framework.attachToStore(view, store);
 </code></pre>
-<p>However, I don&apos;t quite like this approach. To make <code>attachStore</code> works we expect to see a specific API in the view and in the store. We kind of strictly define new public methods. Or in other words we say &quot;Your views and store should have such APIs so we are able to wire them together&quot;. If we go down this road then we will probably define our own base classes which could be extended so we don&apos;t bother the developer with Flux details. Then we say &quot;All your classes should extend our classes&quot;. This doesn&apos;t sound good either because the developer may decide to switch to another Flux provider and he/she has to amend everything.</p>
+<p>However, I don&apos;t quite like this approach. To make <code>attachStore</code> works we expect to see a specific API in the view and in the store. We kind of strictly define new public methods. Or in other words we say &quot;Your views and store should have such APIs so we are able to wire them together&quot;. If we go down this road then we will probably define our own base classes which could be extended so we don&apos;t bother the developer with Flux details. Then we say &quot;All your classes should extend our classes&quot;. This doesn&apos;t sound good either because the developer may decide to switch to another Flux provider and has to amend everything.</p>
+<p><br><br></p>
 <h4 id="with-a-mixin">With a mixin</h4>
 <p>What if we use React&apos;s <a href="https://facebook.github.io/react/docs/reusable-components.html#mixins" target="_blank">mixins</a>.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> View = React.createClass({
@@ -631,15 +652,16 @@
   ...
 });
 </code></pre>
-<p>That&apos;s a &quot;nice&quot; way to define behavior of existing React component. So, in theory we may create a mixin that does the bounding for us. To be honest, I don&apos;t think that this is a good idea too. And <a href="https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750" target="_blank">it looks</a> like it&apos;s not only me. My reason of not liking mixins is that they modify the components in a non-predictable way. I have no idea what is going on behind the scenes. So I&apos;m crossing this option.</p>
+<p>That&apos;s a &quot;nice&quot; way to define behavior of existing React component. So, in theory we may create a mixin that does the bounding for us. To be honest, I don&apos;t think that this is a good idea. And <a href="https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750" target="_blank">it looks</a> like it&apos;s not only me. My reason of not liking mixins is that they modify the components in a non-predictable way. I have no idea what is going on behind the scenes. So I&apos;m crossing this option.</p>
 <h4 id="using-a-context">Using a context</h4>
-<p>Another technique that may answer to the question is React&apos;s <a href="https://facebook.github.io/react/docs/context.html" target="_blank">context</a>. It&apos;s a way to pass props to child components without the need to specify them in every level of the tree. Facebook suggests context in the cases where we have data that has to reach deeply nested components.</p>
+<p>Another technique that may answer the question is React&apos;s <a href="https://facebook.github.io/react/docs/context.html" target="_blank">context</a>. It is a way to pass props to child components without the need to specify them in every level of the tree. Facebook suggests context in the cases where we have data that has to reach deeply nested components.</p>
 <blockquote>
 <p>Occasionally, you want to pass data through the component tree without having to pass the props down manually at every level. React&apos;s &quot;context&quot; feature lets you do this.</p>
 </blockquote>
 <p>I see similarity with the mixins here. The context is defined somewhere at the top and magically serves props for all the children below. It&apos;s not immediately clear where the data comes from.</p>
+<p><br><br><br></p>
 <h4 id="higher-order-components-concept">Higher-Order components concept</h4>
-<p>Higher-Order components pattern is <a href="https://gist.github.com/sebmarkbage/ef0bf1f338a7182b6775" target="_blank">introduced</a> by Sebastian Markb&#xE5;ge and it&apos;s about creating a wrapper component that returns ours. However, while doing it it has the opportunity to send properties or apply additional logic. For example:</p>
+<p>Higher-Order components pattern is <a href="https://gist.github.com/sebmarkbage/ef0bf1f338a7182b6775" target="_blank">introduced</a> by Sebastian Markb&#xE5;ge and it&apos;s about creating a wrapper component that returns ours. While doing it it has the opportunity to send properties or apply additional logic. For example:</p>
 <pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">attachToStore</span>(<span class="hljs-params">Component, store, consumer</span>) </span>{
   <span class="hljs-keyword">const</span> Wrapper = React.createClass({
     getInitialState() {
@@ -672,7 +694,7 @@ ProfilePage = connectToStores(MyView, store, (props, store) =&gt; ({
   data: store.get(<span class="hljs-string">&apos;key&apos;</span>)
 }));
 </code></pre>
-<p>That is an interesting pattern because it shifts the responsibilities. It is the view fetching data from the store and not the store pushing something to the view. This of course has its own pros and cons. It is nice because it makes the store dummy. A store that only mutates the data and says &quot;Hey, my state is changed&quot;. It is not responsible for sending anything to anyone. The downside of this approach is maybe the fact that we have one more component (the wrapper) involved. We also need the three bits - view, store and consumer to be in one place so we can fulfill the connection.</p>
+<p>That is an interesting pattern because it shifts the responsibilities. It is the view fetching data from the store and not the store pushing something to the view. This of course has its own pros and cons. It is nice because it makes the store dummy. A store that only mutates the data and says &quot;Hey, my state is changed&quot;. It is not responsible for sending anything to anyone. The downside of this approach is maybe the fact that we have one more component (the wrapper) involved. We also need the three things - view, store and consumer to be in one place so we can establish the connection.</p>
 <h4 id="my-choice">My choice</h4>
 <p>The last option above, higher-order components, is really close to what I&apos;m searching for. I like the fact that the view decides what it needs. That <em>knowledge</em> anyway exists in the component so it makes sense to keep it there. That&apos;s also why the functions that generate higher-order components are usually kept in the same file as the view. What if we can use similar approach but not passing the store at all. Or in other words, a function that accepts only the consumer. And that function is called every time when there is a change in the store.</p>
 <p>So far our implementation interacts with the store only in the <code>register</code> method.</p>
@@ -690,7 +712,9 @@ ProfilePage = connectToStores(MyView, store, (props, store) =&gt; ({
 <p>Here is how the register method looks like after the changes:</p>
 <pre><code class="lang-js">register: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">store</span>) </span>{
   <span class="hljs-keyword">if</span> (!store || !store.update) {
-    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&apos;You should provide a store that has an `update` method.&apos;</span>);
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(
+      <span class="hljs-string">&apos;You should provide a store that has an `update` method.&apos;</span>
+    );
   } <span class="hljs-keyword">else</span> {
     <span class="hljs-keyword">var</span> consumers = [];
     <span class="hljs-keyword">var</span> subscribe = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">consumer</span>) </span>{
@@ -707,7 +731,9 @@ ProfilePage = connectToStores(MyView, store, (props, store) =&gt; ({
 <p>According to the basic principles of the flux architecture the stores change their state in response of actions. In the <code>update</code> method we send the <code>action</code> but we could also send a function <code>change</code>. Calling that function should trigger the consumers:</p>
 <pre><code class="lang-js">register: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">store</span>) </span>{
   <span class="hljs-keyword">if</span> (!store || !store.update) {
-    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&apos;You should provide a store that has an `update` method.&apos;</span>);
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(
+      <span class="hljs-string">&apos;You should provide a store that has an `update` method.&apos;</span>
+    );
   } <span class="hljs-keyword">else</span> {
     <span class="hljs-keyword">var</span> consumers = [];
     <span class="hljs-keyword">var</span> change = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
@@ -740,12 +766,15 @@ dispatch: <span class="hljs-function"><span class="hljs-keyword">function</span>
 };
 </code></pre>
 <p>Of course sometimes this is not needed so we added a flag which is by default falsy. Here is the final version of our dispatcher:</p>
+<p><span class="new-page"></span></p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> Dispatcher = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">return</span> {
     _stores: [],
     register: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">store</span>) </span>{
       <span class="hljs-keyword">if</span> (!store || !store.update) {
-        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&apos;You should provide a store that has an `update` method.&apos;</span>);
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(
+          <span class="hljs-string">&apos;You should provide a store that has an `update` method&apos;</span>
+        );
       } <span class="hljs-keyword">else</span> {
         <span class="hljs-keyword">var</span> consumers = [];
         <span class="hljs-keyword">var</span> change = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
@@ -773,6 +802,7 @@ dispatch: <span class="hljs-function"><span class="hljs-keyword">function</span>
   }
 };
 </code></pre>
+<p><span class="new-page"></span></p>
 <h2 id="the-actions">The actions</h2>
 <p>You probably noticed that we didn&apos;t talk about the actions. What are they? The convention is that they should be simple objects having two properties - <code>type</code> and <code>payload</code>:</p>
 <pre><code class="lang-js">{
@@ -790,7 +820,10 @@ dispatch: <span class="hljs-function"><span class="hljs-keyword">function</span>
     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&apos;Please, provide action\&apos;s type.&apos;</span>);
   } <span class="hljs-keyword">else</span> {
     <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">payload</span>) </span>{
-      <span class="hljs-keyword">return</span> dispatcher.dispatch({ type: type, payload: payload });
+      <span class="hljs-keyword">return</span> dispatcher.dispatch({
+        type: type,
+        payload: payload
+      });
     }
   }
 }
@@ -815,7 +848,9 @@ dispatch: <span class="hljs-function"><span class="hljs-keyword">function</span>
     _stores: [],
     register: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">store</span>) </span>{
       <span class="hljs-keyword">if</span> (!store || !store.update) {
-        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&apos;You should provide a store that has an `update` method.&apos;</span>);
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(
+          <span class="hljs-string">&apos;You should provide a store that has an `update` method&apos;</span>
+        );
       } <span class="hljs-keyword">else</span> {
         <span class="hljs-keyword">var</span> consumers = [];
         <span class="hljs-keyword">var</span> change = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
@@ -853,7 +888,10 @@ dispatch: <span class="hljs-function"><span class="hljs-keyword">function</span>
           <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">&apos;Please, provide action\&apos;s type.&apos;</span>);
         } <span class="hljs-keyword">else</span> {
           <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">payload</span>) </span>{
-            <span class="hljs-keyword">return</span> dispatcher.dispatch({ type: type, payload: payload });
+            <span class="hljs-keyword">return</span> dispatcher.dispatch({
+              type: type,
+              payload: payload
+            });
           }
         }
       },
@@ -867,6 +905,7 @@ dispatch: <span class="hljs-function"><span class="hljs-keyword">function</span>
 <p>If we add the support of AMD, CommonJS and global usage we end up with 66 lines of code, 1.7KB plain or 795 bytes after minification JavaScript.</p>
 <h2 id="wrapping-up">Wrapping up</h2>
 <p>We have a module that provides two helpers for building a Flux project. Let&apos;s write a simple counter app that doesn&apos;t involve React so we see the pattern in action.</p>
+<p><span class="new-page"></span></p>
 <h3 id="the-markup">The markup</h3>
 <p>We&apos;ll need some UI to interact with it so:</p>
 <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;counter&quot;</span>&gt;</span>
@@ -881,7 +920,8 @@ dispatch: <span class="hljs-function"><span class="hljs-keyword">function</span>
   <span class="hljs-keyword">var</span> value = <span class="hljs-literal">null</span>;
   <span class="hljs-keyword">var</span> el = <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">&apos;#counter&apos;</span>);
   <span class="hljs-keyword">var</span> display = el.querySelector(<span class="hljs-string">&apos;span&apos;</span>);
-  <span class="hljs-keyword">var</span> [ increaseBtn, decreaseBtn ] = <span class="hljs-built_in">Array</span>.from(el.querySelectorAll(<span class="hljs-string">&apos;button&apos;</span>));
+  <span class="hljs-keyword">var</span> [ increaseBtn, decreaseBtn ] =
+    <span class="hljs-built_in">Array</span>.from(el.querySelectorAll(<span class="hljs-string">&apos;button&apos;</span>));
 
   <span class="hljs-keyword">var</span> render = () =&gt; display.innerHTML = value;
   <span class="hljs-keyword">var</span> updateState = (store) =&gt; value = store.getValue();
@@ -975,7 +1015,7 @@ View(counterStoreSubscriber, actions.increase, actions.decrease);
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Flux","level":"3.2","depth":1,"next":{"title":"Flux architecture and its main characteristics","level":"3.2.1","depth":2,"anchor":"#flux-architecture-and-its-main-characteristics","path":"chapter-8/README.md","ref":"chapter-8/README.md#flux-architecture-and-its-main-characteristics","articles":[]},"previous":{"title":"One direction data flow","level":"3.1","depth":1,"path":"chapter-7/README.md","ref":"chapter-7/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-8/README.md","mtime":"2018-04-02T15:49:08.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-03T13:51:55.802Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Flux","level":"3.2","depth":1,"next":{"title":"Flux architecture and its main characteristics","level":"3.2.1","depth":2,"anchor":"#flux-architecture-and-its-main-characteristics","path":"chapter-8/README.md","ref":"chapter-8/README.md#flux-architecture-and-its-main-characteristics","articles":[]},"previous":{"title":"One direction data flow","level":"3.1","depth":1,"path":"chapter-7/README.md","ref":"chapter-7/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"//*[@class='new-page']","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-8/README.md","mtime":"2018-04-12T16:03:35.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-13T15:53:00.177Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

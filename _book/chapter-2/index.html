@@ -386,7 +386,7 @@
 
     
         
-        <li class="header">MISC</li>
+        <li class="header">Good to know</li>
         
         
     
@@ -534,6 +534,26 @@
     
 
     
+        
+        <li class="header">Summary</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../chapter-13/">
+            
+                <a href="../chapter-13/">
+            
+                    
+                    Summary
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
 
     <li class="divider"></li>
 
@@ -578,10 +598,10 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="communication">Communication</h1>
-<p>If you work with React for a couple of days you will realize that every React component is like a small system that operates on its own. It has its own state, input and output. In the following sections we will explore these characteristics.</p>
+<p>Every React component is like a small system that operates on its own. It has its own state, input and output. In the following section we will explore these characteristics.</p>
 <p><img src="communication.jpg" alt="Input-Output"></p>
 <h2 id="input">Input</h2>
-<p>The input for a React component is its props. That&apos;s how we pass data to it:</p>
+<p>The input of a React component is its props. That&apos;s how we pass data to it:</p>
 <pre><code class="lang-js"><span class="hljs-comment">// Title.jsx</span>
 <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Title</span>(<span class="hljs-params">props</span>) </span>{
   <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>{ props.text }<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>;
@@ -628,13 +648,16 @@ Title.defaultProps = {
 }
 </code></pre>
 <p>In this example <code>&lt;span&gt;community&lt;/span&gt;</code> in <code>App</code> component is <code>children</code> in <code>Title</code> component. Notice that if we don&apos;t return <code>{ children }</code> as part of the <code>Title</code>&apos;s body the <code>&lt;span&gt;</code> tag will not be rendered.</p>
-<p>(prior v16.3) An indirect input to a component may be also the so called <code>context</code>. The whole React tree may have a <code>context</code> object which is accessible by every component. More about that in the <a href="https://github.com/krasimir/react-in-patterns/tree/master/patterns/dependency-injection" target="_blank">dependency injection</a> section.</p>
+<p>(prior v16.3) An indirect input to a component may be also the so called <code>context</code>. The whole React tree may have a <code>context</code> object which is accessible by every component. More about that in the <a href="../chapter-10/">dependency injection</a> section.</p>
 <h2 id="output">Output</h2>
-<p>The first obvious output of a React component is the rendered HTML. Visually that&apos;s what we get. However, because the prop may be everything including a function we could also receive data or see a process triggered.</p>
+<p>The first obvious output of a React component is the rendered HTML. Visually that is what we get. However, because the prop may be everything including a function we could also send out data or trigger a process.</p>
 <p>In the following example we have a component that accepts the user&apos;s input and sends it out (<code>&lt;NameField /&gt;</code>).</p>
+<p><span class="new-page"></span></p>
 <pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">NameField</span>(<span class="hljs-params">{ valueUpdated }</span>) </span>{
-  <span class="hljs-keyword">return</span> &lt;input onChange={
-    event =&gt; valueUpdated(event.target.value) } /&gt;
+  <span class="hljs-keyword">return</span> (
+    &lt;input
+      onChange={event =&gt; valueUpdated(event.target.value) } /&gt;
+  );
 };
 class App extends React.Component {
   constructor(props) {
@@ -645,15 +668,15 @@ class App extends React.Component {
   render() {
     return (
       &lt;div&gt;
-        &lt;NameField valueUpdated={
-          name =&gt; this.setState({ name }) } /&gt;
+        &lt;NameField
+          valueUpdated={ name =&gt; this.setState({ name }) } /&gt;
         Name: { this.state.name }
       &lt;/div&gt;
     );
   }
 };
 </code></pre>
-<p>Very often we need an entry point of our logic. React comes with some handy lifecycle methods that may be used to trigger a process. Let&apos;s say that we have an external resource that needs to be fetched on a specific page.</p>
+<p>Very often we need an entry point of our logic. React comes with some handy lifecycle methods that may be used to trigger a process. For example we have an external resource that needs to be fetched on a specific page.</p>
 <pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ResultsPage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   componentDidMount() {
     <span class="hljs-keyword">this</span>.props.getResults();
@@ -667,9 +690,9 @@ class App extends React.Component {
   }
 }
 </code></pre>
-<p>Let&apos;s say that we are building a search-results experience. We have a search page and we enter our criteria there. We click submit and the user goes to <code>/results</code> where we have to display the result of the search. Once we land on the results page we render some sort of a loading screen and trigger a request for fetching the results in <code>componentDidMount</code> lifecycle hook. When the data comes we pass it to a <code>&lt;List&gt;</code> component.</p>
+<p>Let&apos;s say that we are building a search-results experience. We have a search page and we enter our criteria there. We click submit and the user goes to <code>/results</code> where we have to display the result of the search. Once we land on the results page we render some sort of a loading screen and trigger a request for fetching the results in <code>componentDidMount</code> lifecycle hook. When the data comes back we pass it to a <code>&lt;List&gt;</code> component.</p>
 <h2 id="final-thoughts">Final thoughts</h2>
-<p>It is nice that we may think about every React component as a black box. It has its own input, lifecycle and output. It is up to us how we compose these boxes. And maybe that is one of the advantages that React offers. Easy to abstract and easy to compose.</p>
+<p>It is nice that we may think about every React component as a black box. It has its own input, lifecycle and output. It is up to us to compose these boxes. And maybe that is one of the advantages that React offers. Easy to abstract and easy to compose.</p>
 
                                 
                                 </section>
@@ -713,7 +736,7 @@ class App extends React.Component {
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Communication","level":"2.1","depth":1,"next":{"title":"Input","level":"2.1.1","depth":2,"anchor":"#input","path":"chapter-2/README.md","ref":"chapter-2/README.md#input","articles":[]},"previous":{"title":"In brief","level":"1.2","depth":1,"path":"chapter-1/README.md","ref":"chapter-1/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-2/README.md","mtime":"2018-04-03T04:07:00.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-03T13:51:55.802Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Communication","level":"2.1","depth":1,"next":{"title":"Input","level":"2.1.1","depth":2,"anchor":"#input","path":"chapter-2/README.md","ref":"chapter-2/README.md#input","articles":[]},"previous":{"title":"In brief","level":"1.2","depth":1,"path":"chapter-1/README.md","ref":"chapter-1/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"//*[@class='new-page']","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-2/README.md","mtime":"2018-04-12T15:45:41.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-13T15:53:00.177Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

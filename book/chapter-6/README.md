@@ -59,6 +59,8 @@ Containers know about data, its shape and where it comes from. They know details
 
 Here's how our `ClockContainer` looks like:
 
+<span class="new-page"></span>
+
 ```js
 // Clock/index.js
 import Clock from './Clock.jsx'; // <-- that's the presentational component
@@ -100,8 +102,6 @@ It still accepts `time` (a date object), does the `setInterval` loop and knows d
 Presentational components are concerned with how the things look. They have the additional markup needed for making the page pretty. Such components are not bound to anything and have no dependencies. Very often implemented as a [stateless functional components](https://facebook.github.io/react/blog/2015/10/07/react-v0.14.html#stateless-functional-components) they don't have internal state.
 
 In our case the presentational component contains only the two-digits check and returns the `<h1>` tag:
-
-<br /><br /><br /><br /><br />
 
 ```js
 // Clock/Clock.jsx

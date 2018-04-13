@@ -53,6 +53,8 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
+    <link rel="next" href="../chapter-13/" />
+    
     
     <link rel="prev" href="../chapter-11/" />
     
@@ -384,7 +386,7 @@
 
     
         
-        <li class="header">MISC</li>
+        <li class="header">Good to know</li>
         
         
     
@@ -532,6 +534,26 @@
     
 
     
+        
+        <li class="header">Summary</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../chapter-13/">
+            
+                <a href="../chapter-13/">
+            
+                    
+                    Summary
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
 
     <li class="divider"></li>
 
@@ -596,7 +618,11 @@
   render() {
     <span class="hljs-keyword">return</span> (
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
-      { this.props.tags.map((tag, i) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{</span> <span class="hljs-attr">i</span> }&gt;</span>{ tag } <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>) }
+      { 
+        this.props.tags.map(
+          (tag, i) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{</span> <span class="hljs-attr">i</span> }&gt;</span>{ tag } <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        )
+      }
       <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span>
     );
   }
@@ -622,16 +648,17 @@ ReactDOM.render(&lt;App /&gt;, document.querySelector(&apos;#container&apos;));
 </code></pre>
 <p>The entry point is our <code>App</code> class. It uses the <code>Tags</code> component that displays an unordered list based on the passed <code>tags</code> prop. When React renders the list on the screen we know that we have a <code>&lt;ul&gt;</code> tag so we can hook it up to the jQuery plugin.</p>
 <h2 id="force-a-single-render">Force a single-render</h2>
-<p>The very first thing that we have to do is to force a single-render of the <code>Tags</code> component. That&apos;s because when React adds the elements in the actual DOM we want to pass the control of them to jQuery. If we skip this both React and jQuery will work on same DOM elements without knowing for each other. To achieve a single-render we have to use the lifecycle method <code>shouldComponentUpdate</code> like so:</p>
+<p>The very first thing that we have to do is to force a single-render of the <code>Tags</code> component. That is because when React adds the elements in the actual DOM we want to pass the control of them to jQuery. If we skip this both React and jQuery will work on same DOM elements without knowing for each other. To achieve a single-render we have to use the lifecycle method <code>shouldComponentUpdate</code> like so:</p>
 <pre><code class="lang-jsx"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Tags</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   shouldComponentUpdate() {
     <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
   }
   ...
 </code></pre>
-<p>By always returning <code>false</code> here we are saying that our component will never re-render. If defined <code>shouldComponentUpdate</code> is used by React to understand whether to trigger <code>render</code> or not. That&apos;s ideal for our case because we want to place the markup on the page using React but we don&apos;t want to rely on it after that.</p>
+<p>By always returning <code>false</code> here we are saying that our component will never re-render. If defined <code>shouldComponentUpdate</code> is used by React to understand whether to trigger <code>render</code> or not. That is ideal for our case because we want to place the markup on the page using React but we don&apos;t want to rely on it after that.</p>
 <h2 id="initializing-the-plugin">Initializing the plugin</h2>
 <p>React gives us an <a href="https://facebook.github.io/react/docs/refs-and-the-dom.html" target="_blank">API</a> for accessing actual DOM nodes. We have to use the <code>ref</code> attribute on a node and later reach that node via <code>this.refs</code>. <code>componentDidMount</code> is the proper lifecycle method for initializing the <em>tag-it</em> plugin. That&apos;s because we get it called when React mounts the result of the <code>render</code> method.</p>
+<p><br><br><br></p>
 <pre><code class="lang-jsx"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Tags</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   ...
   componentDidMount() {
@@ -641,7 +668,11 @@ ReactDOM.render(&lt;App /&gt;, document.querySelector(&apos;#container&apos;));
   render() {
     <span class="hljs-keyword">return</span> (
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&apos;list&apos;</span>&gt;</span>
-      { this.props.tags.map((tag, i) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{</span> <span class="hljs-attr">i</span> }&gt;</span>{ tag } <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>) }
+      { 
+        this.props.tags.map(
+          (tag, i) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{</span> <span class="hljs-attr">i</span> }&gt;</span>{ tag } <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        )
+      }
       <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span>
     );
   }
@@ -651,6 +682,7 @@ ReactDOM.render(&lt;App /&gt;, document.querySelector(&apos;#container&apos;));
 <h2 id="controlling-the-plugin-using-react">Controlling the plugin using React</h2>
 <p>Let&apos;s say that we want to programmatically add a new tag to the already running <em>tag-it</em> field. Such action will be triggered by the React component and needs to use the jQuery API. We have to find a way to communicate data to <code>Tags</code> component but still keep the single-render approach.</p>
 <p>To illustrate the whole process we will add an input field to the <code>App</code> class and a button which if clicked will pass a string to <code>Tags</code> component.</p>
+<p><br></p>
 <pre><code class="lang-jsx"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   <span class="hljs-keyword">constructor</span>(props) {
     <span class="hljs-keyword">super</span>(props);
@@ -672,13 +704,16 @@ ReactDOM.render(&lt;App /&gt;, document.querySelector(&apos;#container&apos;));
           &lt;input type=&apos;text&apos; ref=&apos;field&apos; /&gt;
           &lt;button onClick={ this._addNewTag }&gt;Add&lt;/button&gt;
         &lt;/div&gt;
-        &lt;Tags tags={ this.state.tags } newTag={ this.state.newTag } /&gt;
+        &lt;Tags
+          tags={ this.state.tags }
+          newTag={ this.state.newTag } /&gt;
       &lt;/div&gt;
     );
   }
 }
 </code></pre>
 <p>We use the internal state as a data storage for the value of the newly added field. Every time when we click the button we update the state and trigger re-rendering of <code>Tags</code> component. However, because of <code>shouldComponentUpdate</code> we have no any updates on the screen. The only one change is that we get a new value of the <code>newTag</code> prop which may be captured via another lifecycle method - <code>componentWillReceiveProps</code>:</p>
+<p><br><br><br></p>
 <pre><code class="lang-jsx"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Tags</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   ...
   componentWillReceiveProps(newProps) {
@@ -702,12 +737,17 @@ ReactDOM.render(&lt;App /&gt;, document.querySelector(&apos;#container&apos;));
   render() {
     <span class="hljs-keyword">return</span> (
       <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&apos;list&apos;</span>&gt;</span>
-      { this.props.tags.map((tag, i) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{</span> <span class="hljs-attr">i</span> }&gt;</span>{ tag } <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>) }
+      { 
+        this.props.tags.map(
+          (tag, i) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{</span> <span class="hljs-attr">i</span> }&gt;</span>{ tag } <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+        ) 
+      }
       <span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span></span>
     );
   }
 };
 </code></pre>
+<p><br></p>
 <h2 id="final-thoughts">Final thoughts</h2>
 <p>Even though React is manipulating the DOM tree we are able to integrate third-party libraries and services. The available lifecycle methods give us enough control on the rendering process so they are the perfect bridge between React and non-React code.</p>
 
@@ -737,10 +777,14 @@ ReactDOM.render(&lt;App /&gt;, document.querySelector(&apos;#container&apos;));
 
             
                 
-                <a href="../chapter-11/#styled-components" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Styled-components">
+                <a href="../chapter-11/#styled-components" class="navigation navigation-prev " aria-label="Previous page: Styled-components">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
+                
+                <a href="../chapter-13/" class="navigation navigation-next " aria-label="Next page: Summary">
+                    <i class="fa fa-angle-right"></i>
+                </a>
                 
             
         
@@ -749,7 +793,7 @@ ReactDOM.render(&lt;App /&gt;, document.querySelector(&apos;#container&apos;));
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Integration of third-party libraries","level":"4.3","depth":1,"previous":{"title":"Styled-components","level":"4.2.4","depth":2,"anchor":"#styled-components","path":"chapter-11/README.md","ref":"chapter-11/README.md#styled-components","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-12/README.md","mtime":"2018-04-02T15:50:14.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-03T13:51:55.802Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Integration of third-party libraries","level":"4.3","depth":1,"next":{"title":"Summary","level":"5.1","depth":1,"path":"chapter-13/README.md","ref":"chapter-13/README.md","articles":[]},"previous":{"title":"Styled-components","level":"4.2.4","depth":2,"anchor":"#styled-components","path":"chapter-11/README.md","ref":"chapter-11/README.md#styled-components","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"//*[@class='new-page']","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-12/README.md","mtime":"2018-04-13T15:22:54.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-13T15:53:00.177Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

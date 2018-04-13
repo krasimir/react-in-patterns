@@ -386,7 +386,7 @@
 
     
         
-        <li class="header">MISC</li>
+        <li class="header">Good to know</li>
         
         
     
@@ -534,6 +534,26 @@
     
 
     
+        
+        <li class="header">Summary</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../chapter-13/">
+            
+                <a href="../chapter-13/">
+            
+                    
+                    Summary
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
 
     <li class="divider"></li>
 
@@ -589,7 +609,8 @@
   }
 };
 </span></code></pre>
-<p>The result of this code is an input element that we can type in but the value stays the same - <code>&apos;hello&apos;</code>. It is never updated because we have a single source of truth - the <code>App</code>&apos;s component state. To make the input works as expected we have to add an <code>onChange</code> handler and update the state (the single source of truth). Which will trigger a new rendering cycle and we will see our updates.</p>
+<p>The result of this code is an input element that we can focus but can&apos;t change. It is never updated because we have a single source of truth - the <code>App</code>&apos;s component state. To make the input works as expected we have to add an <code>onChange</code> handler and update the state (the single source of truth). Which will trigger a new rendering cycle and we will see what we typed.</p>
+<p><span class="new-page"></span></p>
 <pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   <span class="hljs-keyword">constructor</span>(props) {
     <span class="hljs-keyword">super</span>(props);
@@ -609,19 +630,18 @@
   }
 };
 </span></code></pre>
-<p>The <code>&lt;input&gt;</code> element is still <em>controlled</em> but now we see the screen updating while we type.</p>
-<p>On the opposite side is the <em>uncontrolled</em> input where we let the browser handles the user&apos;s updates. We may still provide an initial value by using the <code>defaultValue</code> prop.</p>
+<p>On the opposite side is the <em>uncontrolled</em> input where we let the browser handles the user&apos;s updates. We may still provide an initial value by using the <code>defaultValue</code> prop but after that the browser is responsible for keeping the state of the input.</p>
 <pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   <span class="hljs-keyword">constructor</span>(props) {
     <span class="hljs-keyword">super</span>(props);
     <span class="hljs-keyword">this</span>.state = { value: <span class="hljs-string">&apos;hello&apos;</span> };
   }
   render() {
-    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&apos;text&apos;</span> <span class="hljs-attr">defaultValue</span>=<span class="hljs-string">{</span> <span class="hljs-attr">this.state.value</span> } /&gt;</span>;
+    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&apos;text&apos;</span> <span class="hljs-attr">defaultValue</span>=<span class="hljs-string">{</span> <span class="hljs-attr">this.state.value</span> } /&gt;</span>
   }
 };
 </span></code></pre>
-<p>That is nice but that <code>&lt;input&gt;</code> above is a little bit useless because the user updates the input&apos;s value but our component has no idea about that. We then have to use <a href="https://reactjs.org/docs/glossary.html#refs" target="_blank"><code>Refs</code></a> to get an access to the actual element.</p>
+<p>That <code>&lt;input&gt;</code> element above is a little bit useless because the user updates the value but our component has no idea about that. We then have to use <a href="https://reactjs.org/docs/glossary.html#refs" target="_blank"><code>Refs</code></a> to get an access to the actual element.</p>
 <pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
   <span class="hljs-keyword">constructor</span>(props) {
     <span class="hljs-keyword">super</span>(props);
@@ -645,7 +665,7 @@
 <p>The <code>ref</code> prop receives a string or a callback. The code above uses a callback and stores the DOM element into a <em>local</em> variable called <code>input</code>. Later when the <code>onChange</code> handler is fired we get the new value and send it to the <code>App</code>&apos;s state.</p>
 <p><em>Using a lot of <code>refs</code> is not a good idea. If it happens in your app consider using <code>controlled</code> inputs and re-think your components.</em></p>
 <h2 id="final-thoughts">Final thoughts</h2>
-<p><em>controlled</em> versus <em>uncontrolled</em> inputs is very often underrated. However I believe that it is a fundamental decision because it dictates the data flow in the React component. I personally thing that <em>uncontrolled</em> inputs are kind of an anti-pattern and try to avoid them if possible.</p>
+<p><em>controlled</em> versus <em>uncontrolled</em> inputs is very often underrated. However I believe that it is a fundamental decision because it dictates the data flow in the React component. I personally think that <em>uncontrolled</em> inputs are kind of an anti-pattern and I&apos;m trying to avoid them when possible.</p>
 
                                 
                                 </section>
@@ -689,7 +709,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Controlled and uncontrolled inputs","level":"2.4","depth":1,"next":{"title":"Presentational and container components","level":"2.5","depth":1,"path":"chapter-6/README.md","ref":"chapter-6/README.md","articles":[]},"previous":{"title":"Function as a children, render prop","level":"2.3.4","depth":2,"anchor":"#function-as-a-children-render-prop","path":"chapter-4/README.md","ref":"chapter-4/README.md#function-as-a-children-render-prop","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-5/README.md","mtime":"2018-04-02T15:48:29.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-03T13:51:55.802Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Controlled and uncontrolled inputs","level":"2.4","depth":1,"next":{"title":"Presentational and container components","level":"2.5","depth":1,"path":"chapter-6/README.md","ref":"chapter-6/README.md","articles":[]},"previous":{"title":"Function as a children, render prop","level":"2.3.4","depth":2,"anchor":"#function-as-a-children-render-prop","path":"chapter-4/README.md","ref":"chapter-4/README.md#function-as-a-children-render-prop","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"//*[@class='new-page']","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-5/README.md","mtime":"2018-04-12T15:56:53.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-13T15:53:00.177Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -386,7 +386,7 @@
 
     
         
-        <li class="header">MISC</li>
+        <li class="header">Good to know</li>
         
         
     
@@ -534,6 +534,26 @@
     
 
     
+        
+        <li class="header">Summary</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../chapter-13/">
+            
+                <a href="../chapter-13/">
+            
+                    
+                    Summary
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
 
     <li class="divider"></li>
 
@@ -579,12 +599,8 @@
                                 
                                 <h1 id="composition">Composition</h1>
 <p>One of the biggest benefits of React is composability. I personally don&apos;t know a framework that offers such an easy way to create and combine components. In this section we will explore few composition techniques which proved to work well.</p>
-<p>Let&apos;s get a simple example. Let&apos;s say that we have an application with a header and we want to place a navigation inside. We have three React components - <code>App</code>, <code>Header</code> and <code>Navigation</code>. They have to be nested into each other so we end up with the following markup:</p>
-<pre><code class="lang-js">&lt;App&gt;
-  &lt;Header&gt;
-    &lt;Navigation&gt; ... &lt;/Navigation&gt;
-  &lt;/Header&gt;
-&lt;/App&gt;
+<p>Let&apos;s get a simple example. Let&apos;s say that we have an application with a header and we want to place a navigation inside. We have three React components - <code>App</code>, <code>Header</code> and <code>Navigation</code>. They have to be nested into each other so we end up with the following dependencies:</p>
+<pre><code class="lang-js">&lt;App&gt; -&gt; &lt;Header&gt; -&gt; &lt;Navigation&gt;
 </code></pre>
 <p>The trivial approach for combining these components is to reference them in the places where we need them.</p>
 <pre><code class="lang-js"><span class="hljs-comment">// app.jsx</span>
@@ -606,31 +622,28 @@ export default function Navigation() {
   return (&lt;nav&gt; ... &lt;/nav&gt;);
 }
 </code></pre>
-<p>However, following this approach we introduced several problems:</p>
+<p>However, by following this approach we introduced couple of problems:</p>
 <ul>
-<li>We may consider the <code>App</code> as a place where we do our main composition. The <code>Header</code> though may have other elements like a logo, search field or a slogan. It will be nice if they are passed somehow from the outside so we don&apos;t create a hard-coded dependencies. What if we need the same <code>Header</code> component but without the <code>Navigation</code>. We can&apos;t easily achieve that because we have the two bound tightly together.</li>
+<li>We may consider the <code>App</code> as a place where we do our main composition. The <code>Header</code> though may have other elements like a logo, search field or a slogan. It will be nice if they are passed somehow from the <code>App</code> component so we don&apos;t create a hard-coded dependencies. What if we need the same <code>Header</code> component but without the <code>Navigation</code>. We can&apos;t easily achieve that because we have the two bound tightly together.</li>
 <li>It&apos;s difficult to test. We may have some business logic in the <code>Header</code> and in order to test it we have to create an instance of the component. However, because it imports other components we will probably create instances of those components too and it becomes heavy to test. We may break our <code>Header</code> test by doing something wrong in the <code>Navigation</code> component which is totally misleading. <em>(Note: to some extent <a href="https://facebook.github.io/react/docs/test-utils.html#shallow-rendering" target="_blank">shallow rendering</a> solves this problem by rendering only the <code>Header</code> without its nested children.)</em></li>
 </ul>
 <h2 id="using-reacts-children-api">Using React&apos;s children API</h2>
 <p>In React we have the handy <a href="https://facebook.github.io/react/docs/multiple-components.html#children" target="_blank"><code>children</code></a> prop. That&apos;s how the parent reads/accesses its children. This API will make our Header agnostic and dependency-free:</p>
-<pre><code class="lang-js"><span class="hljs-comment">// App.jsx</span>
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{
+<pre><code class="lang-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">return</span> (
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Header</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-name">Navigation</span> /&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">Header</span>&gt;</span>
   );
 }
-
-// Header.jsx
 export default function Header({ children }) {
   return <span class="hljs-tag">&lt;<span class="hljs-name">header</span>&gt;</span>{ children }<span class="hljs-tag">&lt;/<span class="hljs-name">header</span>&gt;</span>;
 };
 </span></code></pre>
 <p>Notice also that if we don&apos;t use <code>{ children }</code> in <code>Header</code>, the <code>Navigation</code> component will never be rendered.</p>
-<p>It now becomes easier to test because we may render the <code>Header</code> with an empty <code>&lt;div&gt;</code>. This will isolate the component and will let us focus on only one piece of our application.</p>
+<p>It now becomes easier to test because we may render the <code>Header</code> with an empty <code>&lt;div&gt;</code>. This will isolate the component and will let us focus on one piece of our application.</p>
 <h2 id="passing-a-child-as-a-prop">Passing a child as a prop</h2>
-<p>Every React component receive props right. As we mentioned already there is no any strict rule about what these props are. We may even pass other components.</p>
+<p>Every React component receives props. As we mentioned already there is no any strict rule about what these props are. We may even pass other components.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> Title = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello there!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>;
 }
@@ -650,10 +663,10 @@ export default function Header({ children }) {
   );
 };
 </code></pre>
-<p>This technique is useful when a component like <code>Header</code> above needs to decide the order of its children but that&apos;s the only one decision that it takes.</p>
+<p>This technique is useful when a component like <code>Header</code> needs to take decisions about its children but don&apos;t bother about what they actually are. A simple example is a visibility component that hides its children based on a specific condition.</p>
 <h2 id="higher-order-component">Higher-order component</h2>
 <p>For a long period of time higher-order components were the most popular way to enhance and compose React elements. They look really similar to the <a href="http://robdodson.me/javascript-design-patterns-decorator/" target="_blank">decorator design pattern</a> because we have component wrapping and enhancing.</p>
-<p>On the technical side the higher-order component is a function that accepts our original component and returns an enhanced/populated version of it. The most trivial example is as follows:</p>
+<p>On the technical side the higher-order component is usually a function that accepts our original component and returns an enhanced/populated version of it. The most trivial example is as follows:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> enhanceComponent = (Component) =&gt;
   <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Enhance</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
     render() {
@@ -690,8 +703,9 @@ class App extends React.Component {
 var OriginalTitle  = ({ title }) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>{ title }<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>;
 var EnhancedTitle = enhanceComponent(OriginalTitle);
 </span></code></pre>
-<p>The knowledge for the <code>appTitle</code> is hidden into the higher-order component. <code>OriginalTitle</code> knows only that it receives a <code>prop</code> called <code>title</code>. It has no idea that this is coming from a configuration file. That&apos;s a huge advantage because allows us to isolate pieces of our system. It also helps with the testing of the component because we mock easily.</p>
-<p>Another characteristic of this pattern is that we have a nice buffer for additional logic. What if our <code>OriginalTitle</code> needs data also from a remote server. We may query this data in the higher-order component and again send it as a prop.</p>
+<p>The knowledge for the <code>appTitle</code> is hidden into the higher-order component. <code>OriginalTitle</code> knows only that it receives a <code>prop</code> called <code>title</code>. It has no idea that this is coming from a configuration file. That&apos;s a huge advantage because it allows us to isolate blocks. It also helps with the testing of the component because we can create mocks easily.</p>
+<p>Another characteristic of this pattern is that we have a nice buffer for additional logic. For example, if our <code>OriginalTitle</code> needs data also from a remote server. We may query this data in the higher-order component and again send it as a prop.</p>
+<p><span class="new-page"></span></p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> enhanceComponent = (Component) =&gt;
   <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Enhance</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
     <span class="hljs-keyword">constructor</span>(props) {
@@ -715,11 +729,13 @@ var EnhancedTitle = enhanceComponent(OriginalTitle);
     }
   };
 
-var OriginalTitle  = ({ title, remoteTitle }) =&gt; <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>{ title }{ remoteTitle }<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>;
+var OriginalTitle  = ({ title, remoteTitle }) =&gt;
+  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>{ title }{ remoteTitle }<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>;
 var EnhancedTitle = enhanceComponent(OriginalTitle);
 </span></code></pre>
-<p>Again, the <code>OriginalTitle</code> knows that it receives two props and has to render them next to each other. Its only concern is the how the data looks like not where it comes from and how.</p>
+<p>Again, the <code>OriginalTitle</code> knows that it receives two props and has to render them next to each other. Its only concern is how the data looks like not where it comes from and how.</p>
 <p><em><a href="https://github.com/gaearon" target="_blank">Dan Abramov</a> made a really <a href="https://github.com/krasimir/react-in-patterns/issues/12" target="_blank">good point</a> that the actual creation of the higher-order component (i.e. calling a function like <code>enhanceComponent</code>) should happen at a component definition level. Or in other words, it&apos;s a bad practice to do it inside another React component because it may be slow and lead to performance issues.</em></p>
+<p><br><br></p>
 <h2 id="function-as-a-children-render-prop">Function as a children, render prop</h2>
 <p>Last couple of months the React community started shifting in an interesting direction. So far in our examples the <code>children</code> prop was a React component. There is however a new pattern gaining popularity in which the same <code>children</code> prop is a JSX expression. Let&apos;s start by passing a simple object.</p>
 <pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">UserName</span>(<span class="hljs-params">{ children </span>) </span>{
@@ -741,7 +757,8 @@ var EnhancedTitle = enhanceComponent(OriginalTitle);
   );
 }
 </code></pre>
-<p>This may look weird but in fact is really helpful. Like for example when we have some knowledge in the parent component and don&apos;t necessary want to send it down to children. The example below prints a list of TODOs. The <code>App</code> component has all the data and knows how to determine whether a TODO is completed or not. The <code>TodoList</code> component simply encapsulate the needed HTML markup.</p>
+<p>This may look weird but in fact is really powerful. Like for example when we have some knowledge in the parent component and don&apos;t necessary want to send it down to children. The example below prints a list of TODOs. The <code>App</code> component has all the data and knows how to determine whether a TODO is completed or not. The <code>TodoList</code> component simply encapsulate the needed HTML markup.</p>
+<p><br><br><br><br></p>
 <pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">TodoList</span>(<span class="hljs-params">{ todos, children }</span>) </span>{
   <span class="hljs-keyword">return</span> (
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">section</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&apos;main-section&apos;</span>&gt;</span>
@@ -763,13 +780,18 @@ var EnhancedTitle = enhanceComponent(OriginalTitle);
   <span class="hljs-keyword">const</span> isCompleted = todo =&gt; todo.status === <span class="hljs-string">&apos;done&apos;</span>;
   <span class="hljs-keyword">return</span> (
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">TodoList</span> <span class="hljs-attr">todos</span>=<span class="hljs-string">{</span> <span class="hljs-attr">todos</span> }&gt;</span>
-        { todo =&gt; isCompleted(todo) ? <span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>{ todo.label }<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span> : todo.label }
+      {
+        todo =&gt; isCompleted(todo) ?
+          <span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>{ todo.label }<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span> :
+          todo.label
+      }
     <span class="hljs-tag">&lt;/<span class="hljs-name">TodoList</span>&gt;</span></span>
   );
 }
 </code></pre>
 <p>Notice how the <code>App</code> component doesn&apos;t expose the structure of the data. <code>TodoList</code> has no idea that there is <code>label</code> or <code>status</code> properties.</p>
 <p>The so called <em>render prop</em> pattern is almost the same except that we use a prop and not <code>children</code> for rendering the todo.</p>
+<p><br><br><br></p>
 <pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">TodoList</span>(<span class="hljs-params">{ todos, render }</span>) </span>{
   <span class="hljs-keyword">return</span> (
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">section</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&apos;main-section&apos;</span>&gt;</span>
@@ -785,7 +807,10 @@ var EnhancedTitle = enhanceComponent(OriginalTitle);
 <span class="hljs-keyword">return</span> (
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">TodoList</span>
     <span class="hljs-attr">todos</span>=<span class="hljs-string">{</span> <span class="hljs-attr">todos</span> }
-    <span class="hljs-attr">render</span>=<span class="hljs-string">{</span> <span class="hljs-attr">todo</span> =&gt;</span> isCompleted(todo) ? <span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>{ todo.label }<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span> : todo.label } /&gt;
+    <span class="hljs-attr">render</span>=<span class="hljs-string">{</span>
+      <span class="hljs-attr">todo</span> =&gt;</span> isCompleted(todo) ?
+        <span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>{ todo.label }<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span> : todo.label
+    } /&gt;
 );
 </span></code></pre>
 <p>These two patterns, <em>function as children</em> and <em>render prop</em> are probably one of my favorite ones recently. They provide flexibility and help when we want to reuse code. They are also a powerful way to abstract imperative code.</p>
@@ -798,7 +823,9 @@ var EnhancedTitle = enhanceComponent(OriginalTitle);
   }
   render() {
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.state.data === <span class="hljs-literal">null</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;
-    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">section</span>&gt;</span>{ this.props.render(this.state.data) }<span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span></span>;
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">section</span>&gt;</span>{ this.props.render(this.state.data) }<span class="hljs-tag">&lt;/<span class="hljs-name">section</span>&gt;</span></span>
+    );
   }
 }
 </code></pre>
@@ -806,11 +833,13 @@ var EnhancedTitle = enhanceComponent(OriginalTitle);
 <pre><code class="lang-js">&lt;DataProvider render={ data =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>The data is here!<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span> } /&gt;
 </code></pre>
 <p>We do say what we want to happen but not how. That is hidden inside the <code>DataProvider</code>. These days we used this pattern at work where we had to restrict some UI to certain users having <code>read:products</code> permissions. And we used the <em>render prop</em> pattern.</p>
-<pre><code class="lang-js">&lt;Authorize permissionsInclude={[ <span class="hljs-string">&apos;read:products&apos;</span> ]} render={ () =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ProductsList</span> /&gt;</span> } /&gt;
+<pre><code class="lang-js">&lt;Authorize
+  permissionsInclude={[ <span class="hljs-string">&apos;read:products&apos;</span> ]}
+  render={ () =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ProductsList</span> /&gt;</span> } /&gt;
 </span></code></pre>
 <p>Pretty nice and self-explanatory in a declarative fashion. <code>Authorize</code> goes to our identity provider and checks what are the permissions of the current user. If he/she is allowed to read our products we render the <code>ProductList</code>.</p>
 <h2 id="final-thoughts">Final thoughts</h2>
-<p>I believe that the React&apos;s high levels of adoption happens because the library provides nice mechanisms for composition. Did you wonder why HTML is still here. It was created in the dawn of the internet and we still use it. That is because is highly composable. React and its JSX looks like HTML on steroids and as such it comes with the same capabilities. So, make sure that you master the composition because that is one of the biggest benefits of React.</p>
+<p>Did you wonder why HTML is still here. It was created in the dawn of the internet and we still use it. That is because is highly composable. React and its JSX looks like HTML on steroids and as such it comes with the same capabilities. So, make sure that you master the composition because that is one of the biggest benefits of React.</p>
 
                                 
                                 </section>
@@ -854,7 +883,7 @@ var EnhancedTitle = enhanceComponent(OriginalTitle);
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Composition","level":"2.3","depth":1,"next":{"title":"Using React's children API","level":"2.3.1","depth":2,"anchor":"#using-reacts-children-api","path":"chapter-4/README.md","ref":"chapter-4/README.md#using-reacts-children-api","articles":[]},"previous":{"title":"Event handlers","level":"2.2","depth":1,"path":"chapter-3/README.md","ref":"chapter-3/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-4/README.md","mtime":"2018-04-02T15:48:00.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-03T13:51:55.802Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Composition","level":"2.3","depth":1,"next":{"title":"Using React's children API","level":"2.3.1","depth":2,"anchor":"#using-reacts-children-api","path":"chapter-4/README.md","ref":"chapter-4/README.md#using-reacts-children-api","articles":[]},"previous":{"title":"Event handlers","level":"2.2","depth":1,"path":"chapter-3/README.md","ref":"chapter-3/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"//*[@class='new-page']","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-4/README.md","mtime":"2018-04-12T15:55:59.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-13T15:53:00.177Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

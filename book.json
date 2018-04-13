@@ -8,7 +8,8 @@
     "pageNumbers": true,
     "fontSize": 12,
     "fontFamily": "Arial",
-    "paperSize": "a5"
+    "paperSize": "a5",
+    "pageBreaksBefore": "//*[@class='new-page']"
   },
   "styles": {
     "website": "./styles/website.css",

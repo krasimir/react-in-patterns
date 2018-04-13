@@ -386,7 +386,7 @@
 
     
         
-        <li class="header">MISC</li>
+        <li class="header">Good to know</li>
         
         
     
@@ -534,6 +534,26 @@
     
 
     
+        
+        <li class="header">Summary</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../chapter-13/">
+            
+                <a href="../chapter-13/">
+            
+                    
+                    Summary
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
 
     <li class="divider"></li>
 
@@ -578,11 +598,12 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="redux">Redux</h1>
-<p><a href="https://redux.js.org/" target="_blank">Redux</a> is a library that acts as a state container and helps managing your application data flow. It was introduced back in 2015 at ReactEurope conference (<a href="https://www.youtube.com/watch?v=xsSnOQynTHs" target="_blank">video</a>) by <a href="https://twitter.com/dan_abramov" target="_blank">Dan Abramov</a>. It is inspired by the <a href="https://github.com/krasimir/react-in-patterns/tree/master/patterns/flux" target="_blank">Flux architecture</a> and has a lot in common with it. In this section we will create a small counter app using Redux alongside React.</p>
+<p><a href="https://redux.js.org/" target="_blank">Redux</a> is a library that acts as a state container and helps managing your application data flow. It was introduced back in 2015 at ReactEurope conference (<a href="https://www.youtube.com/watch?v=xsSnOQynTHs" target="_blank">video</a>) by <a href="https://twitter.com/dan_abramov" target="_blank">Dan Abramov</a>. It is similar to <a href="https://github.com/krasimir/react-in-patterns/blob/master/book/chapter-8/README.md#flux-architecture-and-its-main-characteristics" target="_blank">Flux architecture</a> and has a lot in common with it. In this section we will create a small counter app using Redux alongside React.</p>
+<p><span class="new-page"></span></p>
 <h2 id="redux-architecture-and-its-main-characteristics">Redux architecture and its main characteristics</h2>
 <p><img src="redux-architecture.jpg" alt="Redux architecture"></p>
-<p>Similarly to <a href="https://github.com/krasimir/react-in-patterns/tree/master/patterns/flux" target="_blank">Flux</a> architecture we have the view components (React) dispatching an action. Same action may be dispatched by another part of our system. Like a bootstrap logic for example. This action is dispatched not to a central hub but directly to the store. We are saying &quot;store&quot; not &quot;stores&quot; because there is only one in Redux. That is one of the big differences between Flux and Redux. The logic that decided how our data changes lives in pure functions called reducers. Once the store receives an action it asks the reducers about the new version of the state by sending the current state and the given action. Then in immutable fashion the reducer needs to return the new state. The store handles from there and updates its internal state. As a final step, the wired to store React components get re-rendered.</p>
-<p>The concept is pretty linear and again follows the <a href="https://github.com/krasimir/react-in-patterns/tree/master/patterns/one-direction-data-flow" target="_blank">one-direction data flow</a>. Let&apos;s talk about all these pieces and introduce a couple of new terms that support the work of the Redux pattern.</p>
+<p>Similarly to <a href="https://github.com/krasimir/react-in-patterns/blob/master/book/chapter-8/README.md" target="_blank">Flux</a> architecture we have the view components (React) dispatching an action. Same action may be dispatched by another part of our system. Like a bootstrap logic for example. This action is dispatched not to a central hub but directly to the store. We are saying &quot;store&quot; not &quot;stores&quot; because there is only one in Redux. That is one of the big differences between Flux and Redux. The logic that decided how our data changes lives in pure functions called reducers. Once the store receives an action it asks the reducers about the new version of the state by sending the current state and the given action. Then in immutable fashion the reducer needs to return the new state. The store continues from there and updates its internal state. As a final step, the wired to the store React component gets re-rendered.</p>
+<p>The concept is pretty linear and again follows the <a href="https://github.com/krasimir/react-in-patterns/blob/master/book/chapter-7/README.md" target="_blank">one-direction data flow</a>. Let&apos;s talk about all these pieces and introduce a couple of new terms that support the work of the Redux pattern.</p>
 <h3 id="actions">Actions</h3>
 <p>The typical action in Redux (same as Flux) is just an object with a <code>type</code> property. Everything else in that object is considered a context specific data and it is not related to the pattern but to your application logic. For example:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> CHANGE_VISIBILITY = <span class="hljs-string">&apos;CHANGE_VISIBILITY&apos;</span>;
@@ -593,10 +614,14 @@
 </code></pre>
 <p>It is a good practice that we create constants like <code>CHANGE_VISIBILITY</code> for our action types. It happens that there are lots of tools/libraries that support Redux and solve different problems which do require the type of the action only. So it is just a convenient way to transfer this information.</p>
 <p>The <code>visible</code> property is the meta data that we mentioned above. It has nothing to do with Redux. It means something in the context of the application.</p>
-<p>Every time when we want to dispatch a method we have to use such objects. However, it becomes too noisy to write them over and over again. That is why there is the concept for <em>action creators</em>. An action create is a function that returns an object and may or may not accept an argument which directly related to the action properties. For example the action creator for the above action looks like this:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> changeVisibility = visible =&gt; ({ type: CHANGE_VISIBILITY, visible });
+<p>Every time when we want to dispatch a method we have to use such objects. However, it becomes too noisy to write them over and over again. That is why there is the concept of <em>action creators</em>. An action creator is a function that returns an object and may or may not accept an argument which directly relates to the action properties. For example the action creator for the above action looks like this:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> changeVisibility = visible =&gt; ({
+  type: CHANGE_VISIBILITY,
+  visible
+});
 
-changeVisibility(<span class="hljs-literal">false</span>); <span class="hljs-comment">// { type: CHANGE_VISIBILITY, visible: false }</span>
+changeVisibility(<span class="hljs-literal">false</span>);
+<span class="hljs-comment">// { type: CHANGE_VISIBILITY, visible: false }</span>
 </code></pre>
 <p>Notice that we pass the value of the <code>visible</code> as an argument and we don&apos;t have to remember (or import) the exact type of the action. Using such helpers makes the code compact and easy to read.</p>
 <h3 id="store">Store</h3>
@@ -612,8 +637,8 @@ createStore([reducer], [initial state], [enhancer]);
 <p>That is the place where we use our action creators. We pass the result of them or in other words action objects to this <code>dispatch</code> method. It then gets spread to the reducers in our application.</p>
 <p>In the typical React application we usually don&apos;t use <code>getState</code> and <code>subscribe</code> directly because there is a helper (we will see it in the next sections) that wires our components with the store and effectively <code>subscribe</code>s for changes. As part of this subscription we also receive the current state so we don&apos;t have to call <code>getState</code> ourself. <code>replaceReducer</code> is kind of an advanced API and it swaps the reducer currently used by the store. I personally never used this method.</p>
 <h3 id="reducer">Reducer</h3>
-<p>The reducer function is probably the most beautiful part of Redux. Even before that I was interested in writing pure functions with an immutability in mind but Redux forced me to do it. There are two characteristics of the reducer that are quite important and without them we basically have a broken pattern.</p>
-<p>(1) It must be a pure function - it means that the function should return the exact same output for given inputs.</p>
+<p>The reducer function is probably the most <em>beautiful</em> part of Redux. Even before that I was interested in writing pure functions with an immutability in mind but Redux forced me to do it. There are two characteristics of the reducer that are quite important and without them we basically have a broken pattern.</p>
+<p>(1) It must be a pure function - it means that the function should return the exact same output evert time when the same input is given.</p>
 <p>(2) It should have no side effects - stuff like accessing a global variable, making an async call or waiting for a promise to resolve have no place in here.</p>
 <p>Here is a simple counter reducer:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> counterReducer = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">state, action</span>) </span>{
@@ -627,15 +652,20 @@ createStore([reducer], [initial state], [enhancer]);
 </code></pre>
 <p>There are no side effects and we return a brand new object every time. We accumulate the new value based on the previous state and the incoming action type. </p>
 <h3 id="wiring-to-react-components">Wiring to React components</h3>
-<p>If we talk about Redux in the context of React we almost always mean <a href="https://github.com/reactjs/react-redux" target="_blank">react-redux</a> module. It provides two things that help wire Redux to our components.</p>
-<p>(1) <code>&lt;Provider&gt;</code> component - it&apos;s a component that accepts our store and makes it available for the children down the React tree. For example:</p>
+<p>If we talk about Redux in the context of React we almost always mean <a href="https://github.com/reactjs/react-redux" target="_blank">react-redux</a> module. It provides two things that help connecting Redux to our components.</p>
+<p>(1) <code>&lt;Provider&gt;</code> component - it&apos;s a component that accepts our store and makes it available for the children down the React tree via the React&apos;s context API. For example:</p>
 <pre><code class="lang-js">&lt;Provider store={ myStore }&gt;
   <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">MyApp</span> /&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">Provider</span>&gt;</span></span>
 </code></pre>
-<p>We usually have a single place in our app where we use it. It is the very top composition bit.</p>
-<p>(2) <code>connect</code> function - it is a function that does the subscription to updates in the store and re-renders our component. It implements a <a href="https://github.com/krasimir/react-in-patterns/tree/master/patterns/composition#higher-order-component" target="_blank">higher-order component</a>. Here is its signature:</p>
-<pre><code>connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])
+<p>We usually have a single place in our app where we use it.</p>
+<p>(2) <code>connect</code> function - it is a function that does the subscribing for updates in the store and re-renders our component. It implements a <a href="https://github.com/krasimir/react-in-patterns/blob/master/book/chapter-4/README.md#higher-order-component" target="_blank">higher-order component</a>. Here is its signature:</p>
+<pre><code>connect(
+  [mapStateToProps],
+  [mapDispatchToProps],
+  [mergeProps],
+  [options]
+)
 </code></pre><p><code>mapStateToProps</code> parameter is a function that accepts the current state and must return a set of key-value pairs (an object) that are getting send as props to our React component. For example:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> mapStateToProps = state =&gt; ({
   visible: state.visible
@@ -646,7 +676,8 @@ createStore([reducer], [initial state], [enhancer]);
   changeVisibility: value =&gt; dispatch(changeVisibility(value))
 });
 </code></pre>
-<p><code>mergeProps</code> combines both <code>mapStateToProps</code> and <code>mapDispatchToProps</code> and the props send to the component and gives us the opportunity to accumulate better props. Like for example if we need to fire two actions we may combine them to a single prop and send that to React&apos;s component. <code>options</code> accepts couple of settings that control how how the connection works.</p>
+<p><code>mergeProps</code> combines both <code>mapStateToProps</code> and <code>mapDispatchToProps</code> and the props send to the component and gives us the opportunity to accumulate better props. Like for example if we need to fire two actions we may combine them to a single prop and send that to React. <code>options</code> accepts couple of settings that control how how the connection works.</p>
+<p><br></p>
 <h2 id="simple-counter-app-using-redux">Simple counter app using Redux</h2>
 <p>Let&apos;s create a simple counter app that uses all the APIs above.</p>
 <p><img src="redux-counter-app.png" alt="Redux counter app example"></p>
@@ -659,10 +690,13 @@ createStore([reducer], [initial state], [enhancer]);
 
 <span class="hljs-keyword">const</span> add = () =&gt; ({ type: ADD });
 <span class="hljs-keyword">const</span> subtract = () =&gt; ({ type: SUBTRACT });
-<span class="hljs-keyword">const</span> changeVisibility = visible =&gt; ({ type: CHANGE_VISIBILITY, visible });
+<span class="hljs-keyword">const</span> changeVisibility = visible =&gt; ({
+  type: CHANGE_VISIBILITY,
+  visible
+});
 </code></pre>
 <h3 id="store-and-its-reducers">Store and its reducers</h3>
-<p>There is something that we didn&apos;t talk about while explaining the store and reducers. We usually have more then one reducer because we want to manage multiple things. The store is only one and we in theory have only one state object. What happens in most of the apps running in production is that the application state is a composition of slices. Every slice represents a part of our system. In this very small example we have counting and visibility slices. So our initial state looks like that:</p>
+<p>There is something that we didn&apos;t talk about while explaining the store and reducers. We usually have more then one reducer because we want to manage multiple things. The store is one though and we in theory have only one state object. What happens in most of the apps running in production is that the application state is a composition of slices. Every slice represents a part of our system. In this very small example we have counting and visibility slices. So our initial state looks like that:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> initialState = {
   counter: {
     value: <span class="hljs-number">0</span>
@@ -707,7 +741,7 @@ createStore([reducer], [initial state], [enhancer]);
 });
 </code></pre>
 <h3 id="selectors">Selectors</h3>
-<p>Before moving to the React components we have to mention the concept of a <em>selector</em>. From the previous section we know that our state is usually divided into different parts. We have dedicated reducers to update the data but when it comes to fetching it we still have a single object. Here is the place where the selectors come in handy. The selector is a function that accepts the whole state object and extracts only the information that we need. For example for our small app we need two of those:</p>
+<p>Before moving to the React components we have to mention the concept of a <em>selector</em>. From the previous section we know that our state is usually divided into different parts. We have dedicated reducers to update the data but when it comes to fetching it we still have a single object. Here is the place where the selectors come in handy. The selector is a function that accepts the whole state object and extracts only the information that we need. For example in our small app we need two of those:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> getCounterValue = state =&gt; state.counter.value;
 <span class="hljs-keyword">const</span> getVisibility = state =&gt; state.visible;
 </code></pre>
@@ -717,8 +751,12 @@ createStore([reducer], [initial state], [enhancer]);
 <pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Visibility</span>(<span class="hljs-params">{ changeVisibility }</span>) </span>{
   <span class="hljs-keyword">return</span> (
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{</span> () =&gt;</span> changeVisibility(true) }&gt;Visible<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{</span> () =&gt;</span> changeVisibility(false) }&gt;Hidden<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{</span> () =&gt;</span> changeVisibility(true) }&gt;
+        Visible
+      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{</span> () =&gt;</span> changeVisibility(false) }&gt;
+        Hidden
+      <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
   );
 }
@@ -730,8 +768,8 @@ createStore([reducer], [initial state], [enhancer]);
   })
 )(Visibility);
 </code></pre>
-<p>We have two buttons <code>Visible</code> and <code>Hidden</code>. They both fire <code>CHANGE_VISIBILITY</code> action but the first one passes <code>true</code> as a value while the second one <code>false</code>. What&apos;s interesting in the here is the <code>VisibilityConnected</code> component class. It gets created as a result of the wiring done via Redux&apos;s <code>connect</code>. Notice that we pass <code>null</code> as <code>mapStateToProps</code> because we don&apos;t need any of the data in the store. We just need to <code>dispatch</code> an action.</p>
-<p>The second component is slightly more complicated. It is named <code>Counter</code> and renders two buttons and the counter number.</p>
+<p>We have two buttons <code>Visible</code> and <code>Hidden</code>. They both fire <code>CHANGE_VISIBILITY</code> action but the first one passes <code>true</code> as a value while the second one <code>false</code>. The <code>VisibilityConnected</code> component class gets created as a result of the wiring done via Redux&apos;s <code>connect</code>. Notice that we pass <code>null</code> as <code>mapStateToProps</code> because we don&apos;t need any of the data in the store. We just need to <code>dispatch</code> an action.</p>
+<p>The second component is slightly more complicated. It is named <code>Counter</code> and renders two buttons and the counter value.</p>
 <pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Counter</span>(<span class="hljs-params">{ value, add, subtract }</span>) </span>{
   <span class="hljs-keyword">return</span> (
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
@@ -770,9 +808,10 @@ const AppConnected = connect(
 </code></pre>
 <p>We again need to <code>connect</code> our component because we want to control the visibility of the counter. The <code>getVisibility</code> selector returns a boolean that indicates weather <code>CounterConnected</code> will be rendered or not.</p>
 <h2 id="final-thoughts">Final thoughts</h2>
-<p>Redux is an wonderful pattern. Over the years the JavaScript community developed the idea and enhanced it with couple of new terms. I think a typical redux application looks more like this:</p>
+<p>Redux is a wonderful pattern. Over the years the JavaScript community developed the idea and enhanced it with couple of new terms. I think a typical redux application looks more like this:</p>
 <p><img src="redux-reallife.jpg" alt="Redux architecture"></p>
-<p>And we didn&apos;t even mention the side effects management. It is a whole new story with its own ideas and solutions. We can conclude that Redux itself is a pretty simple pattern. It teaches very useful techniques but unfortunately it is very often not enough. Sooner or later we have to introduce more concepts/patterns. Which of course is not that bad. We just have to plan for it.</p>
+<p><em>By the way we didn&apos;t mention the side effects management. It is a whole new story with its own ideas and solutions.</em></p>
+<p>We can conclude that Redux itself is a pretty simple pattern. It teaches very useful techniques but unfortunately it is very often not enough. Sooner or later we have to introduce more concepts/patterns. Which of course is not that bad. We just have to plan for it.</p>
 
                                 
                                 </section>
@@ -816,7 +855,7 @@ const AppConnected = connect(
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Redux","level":"3.3","depth":1,"next":{"title":"Redux architecture and its main characteristics","level":"3.3.1","depth":2,"anchor":"#redux-architecture-and-its-main-characteristics","path":"chapter-9/README.md","ref":"chapter-9/README.md#redux-architecture-and-its-main-characteristics","articles":[]},"previous":{"title":"Implementing a Flux architecture","level":"3.2.2","depth":2,"anchor":"#implementing-a-flux-architecture","path":"chapter-8/README.md","ref":"chapter-8/README.md#implementing-a-flux-architecture","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-9/README.md","mtime":"2018-04-03T03:17:31.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-03T13:51:55.802Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Redux","level":"3.3","depth":1,"next":{"title":"Redux architecture and its main characteristics","level":"3.3.1","depth":2,"anchor":"#redux-architecture-and-its-main-characteristics","path":"chapter-9/README.md","ref":"chapter-9/README.md#redux-architecture-and-its-main-characteristics","articles":[]},"previous":{"title":"Implementing a Flux architecture","level":"3.2.2","depth":2,"anchor":"#implementing-a-flux-architecture","path":"chapter-8/README.md","ref":"chapter-8/README.md#implementing-a-flux-architecture","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"//*[@class='new-page']","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-9/README.md","mtime":"2018-04-13T03:55:32.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-13T15:53:00.177Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

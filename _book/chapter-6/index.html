@@ -386,7 +386,7 @@
 
     
         
-        <li class="header">MISC</li>
+        <li class="header">Good to know</li>
         
         
     
@@ -534,6 +534,26 @@
     
 
     
+        
+        <li class="header">Summary</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../chapter-13/">
+            
+                <a href="../chapter-13/">
+            
+                    
+                    Summary
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
 
     <li class="divider"></li>
 
@@ -589,7 +609,9 @@
   render() {
     <span class="hljs-keyword">const</span> time = <span class="hljs-keyword">this</span>._formatTime(<span class="hljs-keyword">this</span>.state.time);
     <span class="hljs-keyword">return</span> (
-      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>{ time.hours } : { time.minutes } : { time.seconds }<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>
+        { time.hours } : { time.minutes } : { time.seconds }
+      <span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>
     );
   }
   componentDidMount() {
@@ -608,7 +630,9 @@
     <span class="hljs-keyword">return</span> { hours, minutes, seconds };
   }
   _updateTime() {
-    <span class="hljs-keyword">this</span>.setState({ time: <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-keyword">this</span>.state.time.getTime() + <span class="hljs-number">1000</span>) });
+    <span class="hljs-keyword">this</span>.setState({
+      time: <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-keyword">this</span>.state.time.getTime() + <span class="hljs-number">1000</span>)
+    });
   }
 };
 
@@ -622,8 +646,9 @@ ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-n
 <li><code>_formatTime</code> is actually doing two things - it extracts the needed information from the date object and makes sure that the values are always presented by two digits. That&apos;s fine but it will be nice if the extracting is not part of the function because then it is bound to the type of the <code>time</code> object (coming as a prop). I.e. knows specifics about the shape of the data and at the same time deals with the visualization of it.</li>
 </ul>
 <h2 id="extracting-the-container">Extracting the container</h2>
-<p>Containers know about data, its shape and where it comes from. They know details about how the things work or the so called <em>business logic</em>. They receive information and format it so it is easy to use by the presentational component. Very often we use <a href="https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components" target="_blank">higher-order components</a> to create containers.</p>
+<p>Containers know about data, its shape and where it comes from. They know details about how the things work or the so called <em>business logic</em>. They receive information and format it so like is easy to be used by the presentational component. Very often we use <a href="https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components" target="_blank">higher-order components</a> to create containers because they provide a buffer space where we can insert custom logic.</p>
 <p>Here&apos;s how our <code>ClockContainer</code> looks like:</p>
+<p><span class="new-page"></span></p>
 <pre><code class="lang-js"><span class="hljs-comment">// Clock/index.js</span>
 <span class="hljs-keyword">import</span> Clock <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./Clock.jsx&apos;</span>; <span class="hljs-comment">// &lt;-- that&apos;s the presentational component</span>
 
@@ -650,11 +675,13 @@ ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-n
     };
   }
   _updateTime() {
-    this.setState({ time: new Date(this.state.time.getTime() + 1000) });
+    this.setState({
+      time: new Date(this.state.time.getTime() + 1000)
+    });
   }
 };
 </span></code></pre>
-<p>It still accepts <code>time</code> (a date object), does the <code>setInterval</code> loop and knows details about the data (<code>getHours</code>, <code>getMinutes</code> and <code>getSeconds</code>). In the end renders the presentational component and passes three numbers for hours, minutes and seconds. There is nothing about how the things look like. Only business logic.</p>
+<p>It still accepts <code>time</code> (a date object), does the <code>setInterval</code> loop and knows details about the data (<code>getHours</code>, <code>getMinutes</code> and <code>getSeconds</code>). In the end renders the presentational component and passes three numbers for hours, minutes and seconds. There is nothing about how the things look like. Only <em>business logic</em>.</p>
 <h2 id="presentational-component">Presentational component</h2>
 <p>Presentational components are concerned with how the things look. They have the additional markup needed for making the page pretty. Such components are not bound to anything and have no dependencies. Very often implemented as a <a href="https://facebook.github.io/react/blog/2015/10/07/react-v0.14.html#stateless-functional-components" target="_blank">stateless functional components</a> they don&apos;t have internal state.</p>
 <p>In our case the presentational component contains only the two-digits check and returns the <code>&lt;h1&gt;</code> tag:</p>
@@ -670,29 +697,11 @@ ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-n
 };
 </code></pre>
 <h2 id="benefits">Benefits</h2>
-<p>Splitting the components in containers and presentation increases the reusability of the components. Our <code>Clock</code> function/component may exist in application that doesn&apos;t change the time or it&apos;s not working with JavaScript&apos;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a>  objects. That&apos;s because it&apos;s pretty <em>dummy</em>. No details about the data.</p>
-<p>The nice thing about containers is that they encapsulate logic and may inject data into different renderers. Very often a file that exports a container is not exposing a class directly but a function. For example, instead of using</p>
-<pre><code class="lang-js"><span class="hljs-keyword">import</span> Clock <span class="hljs-keyword">from</span> <span class="hljs-string">&apos;./Clock.jsx&apos;</span>;
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ClockContainer</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
-  render() {
-    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Clock</span> /&gt;</span>;
-  }
-}
-</span></code></pre>
-<p>we may export a function that accepts the presentational component or in other words higher-order component.</p>
-<pre><code class="lang-js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">ClockComponent</span>) </span>{
-  <span class="hljs-keyword">return</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Container</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
-    render() {
-      <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ClockComponent</span> /&gt;</span>;
-    }
-  }
-}
-</span></code></pre>
-<p>Using this technique our container is really flexible in rendering its result. It will be really helpful if we want to switch from digital to analog clock representation for example.</p>
-<p>Even the testing becomes easier because we have to think less for our components. Containers are not concern with UI and very often the actions that trigger logic are controlled with callbacks. Presentational components are just about rendering the incoming props and their unit tests are more or less checking if the right callback is called if something is clicked/filled in.</p>
+<p>Splitting the components in containers and presentation increases the reusability of the components. Our <code>Clock</code> function/component may exist in application that doesn&apos;t change the time or it&apos;s not working with JavaScript&apos;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a> object. That&apos;s because it is pretty <em>dummy</em>. No details about the data are required.</p>
+<p>The containers encapsulate logic and we may use them together with different renderers because they don&apos;t leak information about the visual part. The approach that we took above is a good example of how the container doesn&apos;t care about how the things look like. We may easily switch from digital to analog clock and the only one change will be to replace the <code>&lt;Clock&gt;</code> component in the <code>render</code> method.</p>
+<p>Even the testing becomes easier because the components have less responsibilities. Containers are not concern with UI. Presentational components are pure renderers and it is enough to run expectations on the resulted markup.</p>
 <h2 id="final-thoughts">Final thoughts</h2>
-<p>React is unique in that sense that it is considered a view layer but at the same time it is a lot about UI logic too. The concept of container and presentation is not new at all but it fits really nicely with React. It makes our applications better structured and easy to manage.</p>
+<p>The concept of container and presentation is not new at all but it fits really nicely with React. It makes our applications better structured, easy to manage and scale.</p>
 
                                 
                                 </section>
@@ -736,7 +745,7 @@ ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-n
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Presentational and container components","level":"2.5","depth":1,"next":{"title":"One direction data flow","level":"3.1","depth":1,"path":"chapter-7/README.md","ref":"chapter-7/README.md","articles":[]},"previous":{"title":"Controlled and uncontrolled inputs","level":"2.4","depth":1,"path":"chapter-5/README.md","ref":"chapter-5/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-6/README.md","mtime":"2018-04-02T15:48:42.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-03T13:51:55.802Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Presentational and container components","level":"2.5","depth":1,"next":{"title":"One direction data flow","level":"3.1","depth":1,"path":"chapter-7/README.md","ref":"chapter-7/README.md","articles":[]},"previous":{"title":"Controlled and uncontrolled inputs","level":"2.4","depth":1,"path":"chapter-5/README.md","ref":"chapter-5/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"//*[@class='new-page']","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-6/README.md","mtime":"2018-04-12T15:57:50.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-13T15:53:00.177Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

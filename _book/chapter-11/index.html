@@ -386,7 +386,7 @@
 
     
         
-        <li class="header">MISC</li>
+        <li class="header">Good to know</li>
         
         
     
@@ -534,6 +534,26 @@
     
 
     
+        
+        <li class="header">Summary</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../chapter-13/">
+            
+                <a href="../chapter-13/">
+            
+                    
+                    Summary
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
 
     <li class="divider"></li>
 
@@ -578,9 +598,9 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="styling-react-components">Styling React components</h1>
-<p>React is a view layer. As such it kind of controls the markup rendered in the browser. And we know that the styling with CSS is tightly connected to the markup on the page. There are couple of approach for styling React applications and in this section we will go through the most popular ones.</p>
+<p>React is a view layer. As such it kind of controls the markup rendered in the browser. And we know that the styling with CSS is tightly connected to the markup on the page. There are couple of approaches for styling React applications and in this section we will go through the most popular ones.</p>
 <h2 id="the-good-old-css-class">The good old CSS class</h2>
-<p>JSX syntax is pretty close to HTML syntax. As such we have almost the same tag attributes and we may still style using CSS classes. Classes which are defined in external <code>.css</code> file. The only caveat is using <code>className</code> and not <code>class</code>. For example:</p>
+<p>JSX syntax is pretty close to HTML syntax. As such we have almost the same tag attributes and we may still style using CSS classes. Classes which are defined in an external <code>.css</code> file. The only caveat is using <code>className</code> and not <code>class</code>. For example:</p>
 <pre><code>&lt;h1 className=&apos;title&apos;&gt;Styling&lt;/h1&gt;
 </code></pre><h2 id="inline-styling">Inline styling</h2>
 <p>The inline styling works just fine. Similarly to HTML we are free to pass styles directly via a <code>style</code>  attribute. However, while in HTML the value is a string in JSX must be an object.</p>
@@ -593,7 +613,7 @@
 
 <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h2</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{</span> <span class="hljs-attr">inlineStyles</span> }&gt;</span>Inline styling<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span></span>
 </code></pre>
-<p>Because we write the styles in JavaScript we have some limitations from a syntax point of view. If we want to keep the original CSS property names we have to put them in quotes. If not then we have to follow the camel case convention. However, writing styles in JavaScript is quite interesting and may be a lot more flexible then the plain CSS. Like for example inheriting of styles happens almost naturally:</p>
+<p>Because we write the styles in JavaScript we have some limitations from a syntax point of view. If we want to keep the original CSS property names we have to put them in quotes. If not then we have to follow the camel case convention. However, writing styles in JavaScript is quite interesting and may be a lot more flexible then the plain CSS. Like for example inheriting of styles:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> theme = {
   fontFamily: <span class="hljs-string">&apos;Georgia&apos;</span>,
   color: <span class="hljs-string">&apos;blue&apos;</span>
@@ -605,8 +625,9 @@
 </code></pre>
 <p>We have some basic styles in <code>theme</code> and with mix them with what is in <code>paragraphText</code>. Shortly, we are able to use the whole power of JavaScript to organize our CSS. What it matters at the end is that we generate an object that goes to the <code>style</code> attribute.</p>
 <h2 id="css-modules">CSS modules</h2>
-<p><a href="https://github.com/css-modules/css-modules/blob/master/docs/get-started.md" target="_blank">CSS modules</a> is building on top of what we said so far. If we don&apos;t like the JavaScript syntax then we may use CSS modules and we will be able to do write plain CSS. Usually this library kicks in while we build our bundle. It is possible to hook it as part of the transpilation step but normally is distributed as a build system plugin.</p>
+<p><a href="https://github.com/css-modules/css-modules/blob/master/docs/get-started.md" target="_blank">CSS modules</a> is building on top of what we said so far. If we don&apos;t like the JavaScript syntax then we may use CSS modules and we will be able to write plain CSS. Usually this library plays its role at bundling time. It is possible to hook it as part of the transpilation step but normally is distributed as a build system plugin.</p>
 <p>Here is a quick example to get an idea how it works:</p>
+<p><br><br></p>
 <pre><code class="lang-js"><span class="hljs-comment">/* style.css */</span>
 .title {
   color: green;
@@ -625,7 +646,7 @@
   composes: mainColor from &quot;./brand-colors.css&quot;;
 }
 </code></pre><h2 id="styled-components">Styled-components</h2>
-<p><a href="https://www.styled-components.com/" target="_blank">Styled-components</a> took another direction. Instead of inlining styles the library provides a React component. We then use this component to represent a specific look and feel. For example, we may create a link component that has certain styling and use that instead of the <code>&lt;a&gt;</code> tag.</p>
+<p><a href="https://www.styled-components.com/" target="_blank">Styled-components</a> took another direction. Instead of inlining styles the library provides a React component. We then use this component to represent a specific look and feel. For example, we may create a <code>Link</code> component that has certain styling and use that instead of the <code>&lt;a&gt;</code> tag.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> Link = styled.a<span class="hljs-string">`
   text-decoration: none;
   padding: 4px;
@@ -642,9 +663,9 @@
 
 <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">AnotherLink</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&apos;http://facebook.com&apos;</span>&gt;</span>Facebook<span class="hljs-tag">&lt;/<span class="hljs-name">AnotherLink</span>&gt;</span></span>
 </code></pre>
-<p>By far for me styled-components are probably the most interesting approach for styling in React. It is quite easy to create components for everything and forget about the styling. If your company likes creating a design system and building a product with it then this option is probably the most suitable one.</p>
+<p>By far for me styled-components are probably the most interesting approach for styling in React. It is quite easy to create components for everything and forget about the styling. If your company has the capacity to create a design system and building a product with it then this option is probably the most suitable one.</p>
 <h2 id="final-thoughts">Final thoughts</h2>
-<p>There are multiple ways to style your React application. I did experienced all of them in production and I would say that there is no right or wrong. Sometimes it is a matter of feeling and team work.</p>
+<p>There are multiple ways to style your React application. I did experienced all of them in production and I would say that there is no right or wrong. As most of the stuff in JavaScript today you have to pick the one that fits better in your context.</p>
 
                                 
                                 </section>
@@ -688,7 +709,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Styling","level":"4.2","depth":1,"next":{"title":"The good old CSS class","level":"4.2.1","depth":2,"anchor":"#the-good-old-css-class","path":"chapter-11/README.md","ref":"chapter-11/README.md#the-good-old-css-class","articles":[]},"previous":{"title":"Using the module system","level":"4.1.3","depth":2,"anchor":"#using-the-module-system","path":"chapter-10/README.md","ref":"chapter-10/README.md#using-the-module-system","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-11/README.md","mtime":"2018-04-02T15:50:00.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-03T13:51:55.802Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Styling","level":"4.2","depth":1,"next":{"title":"The good old CSS class","level":"4.2.1","depth":2,"anchor":"#the-good-old-css-class","path":"chapter-11/README.md","ref":"chapter-11/README.md#the-good-old-css-class","articles":[]},"previous":{"title":"Using the module system","level":"4.1.3","depth":2,"anchor":"#using-the-module-system","path":"chapter-10/README.md","ref":"chapter-10/README.md#using-the-module-system","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"//*[@class='new-page']","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-11/README.md","mtime":"2018-04-13T15:12:03.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-13T15:53:00.177Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
