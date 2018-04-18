@@ -14,7 +14,7 @@
 
 ## Content
 
-* [In brief](chapter-1/README.md)
+* [In brief](./book/chapter-1/README.md)
 
 ### Foundation
 
