@@ -75,6 +75,8 @@ The `title` is hidden in a middle layer (higher-order component) where we pass i
 
 ## Using React's context (prior v. 16.3)
 
+*In v16.3 React's team introduced a new version of the context API and if you are going to use that version or above you'd probably skip this section.*
+
 React has the concept of [*context*](https://facebook.github.io/react/docs/context.html). The *context* is something that every React component has access to. It's something like an [event bus](https://github.com/krasimir/EventBus) but for data. A single *store* which we access from everywhere.
 
 ```js
