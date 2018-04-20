@@ -42,7 +42,7 @@ function Answer() {
 <SomethingElse answer={ <Answer /> } />
 ```
 
-There is also a `props.children` property that gives us an access to the child components passed by the owner of the component. For example:
+There is also a `props.children` property that gives us access to the child components passed by the owner of the component. For example:
 
 ```js
 function Title({ text, children }) {
