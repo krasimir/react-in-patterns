@@ -4,4 +4,4 @@ This cookbook is targeting developers that already have basic understanding of w
 
 The book is highly opinioned. It represents my own understanding of the described patterns and it is possible that they have a different interpretation around the web. Have this in mind when arguing with someone and using this book as an argument.
 
-Also notice that English is not my native language. If you see a typo or something sounds weird please contribute here [github.com/krasimir/react-in-patterns](https://github.com/krasimir/react-in-patterns/tree/master/book). If you read from a printed version of this book then feel free to use a pen ¯\_(ツ)_/¯ 
+Also notice that English is not my native language. If you see a typo or something sounds weird please contribute here [github.com/krasimir/react-in-patterns](https://github.com/krasimir/react-in-patterns/tree/master/book). If you read from a printed version of this book then feel free to use a pen ¯\\_(ツ)_/¯ 
