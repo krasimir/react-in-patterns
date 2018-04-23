@@ -100,7 +100,7 @@ I see similarity with the mixins here. The context is defined somewhere at the t
 
 #### Higher-Order components concept
 
-Higher-Order components pattern is [introduced](https://gist.github.com/sebmarkbage/ef0bf1f338a7182b6775) by Sebastian Markb&#229;ge and it's about creating a wrapper component that returns ours. While doing it it has the opportunity to send properties or apply additional logic. For example:
+Higher-Order components pattern is [introduced](https://gist.github.com/sebmarkbage/ef0bf1f338a7182b6775) by Sebastian Markb&#229;ge and it's about creating a wrapper component that returns ours. While doing it, it has the opportunity to send properties or apply additional logic. For example:
 
 ```js
 function attachToStore(Component, store, consumer) {
