@@ -1,8 +1,11 @@
 # React in patterns (ฉบับภาษาไทย)
 
-:books: A free book that talks about design patterns/techniques used while developing with [React](https://facebook.github.io/react/).
+:books: หนังสือแจกฟรีที่อธิบายเกี่ยวกับดีไซน์แพตเทิร์นและเทคนิคที่ใช้สำหรับการพัฒนาเว็บแอพพลิเคชันด้วย [React](https://facebook.github.io/react/).
 
-## Book
+## ผู้เขียน
+[Krasimir Tsonev](https://github.com/krasimir)
+
+## หนังสือ
 
 * [GitBook](https://www.gitbook.com/book/krasimir/react-in-patterns/details)
 * [Web](https://krasimir.gitbooks.io/react-in-patterns/content/)
@@ -12,11 +15,11 @@
 
 ![React in patterns cover](./book/cover_small.jpg)
 
-## Content
+## สารบัญ
 
-* [In brief](./book/chapter-1/README.md)
+* [เนื้อหาโดยสังเขป](./book/chapter-1/README.md)
 
-### Foundation
+### หลักการพื้นฐาน (Foundation)
 
 * [Communication](./book/chapter-2/README.md)
   * [Input](./book/chapter-2/README.md#input)
@@ -30,7 +33,7 @@
 * [Controlled and uncontrolled inputs](./book/chapter-5/README.md)
 * [Presentational and container components](./book/chapter-6/README.md) 
 
-### Data flow
+### กระแสข้อมูล (Data flow)
 
 * [One direction data flow](./book/chapter-7/README.md)
 * [Flux](./book/chapter-8/README.md)
@@ -54,11 +57,11 @@
 * [Integration of third-party libraries](./book/chapter-12/README.md)
 
 
-## Source code
+## ซอร์สโค้ด
 
-The code samples used in the book are available [here](./code).
+ตัวอย่างซอร์สโค้ดที่ใช้ประกอบในหนังสือเล่มนี้ สามารถดาวน์โหลดได้ที่ [ตัวอย่างซอร์สโค้ด](./code).
 
-## Other resources
+## แหล่งข้อมูลอ้างอิงอื่นๆ
 
 * [React Design principles](https://facebook.github.io/react/contributing/design-principles.html)
 * [Airbnb React/JSX Style Guide](https://github.com/airbnb/javascript/tree/master/react)
