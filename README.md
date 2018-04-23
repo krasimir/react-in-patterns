@@ -1,4 +1,4 @@
-# React in patterns
+# React in patterns (ฉบับภาษาไทย)
 
 :books: A free book that talks about design patterns/techniques used while developing with [React](https://facebook.github.io/react/).
 
