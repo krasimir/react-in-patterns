@@ -25,7 +25,7 @@ const inlineStyles = {
 <h2 style={ inlineStyles }>Inline styling</h2>
 ```
 
-Because we write the styles in JavaScript we have some limitations from a syntax point of view. If we want to keep the original CSS property names we have to put them in quotes. If not then we have to follow the camel case convention. However, writing styles in JavaScript is quite interesting and may be a lot more flexible then the plain CSS. Like for example inheriting of styles:
+Because we write the styles in JavaScript we have some limitations from a syntax point of view. If we want to keep the original CSS property names we have to put them in quotes. If not then we have to follow the camel case convention. However, writing styles in JavaScript is quite interesting and may be a lot more flexible than the plain CSS. Like for example inheriting of styles:
 
 ```js
 const theme = {
