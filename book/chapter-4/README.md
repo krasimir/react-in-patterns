@@ -177,7 +177,7 @@ Again, the `OriginalTitle` knows that it receives two props and has to render th
 Last couple of months the React community started shifting in an interesting direction. So far in our examples the `children` prop was a React component. There is however a new pattern gaining popularity in which the same `children` prop is a JSX expression. Let's start by passing a simple object.
 
 ```js
-function UserName({ children ) {
+function UserName({ children }) {
   return (
     <div>
       <b>{ children.lastName }</b>,

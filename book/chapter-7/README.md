@@ -65,7 +65,7 @@ function App() {
 };
 ```
 
-Our `Store` object is a [singleton](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript) where we have helpers for setting and getting the value of the `_flag` property. By passing the getter to the `Switcher` we are able to update the data externally. More or less our application workflow looks like that:
+Our `Store` object is a [singleton](https://addyosmani.com/resources/essentialjsdesignpatterns/book/#singletonpatternjavascript) where we have helpers for setting and getting the value of the `_flag` property. By passing the setter to the `Switcher` we are able to update the data externally. More or less our application workflow looks like that:
 
 ![one-direction data flow](./one-direction-1.jpg)
 
