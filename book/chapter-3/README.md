@@ -83,7 +83,7 @@ class Switcher extends React.Component {
 };
 ```
 
-Facebook by the way [recommend](https://facebook.github.io/react/docs/reusable-components.html#no-autobinding) the same technique while dealing with functions that need the context of the same component.
+Facebook by the way [recommends](https://facebook.github.io/react/docs/reusable-components.html#no-autobinding) the same technique while dealing with functions that need the context of the same component.
 
 The constructor is also a nice place for partially executing our handlers. For example, we have a form but want to handle every input in a single function.
 
@@ -113,4 +113,4 @@ class Form extends React.Component {
 
 ## Final thoughts
 
-There is not much to learn about event handling in React. The authors of the library did a good job in keeping what's already there. Since we are using HTML-like syntax it makes total sense that we have also a DOM-like event handling.
+There is not much to learn about event handling in React. The authors of the library did a good job in keeping what's already there. Since we are using HTML-like syntax it makes total sense that we also have a DOM-like event handling.
