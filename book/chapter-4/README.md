@@ -1,6 +1,6 @@
 # Composition
 
-One of the biggest benefits of React is composability. I personally don't know a framework that offers such an easy way to create and combine components. In this section we will explore few composition techniques which proved to work well.
+One of the biggest benefits of React is composability. I personally don't know a framework that offers such an easy way to create and combine components. In this section we will explore a few composition techniques which proved to work well.
 
 Let's get a simple example. Let's say that we have an application with a header and we want to place a navigation inside. We have three React components - `App`, `Header` and `Navigation`. They have to be nested into each other so we end up with the following dependencies:
 
@@ -31,9 +31,9 @@ export default function Navigation() {
 }
 ```
 
-However, by following this approach we introduced couple of problems:
+However, by following this approach we introduced a couple of problems:
 
-* We may consider the `App` as a place where we do our main composition. The `Header` though may have other elements like a logo, search field or a slogan. It will be nice if they are passed somehow from the `App` component so we don't create a hard-coded dependencies. What if we need the same `Header` component but without the `Navigation`. We can't easily achieve that because we have the two bound tightly together.
+* We may consider the `App` as a place where we do our main composition. The `Header` though may have other elements like a logo, search field or a slogan. It will be nice if they are passed somehow from the `App` component so we don't create hard-coded dependencies. What if we need the same `Header` component but without the `Navigation`. We can't easily achieve that because we have the two bound tightly together.
 * It's difficult to test. We may have some business logic in the `Header` and in order to test it we have to create an instance of the component. However, because it imports other components we will probably create instances of those components too and it becomes heavy to test. We may break our `Header` test by doing something wrong in the `Navigation` component which is totally misleading. *(Note: to some extent [shallow rendering](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) solves this problem by rendering only the `Header` without its nested children.)*
 
 ## Using React's children API
@@ -110,7 +110,7 @@ class App extends React.Component {
 };
 ```
 
-The very first thing that the higher-order component does is to render the original component. It's a good practice to proxy pass the `props` to it. This way we will keep the input of our original component. And here it comes the first big benefit of this pattern - because we control the input of the component we may send something that the component usually has no access to. Let's say that we have a configuration setting that `OriginalTitle` needs:
+The very first thing that the higher-order component does is to render the original component. It's a good practice to proxy pass the `props` to it. This way we will keep the input of our original component. And here comes the first big benefit of this pattern - because we control the input of the component we may send something that the component usually has no access to. Let's say that we have a configuration setting that `OriginalTitle` needs:
 
 ```js
 var config = require('path/to/configuration');
@@ -281,7 +281,7 @@ class DataProvider extends React.Component {
 }
 ```
 
-`DataProvider` renders nothing when first gets mounted. Five seconds later we update the state of the component and we render a `<section>` followed by what is `render` prop returning. Imagine that this same component fetches data from a remote server and we want to display it only when it is available.
+`DataProvider` renders nothing when it first gets mounted. Five seconds later we update the state of the component and we render a `<section>` followed by what is `render` prop returning. Imagine that this same component fetches data from a remote server and we want to display it only when it is available.
 
 ```js
 <DataProvider render={ data => <p>The data is here!</p> } />
@@ -299,4 +299,4 @@ Pretty nice and self-explanatory in a declarative fashion. `Authorize` goes to o
 
 ## Final thoughts
 
-Did you wonder why HTML is still here. It was created in the dawn of the internet and we still use it. That is because is highly composable. React and its JSX looks like HTML on steroids and as such it comes with the same capabilities. So, make sure that you master the composition because that is one of the biggest benefits of React.
+Did you wonder why HTML is still here. It was created in the dawn of the internet and we still use it. That is because it's highly composable. React and its JSX looks like HTML on steroids and as such it comes with the same capabilities. So, make sure that you master the composition because that is one of the biggest benefits of React.
