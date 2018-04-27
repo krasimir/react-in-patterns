@@ -100,7 +100,7 @@ I see similarity with the mixins here. The context is defined somewhere at the t
 
 #### Higher-Order components concept
 
-Higher-Order components pattern is [introduced](https://gist.github.com/sebmarkbage/ef0bf1f338a7182b6775) by Sebastian Markb&#229;ge and it's about creating a wrapper component that returns ours. While doing it it has the opportunity to send properties or apply additional logic. For example:
+Higher-Order components pattern is [introduced](https://gist.github.com/sebmarkbage/ef0bf1f338a7182b6775) by Sebastian Markb&#229;ge and it's about creating a wrapper component that returns ours. While doing it, it has the opportunity to send properties or apply additional logic. For example:
 
 ```js
 function attachToStore(Component, store, consumer) {
@@ -127,7 +127,7 @@ function attachToStore(Component, store, consumer) {
 };
 ```
 
-`Component` is the view that we want attached to the `store`. The `consumer` function says what part of the store's state should be fetched and send to the view. A simple usage of the above function could be:
+`Component` is the view that we want attached to the `store`. The `consumer` function says what part of the store's state should be fetched and sent to the view. A simple usage of the above function could be:
 
 ```js
 class MyView extends React.Component {
@@ -140,7 +140,7 @@ ProfilePage = connectToStores(MyView, store, (props, store) => ({
 
 ```
 
-That is an interesting pattern because it shifts the responsibilities. It is the view fetching data from the store and not the store pushing something to the view. This of course has its own pros and cons. It is nice because it makes the store dummy. A store that only mutates the data and says "Hey, my state is changed". It is not responsible for sending anything to anyone. The downside of this approach is maybe the fact that we have one more component (the wrapper) involved. We also need the three things - view, store and consumer to be in one place so we can establish the connection.
+That is an interesting pattern because it shifts the responsibilities. It is the view fetching data from the store and not the store pushing something to the view. This of course has it's own pros and cons. It is nice because it makes the store dummy. A store that only mutates the data and says "Hey, my state is changed". It is not responsible for sending anything to anyone. The downside of this approach is maybe the fact that we have one more component (the wrapper) involved. We also need the three things - view, store and consumer to be in one place so we can establish the connection.
 
 #### My choice
 
@@ -185,7 +185,7 @@ register: function (store) {
 }
 ```
 
-The last bit in the story is how the store says that its internal state is changed. It's nice that we collect the consumer functions but right now there is no code that execute them.
+The last bit in the story is how the store says that its internal state is changed. It's nice that we collect the consumer functions but right now there is no code that executes them.
 
 According to the basic principles of the flux architecture the stores change their state in response of actions. In the `update` method we send the `action` but we could also send a function `change`. Calling that function should trigger the consumers:
 

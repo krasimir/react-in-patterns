@@ -39,7 +39,7 @@ class App extends React.Component {
 };
 ```
 
-On the opposite side is the *uncontrolled* input where we let the browser handles the user's updates. We may still provide an initial value by using the `defaultValue` prop but after that the browser is responsible for keeping the state of the input.
+On the opposite side is the *uncontrolled* input where we let the browser handle the user's updates. We may still provide an initial value by using the `defaultValue` prop but after that the browser is responsible for keeping the state of the input.
 
 ```js
 class App extends React.Component {

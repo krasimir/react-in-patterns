@@ -26,7 +26,7 @@ function App() {
 }
 ```
 
-The `Title` component has only one input (prop) - `text`. The parent component (`App`) should provide it as an attribute while using the `<Title>` tag. Alongside the component definition we also have to define at least `propTypes`. In there we define the type of every property and React hints us in the console if something unexpected gets send. `defaultProps` is another useful option. We may use it to set a default value of component's props so that if the developer forgets to pass them we have meaningful values.
+The `Title` component has only one input (prop) - `text`. The parent component (`App`) should provide it as an attribute while using the `<Title>` tag. Alongside the component definition we also have to define at least `propTypes`. In there we define the type of every property and React hints us in the console if something unexpected gets sent. `defaultProps` is another useful option. We may use it to set a default value of component's props so that if the developer forgets to pass them we have meaningful values.
 
 React is not defining strictly what should be passed as a prop. It may be whatever we want. It could even be another component:
 
@@ -78,7 +78,7 @@ In the following example we have a component that accepts the user's input and s
 function NameField({ valueUpdated }) {
   return (
     <input
-      onChange={event => valueUpdated(event.target.value) } />
+      onChange={ event => valueUpdated(event.target.value) } />
   );
 };
 class App extends React.Component {

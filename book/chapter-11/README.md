@@ -38,7 +38,7 @@ const paragraphText = {
 };
 ```
 
-We have some basic styles in `theme` and with mix them with what is in `paragraphText`. Shortly, we are able to use the whole power of JavaScript to organize our CSS. What it matters at the end is that we generate an object that goes to the `style` attribute.
+We have some basic styles in `theme` and with mix them with what is in `paragraphText`. Shortly, we are able to use the whole power of JavaScript to organize our CSS. What matters at the end is that we generate an object that goes to the `style` attribute.
 
 ## CSS modules
 
@@ -97,8 +97,8 @@ const AnotherLink = styled(Link)`
 <AnotherLink href='http://facebook.com'>Facebook</AnotherLink>
 ```
 
-By far for me styled-components are probably the most interesting approach for styling in React. It is quite easy to create components for everything and forget about the styling. If your company has the capacity to create a design system and building a product with it then this option is probably the most suitable one.
+For me styled-components are probably by far the most interesting approach for styling in React. It is quite easy to create components for everything and forget about the styling. If your company has the capacity to create a design system and building a product with it then this option is probably the most suitable one.
 
 ## Final thoughts
 
-There are multiple ways to style your React application. I did experienced all of them in production and I would say that there is no right or wrong. As most of the stuff in JavaScript today you have to pick the one that fits better in your context.
+There are multiple ways to style your React application. I experienced all of them in production and I would say that there is no right or wrong. As most of the stuff in JavaScript today you have to pick the one that fits better in your context.

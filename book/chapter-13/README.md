@@ -1,3 +1,3 @@
 # Summary
 
-React became on of the most popular libraries for building UI. It comes with great API which is simple and powerful. The tricky part thought is that React itself is not always enough for building complex applications. There are concepts that we have to know to make it right. Design patterns that are introduced by community and work well in scale. This book teaches most of those patterns in a slightly opinioned style. I hope you liked it :)
+React became one of the most popular libraries for building UIs. It comes with a great API which is simple and powerful. The tricky part though is that React itself is not always enough for building complex applications. There are concepts that we must know to make it right. Design patterns that are introduced by the community and work well at scale. This book teaches most of those patterns in a slightly opinionated style. I hope you liked it :)
