@@ -235,7 +235,7 @@ function App() {
 
 Notice how the `App` component doesn't expose the structure of the data. `TodoList` has no idea that there is `label` or `status` properties.
 
-The so called *render prop* pattern is almost the same except that we use a prop and not `children` for rendering the todo.
+The so called *render prop* pattern is almost the same except that we use the `render` prop and not `children` for rendering the todo.
 
 <br /><br /><br />
 
@@ -281,7 +281,7 @@ class DataProvider extends React.Component {
 }
 ```
 
-`DataProvider` renders nothing when it first gets mounted. Five seconds later we update the state of the component and we render a `<section>` followed by what is `render` prop returning. Imagine that this same component fetches data from a remote server and we want to display it only when it is available.
+`DataProvider` renders nothing when it first gets mounted. Five seconds later we update the state of the component and render a `<section>` followed by what is `render` prop returning. Imagine that this same component fetches data from a remote server and we want to display it only when it is available.
 
 ```js
 <DataProvider render={ data => <p>The data is here!</p> } />
