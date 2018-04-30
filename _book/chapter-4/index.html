@@ -598,7 +598,7 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="composition">Composition</h1>
-<p>One of the biggest benefits of React is composability. I personally don&apos;t know a framework that offers such an easy way to create and combine components. In this section we will explore few composition techniques which proved to work well.</p>
+<p>One of the biggest benefits of React is composability. I personally don&apos;t know a framework that offers such an easy way to create and combine components. In this section we will explore a few composition techniques which proved to work well.</p>
 <p>Let&apos;s get a simple example. Let&apos;s say that we have an application with a header and we want to place a navigation inside. We have three React components - <code>App</code>, <code>Header</code> and <code>Navigation</code>. They have to be nested into each other so we end up with the following dependencies:</p>
 <pre><code class="lang-js">&lt;App&gt; -&gt; &lt;Header&gt; -&gt; &lt;Navigation&gt;
 </code></pre>
@@ -622,9 +622,9 @@ export default function Navigation() {
   return (&lt;nav&gt; ... &lt;/nav&gt;);
 }
 </code></pre>
-<p>However, by following this approach we introduced couple of problems:</p>
+<p>However, by following this approach we introduced a couple of problems:</p>
 <ul>
-<li>We may consider the <code>App</code> as a place where we do our main composition. The <code>Header</code> though may have other elements like a logo, search field or a slogan. It will be nice if they are passed somehow from the <code>App</code> component so we don&apos;t create a hard-coded dependencies. What if we need the same <code>Header</code> component but without the <code>Navigation</code>. We can&apos;t easily achieve that because we have the two bound tightly together.</li>
+<li>We may consider the <code>App</code> as a place where we do our main composition. The <code>Header</code> though may have other elements like a logo, search field or a slogan. It will be nice if they are passed somehow from the <code>App</code> component so we don&apos;t create hard-coded dependencies. What if we need the same <code>Header</code> component but without the <code>Navigation</code>. We can&apos;t easily achieve that because we have the two bound tightly together.</li>
 <li>It&apos;s difficult to test. We may have some business logic in the <code>Header</code> and in order to test it we have to create an instance of the component. However, because it imports other components we will probably create instances of those components too and it becomes heavy to test. We may break our <code>Header</code> test by doing something wrong in the <code>Navigation</code> component which is totally misleading. <em>(Note: to some extent <a href="https://facebook.github.io/react/docs/test-utils.html#shallow-rendering" target="_blank">shallow rendering</a> solves this problem by rendering only the <code>Header</code> without its nested children.)</em></li>
 </ul>
 <h2 id="using-reacts-children-api">Using React&apos;s children API</h2>
@@ -685,7 +685,7 @@ class App extends React.Component {
   }
 };
 </code></pre>
-<p>The very first thing that the higher-order component does is to render the original component. It&apos;s a good practice to proxy pass the <code>props</code> to it. This way we will keep the input of our original component. And here it comes the first big benefit of this pattern - because we control the input of the component we may send something that the component usually has no access to. Let&apos;s say that we have a configuration setting that <code>OriginalTitle</code> needs:</p>
+<p>The very first thing that the higher-order component does is to render the original component. It&apos;s a good practice to proxy pass the <code>props</code> to it. This way we will keep the input of our original component. And here comes the first big benefit of this pattern - because we control the input of the component we may send something that the component usually has no access to. Let&apos;s say that we have a configuration setting that <code>OriginalTitle</code> needs:</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> config = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;path/to/configuration&apos;</span>);
 
 <span class="hljs-keyword">var</span> enhanceComponent = (Component) =&gt;
@@ -738,7 +738,7 @@ var EnhancedTitle = enhanceComponent(OriginalTitle);
 <p><br><br></p>
 <h2 id="function-as-a-children-render-prop">Function as a children, render prop</h2>
 <p>Last couple of months the React community started shifting in an interesting direction. So far in our examples the <code>children</code> prop was a React component. There is however a new pattern gaining popularity in which the same <code>children</code> prop is a JSX expression. Let&apos;s start by passing a simple object.</p>
-<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">UserName</span>(<span class="hljs-params">{ children </span>) </span>{
+<pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">UserName</span>(<span class="hljs-params">{ children }</span>) </span>{
   <span class="hljs-keyword">return</span> (
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
       <span class="hljs-tag">&lt;<span class="hljs-name">b</span>&gt;</span>{ children.lastName }<span class="hljs-tag">&lt;/<span class="hljs-name">b</span>&gt;</span>,
@@ -790,7 +790,7 @@ var EnhancedTitle = enhanceComponent(OriginalTitle);
 }
 </code></pre>
 <p>Notice how the <code>App</code> component doesn&apos;t expose the structure of the data. <code>TodoList</code> has no idea that there is <code>label</code> or <code>status</code> properties.</p>
-<p>The so called <em>render prop</em> pattern is almost the same except that we use a prop and not <code>children</code> for rendering the todo.</p>
+<p>The so called <em>render prop</em> pattern is almost the same except that we use the <code>render</code> prop and not <code>children</code> for rendering the todo.</p>
 <p><br><br><br></p>
 <pre><code class="lang-js"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">TodoList</span>(<span class="hljs-params">{ todos, render }</span>) </span>{
   <span class="hljs-keyword">return</span> (
@@ -829,7 +829,7 @@ var EnhancedTitle = enhanceComponent(OriginalTitle);
   }
 }
 </code></pre>
-<p><code>DataProvider</code> renders nothing when first gets mounted. Five seconds later we update the state of the component and we render a <code>&lt;section&gt;</code> followed by what is <code>render</code> prop returning. Imagine that this same component fetches data from a remote server and we want to display it only when it is available.</p>
+<p><code>DataProvider</code> renders nothing when it first gets mounted. Five seconds later we update the state of the component and render a <code>&lt;section&gt;</code> followed by what is <code>render</code> prop returning. Imagine that this same component fetches data from a remote server and we want to display it only when it is available.</p>
 <pre><code class="lang-js">&lt;DataProvider render={ data =&gt; <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>The data is here!<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span> } /&gt;
 </code></pre>
 <p>We do say what we want to happen but not how. That is hidden inside the <code>DataProvider</code>. These days we used this pattern at work where we had to restrict some UI to certain users having <code>read:products</code> permissions. And we used the <em>render prop</em> pattern.</p>
@@ -839,7 +839,7 @@ var EnhancedTitle = enhanceComponent(OriginalTitle);
 </span></code></pre>
 <p>Pretty nice and self-explanatory in a declarative fashion. <code>Authorize</code> goes to our identity provider and checks what are the permissions of the current user. If he/she is allowed to read our products we render the <code>ProductList</code>.</p>
 <h2 id="final-thoughts">Final thoughts</h2>
-<p>Did you wonder why HTML is still here. It was created in the dawn of the internet and we still use it. That is because is highly composable. React and its JSX looks like HTML on steroids and as such it comes with the same capabilities. So, make sure that you master the composition because that is one of the biggest benefits of React.</p>
+<p>Did you wonder why HTML is still here. It was created in the dawn of the internet and we still use it. That is because it&apos;s highly composable. React and its JSX looks like HTML on steroids and as such it comes with the same capabilities. So, make sure that you master the composition because that is one of the biggest benefits of React.</p>
 
                                 
                                 </section>
@@ -883,7 +883,7 @@ var EnhancedTitle = enhanceComponent(OriginalTitle);
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Composition","level":"2.3","depth":1,"next":{"title":"Using React's children API","level":"2.3.1","depth":2,"anchor":"#using-reacts-children-api","path":"chapter-4/README.md","ref":"chapter-4/README.md#using-reacts-children-api","articles":[]},"previous":{"title":"Event handlers","level":"2.2","depth":1,"path":"chapter-3/README.md","ref":"chapter-3/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"//*[@class='new-page']","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-4/README.md","mtime":"2018-04-12T15:55:59.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-19T11:58:23.299Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Composition","level":"2.3","depth":1,"next":{"title":"Using React's children API","level":"2.3.1","depth":2,"anchor":"#using-reacts-children-api","path":"chapter-4/README.md","ref":"chapter-4/README.md#using-reacts-children-api","articles":[]},"previous":{"title":"Event handlers","level":"2.2","depth":1,"path":"chapter-3/README.md","ref":"chapter-3/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"//*[@class='new-page']","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-4/README.md","mtime":"2018-04-30T03:56:33.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-04-30T03:56:49.549Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
