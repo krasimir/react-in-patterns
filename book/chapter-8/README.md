@@ -71,7 +71,7 @@ Some of the flux implementations available out there provide a helper function t
 Framework.attachToStore(view, store);
 ```
 
-However, I don't quite like this approach. To make `attachStore` works we expect to see a specific API in the view and in the store. We kind of strictly define new public methods. Or in other words we say "Your views and store should have such APIs so we are able to wire them together". If we go down this road then we will probably define our own base classes which could be extended so we don't bother the developer with Flux details. Then we say "All your classes should extend our classes". This doesn't sound good either because the developer may decide to switch to another Flux provider and has to amend everything.
+However, I don't quite like this approach. To make `attachToStore` works we expect to see a specific API in the view and in the store. We kind of strictly define new public methods. Or in other words we say "Your views and store should have such APIs so we are able to wire them together". If we go down this road then we will probably define our own base classes which could be extended so we don't bother the developer with Flux details. Then we say "All your classes should extend our classes". This doesn't sound good either because the developer may decide to switch to another Flux provider and has to amend everything.
 
 <br /><br />
 
