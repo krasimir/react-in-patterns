@@ -304,7 +304,7 @@ const AppConnected = connect(
 )(App);
 ```
 
-We again need to `connect` our component because we want to control the visibility of the counter. The `getVisibility` selector returns a boolean that indicates weather `CounterConnected` will be rendered or not.
+We again need to `connect` our component because we want to control the visibility of the counter. The `getVisibility` selector returns a boolean that indicates whether `CounterConnected` will be rendered or not.
 
 ## Final thoughts
 
