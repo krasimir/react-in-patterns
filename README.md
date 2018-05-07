@@ -12,6 +12,10 @@
 
 ![React in patterns cover](./book/cover_small.jpg)
 
+## Translations
+
+  * [简体中文](https://github.com/SangKa/react-in-patterns-cn)
+
 ## Content
 
 * [In brief](./book/chapter-1/README.md)
