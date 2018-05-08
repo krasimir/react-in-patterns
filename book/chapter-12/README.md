@@ -30,10 +30,14 @@ Now, let's create a simple React app that will use the plugin:
 ```jsx
 // Tags.jsx
 class Tags extends React.Component {
+  componentDidMount() {
+    // initialize tagit
+    $(this.refs.list).tagit();
+  }
   render() {
     return (
-      <ul>
-      { 
+      <ul ref="list">
+      {
         this.props.tags.map(
           (tag, i) => <li key={ i }>{ tag } </li>
         )
@@ -94,7 +98,7 @@ class Tags extends React.Component {
   render() {
     return (
       <ul ref='list'>
-      { 
+      {
         this.props.tags.map(
           (tag, i) => <li key={ i }>{ tag } </li>
         )
@@ -178,10 +182,10 @@ class Tags extends React.Component {
   render() {
     return (
       <ul ref='list'>
-      { 
+      {
         this.props.tags.map(
           (tag, i) => <li key={ i }>{ tag } </li>
-        ) 
+        )
       }
       </ul>
     );
