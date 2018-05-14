@@ -68,7 +68,7 @@ In the typical React application we usually don't use `getState` and `subscribe`
 
 The reducer function is probably the most *beautiful* part of Redux. Even before that I was interested in writing pure functions with an immutability in mind but Redux forced me to do it. There are two characteristics of the reducer that are quite important and without them we basically have a broken pattern.
 
-(1) It must be a pure function - it means that the function should return the exact same output evert time when the same input is given.
+(1) It must be a pure function - it means that the function should return the exact same output every time when the same input is given.
 
 (2) It should have no side effects - stuff like accessing a global variable, making an async call or waiting for a promise to resolve have no place in here.
 
