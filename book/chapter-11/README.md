@@ -12,7 +12,7 @@ JSX syntax is pretty close to HTML syntax. As such we have almost the same tag a
 
 ## Inline styling
 
-The inline styling works just fine. Similarly to HTML we are free to pass styles directly via a `style`  attribute. However, while in HTML the value is a string in JSX must be an object.
+The inline styling works just fine. Similarly to HTML we are free to pass styles directly via a `style`  attribute. However, while in HTML the value is a string, in JSX it must be an object.
 
 ```js
 const inlineStyles = {
