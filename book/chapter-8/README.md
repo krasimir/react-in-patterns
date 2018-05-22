@@ -198,8 +198,8 @@ register: function (store) {
   } else {
     var consumers = [];
     var change = function () {
-      consumers.forEach(function (l) {
-        l(store);
+      consumers.forEach(function (consumer) {
+        consumer(store);
       });
     };
     var subscribe = function (consumer) {
@@ -247,8 +247,8 @@ var Dispatcher = function () {
       } else {
         var consumers = [];
         var change = function () {
-          consumers.forEach(function (l) {
-            l(store);
+          consumers.forEach(function (consumer) {
+            consumer(store);
           });
         };
         var subscribe = function (consumer, noInit) {
@@ -341,8 +341,8 @@ var Dispatcher = function () {
       } else {
         var consumers = [];
         var change = function () {
-          consumers.forEach(function (l) {
-            l(store);
+          consumers.forEach(function (consumer) {
+            consumer(store);
           });
         };
         var subscribe = function (consumer, noInit) {
