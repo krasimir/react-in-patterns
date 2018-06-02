@@ -656,7 +656,7 @@ export default function Header({ children }) {
 <p>Notice also that if we don&apos;t use <code>{ children }</code> in <code>Header</code>, the <code>Navigation</code> component will never be rendered.</p>
 <p>It now becomes easier to test because we may render the <code>Header</code> with an empty <code>&lt;div&gt;</code>. This will isolate the component and will let us focus on one piece of our application.</p>
 <h2 id="passing-a-child-as-a-prop">Passing a child as a prop</h2>
-<p>Every React component receives props. As we mentioned already there is no any strict rule about what these props are. We may even pass other components.</p>
+<p>Every React component receives props. As we mentioned already, there is no strict rule about what these props are. We may even pass other components.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">const</span> Title = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
   <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello there!<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>;
 }
