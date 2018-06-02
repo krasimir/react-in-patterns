@@ -52,6 +52,7 @@
   * [CSS modules](./book/chapter-11/README.md#css-modules)
   * [Styled-components](./book/chapter-11/README.md#styled-components)
 * [Integration of third-party libraries](./book/chapter-12/README.md)
+* [React and separation of concerns](./book/chapter-13/README.md)
 
 
 ## Source code

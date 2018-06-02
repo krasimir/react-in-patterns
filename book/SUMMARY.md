@@ -38,7 +38,8 @@
   * [CSS modules](chapter-11/README.md#css-modules)
   * [Styled-components](chapter-11/README.md#styled-components)
 * [Integration of third-party libraries](chapter-12/README.md)
+* [React and separation of concerns](chapter-13/README.md)
 
 ### Summary
 
-* [Summary](chapter-13/README.md)
+* [Summary](chapter-14/README.md)
