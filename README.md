@@ -1,4 +1,4 @@
-# React in patterns
+[WIP Chapter9] # React in patterns
 
 :books: A free book that talks about design patterns/techniques used while developing with [React](https://facebook.github.io/react/).
 
