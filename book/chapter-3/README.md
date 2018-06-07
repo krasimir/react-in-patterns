@@ -83,7 +83,7 @@ class Switcher extends React.Component {
 };
 ```
 
-Facebook by the way [recommends](https://facebook.github.io/react/docs/reusable-components.html#no-autobinding) the same technique while dealing with functions that need the context of the same component.
+Facebook by the way [recommends](https://reactjs.org/docs/handling-events.html) the same technique while dealing with functions that need the context of the same component.
 
 The constructor is also a nice place for partially executing our handlers. For example, we have a form but want to handle every input in a single function.
 
