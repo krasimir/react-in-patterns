@@ -77,7 +77,7 @@ However, I don't quite like this approach. To make `attachToStore` works we expe
 
 #### With a mixin
 
-What if we use React's [mixins](https://facebook.github.io/react/docs/reusable-components.html#mixins).
+What if we use React's [mixins](https://reactjs.org/docs/react-without-es6.html#mixins).
 
 ```js
 var View = React.createClass({
