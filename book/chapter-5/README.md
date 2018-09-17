@@ -53,7 +53,7 @@ class App extends React.Component {
 };
 ```
 
-That `<input>` element above is a little bit useless because the user updates the value but our component has no idea about that. We then have to use [`Refs`](https://reactjs.org/docs/glossary.html#refs) to get an access to the actual element.
+That `<input>` element above is a little bit useless because the user updates the value but our component has no idea about that. We then have to use [`Refs`](https://reactjs.org/docs/glossary.html#refs) to get access to the actual element.
 
 ```js
 class App extends React.Component {
