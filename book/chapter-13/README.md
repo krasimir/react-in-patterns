@@ -118,7 +118,7 @@ class App extends React.Component {
 
 Quite a lot of things are happening isn't it. When first rendered the component shows nothing - `null`. Then we get the life-cycle `componentDidMount` method fired where we set the `loading` flag to `true` and fire the API request. While the request is in flight we display a paragraph containing the text `"Loading"`. In the end, if everything is ok we turn `loading` to false and render list of user names. In case of error we display `"Ops, sorry. No data loaded"`.
 
-Now I agree that the `App` component is kind of violating the separation of concerns. It contains data fetching and data representation. There are couple of ways to solve this problem but my favorite one is [FaCC (Function as Child Components)](https://github.com/krasimir/react-in-patterns/blob/master/book/chapter-4/README.md#function-as-a-children-render-prop). Let's write a `FetchUsers` component that will take care for the API request.
+Now I agree that the `App` component is kind of violating the separation of concerns. It contains data fetching and data representation. There are couple of ways to solve this problem but my favorite one is [FaCC (Function as Child Components)](https://github.com/krasimir/react-in-patterns/blob/master/book/chapter-04/README.md#function-as-a-children-render-prop). Let's write a `FetchUsers` component that will take care for the API request.
 
 ```js
 class FetchUsers extends React.Component {

@@ -1,30 +1,30 @@
 # Summary
 
-* [In brief](chapter-1/README.md)
+* [In brief](chapter-01/README.md)
 
 ### Foundation
 
-* [Communication](chapter-2/README.md)
-  * [Input](chapter-2/README.md#input)
-  * [Output](chapter-2/README.md#output)
-* [Event handlers](chapter-3/README.md)
-* [Composition](chapter-4/README.md)
-  * [Using React's children API](chapter-4/README.md#using-reacts-children-api)
-  * [Passing a child as a prop](chapter-4/README.md#passing-a-child-as-a-prop)
-  * [Higher-order component](chapter-4/README.md#higher-order-component)
-  * [Function as a children, render prop](chapter-4/README.md#function-as-a-children-render-prop)
-* [Controlled and uncontrolled inputs](chapter-5/README.md)
-* [Presentational and container components](chapter-6/README.md) 
+* [Communication](chapter-02/README.md)
+  * [Input](chapter-02/README.md#input)
+  * [Output](chapter-02/README.md#output)
+* [Event handlers](chapter-03/README.md)
+* [Composition](chapter-04/README.md)
+  * [Using React's children API](chapter-04/README.md#using-reacts-children-api)
+  * [Passing a child as a prop](chapter-04/README.md#passing-a-child-as-a-prop)
+  * [Higher-order component](chapter-04/README.md#higher-order-component)
+  * [Function as a children, render prop](chapter-04/README.md#function-as-a-children-render-prop)
+* [Controlled and uncontrolled inputs](chapter-05/README.md)
+* [Presentational and container components](chapter-06/README.md) 
 
 ### Data flow
 
-* [One direction data flow](chapter-7/README.md)
-* [Flux](chapter-8/README.md)
-  * [Flux architecture and its main characteristics](chapter-8/README.md#flux-architecture-and-its-main-characteristics)
-  * [Implementing a Flux architecture](chapter-8/README.md#implementing-a-flux-architecture)
-* [Redux](chapter-9/README.md)
-  * [Redux architecture and its main characteristics](chapter-9/README.md#redux-architecture-and-its-main-characteristics)
-  * [Simple counter app using Redux](chapter-9/README.md#simple-counter-app-using-redux)
+* [One direction data flow](chapter-07/README.md)
+* [Flux](chapter-08/README.md)
+  * [Flux architecture and its main characteristics](chapter-08/README.md#flux-architecture-and-its-main-characteristics)
+  * [Implementing a Flux architecture](chapter-08/README.md#implementing-a-flux-architecture)
+* [Redux](chapter-09/README.md)
+  * [Redux architecture and its main characteristics](chapter-09/README.md#redux-architecture-and-its-main-characteristics)
+  * [Simple counter app using Redux](chapter-09/README.md#simple-counter-app-using-redux)
 
 ### Good to know
 
