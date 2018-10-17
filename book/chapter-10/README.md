@@ -37,7 +37,7 @@ class App extends React.Component {
 
 The string "React in patterns" should somehow reach the `Title` component. The direct way of doing this is to pass it from `App` to `Header` and then `Header` pass it down to `Title`. However, this may work for these three components but what happens if there are multiple properties and deeper nesting. Lots of components will act as proxy passing properties to their children.
 
-We already saw how the [higher-order component](https://krasimir.gitbooks.io/react-in-patterns/content/chapter-4/#higher-order-component) may be used to inject data. Let's use the same technique to inject the `title` variable:
+We already saw how the [higher-order component](https://krasimir.gitbooks.io/react-in-patterns/content/chapter-04/#higher-order-component) may be used to inject data. Let's use the same technique to inject the `title` variable:
 
 ```js
 // inject.jsx
@@ -300,7 +300,7 @@ export function wire(Component, deps, mapper) {
 }
 ```
 
-We'll store the dependencies in `dependencies` global variable (it's global for our module, not for the whole application). We then export two functions `register` and `fetch` that write and read entries. It looks a little bit like implementing setter and getter against a simple JavaScript object. Then we have the `wire` function that accepts our React component and returns a [higher-order component](https://krasimir.gitbooks.io/react-in-patterns/content/chapter-4/#higher-order-component). In the constructor of that component we are resolving the dependencies and later while rendering the original component we pass them as props. We follow the same pattern where we describe what we need (`deps` argument) and extract the needed props with a `mapper` function.
+We'll store the dependencies in `dependencies` global variable (it's global for our module, not for the whole application). We then export two functions `register` and `fetch` that write and read entries. It looks a little bit like implementing setter and getter against a simple JavaScript object. Then we have the `wire` function that accepts our React component and returns a [higher-order component](https://krasimir.gitbooks.io/react-in-patterns/content/chapter-04/#higher-order-component). In the constructor of that component we are resolving the dependencies and later while rendering the original component we pass them as props. We follow the same pattern where we describe what we need (`deps` argument) and extract the needed props with a `mapper` function.
 
 Having the `di.jsx` helper we are again able to register our dependencies at the entry point of our application (`app.jsx`) and inject them wherever (`Title.jsx`) we need.
 

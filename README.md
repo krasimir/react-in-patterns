@@ -18,31 +18,31 @@
 
 ## Content
 
-* [In brief](./book/chapter-1/README.md)
+* [In brief](./book/chapter-01/README.md)
 
 ### Foundation
 
-* [Communication](./book/chapter-2/README.md)
-  * [Input](./book/chapter-2/README.md#input)
-  * [Output](./book/chapter-2/README.md#output)
-* [Event handlers](./book/chapter-3/README.md)
-* [Composition](./book/chapter-4/README.md)
-  * [Using React's children API](./book/chapter-4/README.md#using-reacts-children-api)
-  * [Passing a child as a prop](./book/chapter-4/README.md#passing-a-child-as-a-prop)
-  * [Higher-order component](./book/chapter-4/README.md#higher-order-component)
-  * [Function as a children, render prop](./book/chapter-4/README.md#function-as-a-children-render-prop)
-* [Controlled and uncontrolled inputs](./book/chapter-5/README.md)
-* [Presentational and container components](./book/chapter-6/README.md) 
+* [Communication](./book/chapter-02/README.md)
+  * [Input](./book/chapter-02/README.md#input)
+  * [Output](./book/chapter-02/README.md#output)
+* [Event handlers](./book/chapter-03/README.md)
+* [Composition](./book/chapter-04/README.md)
+  * [Using React's children API](./book/chapter-04/README.md#using-reacts-children-api)
+  * [Passing a child as a prop](./book/chapter-04/README.md#passing-a-child-as-a-prop)
+  * [Higher-order component](./book/chapter-04/README.md#higher-order-component)
+  * [Function as a children, render prop](./book/chapter-04/README.md#function-as-a-children-render-prop)
+* [Controlled and uncontrolled inputs](./book/chapter-05/README.md)
+* [Presentational and container components](./book/chapter-06/README.md) 
 
 ### Data flow
 
-* [One direction data flow](./book/chapter-7/README.md)
-* [Flux](./book/chapter-8/README.md)
-  * [Flux architecture and its main characteristics](./book/chapter-8/README.md#flux-architecture-and-its-main-characteristics)
-  * [Implementing a Flux architecture](./book/chapter-8/README.md#implementing-a-flux-architecture)
-* [Redux](./book/chapter-9/README.md)
-  * [Redux architecture and its main characteristics](./book/chapter-9/README.md#redux-architecture-and-its-main-characteristics)
-  * [Simple counter app using Redux](./book/chapter-9/README.md#simple-counter-app-using-redux)
+* [One direction data flow](./book/chapter-07/README.md)
+* [Flux](./book/chapter-08/README.md)
+  * [Flux architecture and its main characteristics](./book/chapter-08/README.md#flux-architecture-and-its-main-characteristics)
+  * [Implementing a Flux architecture](./book/chapter-08/README.md#implementing-a-flux-architecture)
+* [Redux](./book/chapter-09/README.md)
+  * [Redux architecture and its main characteristics](./book/chapter-09/README.md#redux-architecture-and-its-main-characteristics)
+  * [Simple counter app using Redux](./book/chapter-09/README.md#simple-counter-app-using-redux)
 
 ### MISC
 
