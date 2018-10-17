@@ -656,10 +656,10 @@
 <p>Some of the flux implementations available out there provide a helper function that does the job. For example:</p>
 <pre><code class="lang-js">Framework.attachToStore(view, store);
 </code></pre>
-<p>However, I don&apos;t quite like this approach. To make <code>attachStore</code> works we expect to see a specific API in the view and in the store. We kind of strictly define new public methods. Or in other words we say &quot;Your views and store should have such APIs so we are able to wire them together&quot;. If we go down this road then we will probably define our own base classes which could be extended so we don&apos;t bother the developer with Flux details. Then we say &quot;All your classes should extend our classes&quot;. This doesn&apos;t sound good either because the developer may decide to switch to another Flux provider and has to amend everything.</p>
+<p>However, I don&apos;t quite like this approach. To make <code>attachToStore</code> works we expect to see a specific API in the view and in the store. We kind of strictly define new public methods. Or in other words we say &quot;Your views and store should have such APIs so we are able to wire them together&quot;. If we go down this road then we will probably define our own base classes which could be extended so we don&apos;t bother the developer with Flux details. Then we say &quot;All your classes should extend our classes&quot;. This doesn&apos;t sound good either because the developer may decide to switch to another Flux provider and has to amend everything.</p>
 <p><br><br></p>
 <h4 id="with-a-mixin">With a mixin</h4>
-<p>What if we use React&apos;s <a href="https://facebook.github.io/react/docs/reusable-components.html#mixins" target="_blank">mixins</a>.</p>
+<p>What if we use React&apos;s <a href="https://reactjs.org/docs/react-without-es6.html#mixins" target="_blank">mixins</a>.</p>
 <pre><code class="lang-js"><span class="hljs-keyword">var</span> View = React.createClass({
   mixins: [Framework.attachToStore(store)]
   ...
@@ -750,8 +750,8 @@ ProfilePage = connectToStores(MyView, store, (props, store) =&gt; ({
   } <span class="hljs-keyword">else</span> {
     <span class="hljs-keyword">var</span> consumers = [];
     <span class="hljs-keyword">var</span> change = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-      consumers.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">l</span>) </span>{
-        l(store);
+      consumers.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">consumer</span>) </span>{
+        consumer(store);
       });
     };
     <span class="hljs-keyword">var</span> subscribe = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">consumer</span>) </span>{
@@ -791,8 +791,8 @@ dispatch: <span class="hljs-function"><span class="hljs-keyword">function</span>
       } <span class="hljs-keyword">else</span> {
         <span class="hljs-keyword">var</span> consumers = [];
         <span class="hljs-keyword">var</span> change = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-          consumers.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">l</span>) </span>{
-            l(store);
+          consumers.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">consumer</span>) </span>{
+            consumer(store);
           });
         };
         <span class="hljs-keyword">var</span> subscribe = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">consumer, noInit</span>) </span>{
@@ -867,8 +867,8 @@ dispatch: <span class="hljs-function"><span class="hljs-keyword">function</span>
       } <span class="hljs-keyword">else</span> {
         <span class="hljs-keyword">var</span> consumers = [];
         <span class="hljs-keyword">var</span> change = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
-          consumers.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">l</span>) </span>{
-            l(store);
+          consumers.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">consumer</span>) </span>{
+            consumer(store);
           });
         };
         <span class="hljs-keyword">var</span> subscribe = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">consumer, noInit</span>) </span>{
@@ -1028,7 +1028,7 @@ View(counterStoreSubscriber, actions.increase, actions.decrease);
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Flux","level":"3.2","depth":1,"next":{"title":"Flux architecture and its main characteristics","level":"3.2.1","depth":2,"anchor":"#flux-architecture-and-its-main-characteristics","path":"chapter-08/README.md","ref":"chapter-08/README.md#flux-architecture-and-its-main-characteristics","articles":[]},"previous":{"title":"One direction data flow","level":"3.1","depth":1,"path":"chapter-07/README.md","ref":"chapter-07/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"//*[@class='new-page']","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-08/README.md","mtime":"2018-04-27T21:06:09.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-06-02T16:33:33.560Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Flux","level":"3.2","depth":1,"next":{"title":"Flux architecture and its main characteristics","level":"3.2.1","depth":2,"anchor":"#flux-architecture-and-its-main-characteristics","path":"chapter-08/README.md","ref":"chapter-08/README.md#flux-architecture-and-its-main-characteristics","articles":[]},"previous":{"title":"One direction data flow","level":"3.1","depth":1,"path":"chapter-07/README.md","ref":"chapter-07/README.md","articles":[]},"dir":"ltr"},"config":{"plugins":[],"root":"./book","styles":{"website":"./styles/website.css","ebook":"./styles/ebook.css","pdf":"./styles/ebook.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Krasimir Tsonev","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a5","chapterMark":"pagebreak","pageBreaksBefore":"//*[@class='new-page']","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"React in patterns","gitbook":"3.2.3","description":"A book about common design patterns used while developing with React."},"file":{"path":"chapter-08/README.md","mtime":"2018-10-17T19:02:30.000Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-10-17T19:02:47.735Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
