@@ -55,7 +55,7 @@ There are couple of things happening in our component. It looks like it has too 
 
 ## Extracting the container
 
-Containers know about data, its shape and where it comes from. They know details about how the things work or the so called *business logic*. They receive information and format it so like is easy to be used by the presentational component. Very often we use [higher-order components](https://github.com/krasimir/react-in-patterns/tree/master/patterns/higher-order-components) to create containers because they provide a buffer space where we can insert custom logic.
+Containers know about data, its shape and where it comes from. They know details about how the things work or the so called *business logic*. They receive information and format it so like is easy to be used by the presentational component. Very often we use [higher-order components](https://krasimir.gitbooks.io/react-in-patterns/content/chapter-04/#higher-order-component) to create containers because they provide a buffer space where we can insert custom logic.
 
 Here's how our `ClockContainer` looks like:
 
