@@ -151,4 +151,4 @@ function Switcher({ value, onChange }) {
 
 ## Final thoughts
 
-The benefit that comes with this pattern is that our components become dummy representation of the store's data. There is only one source of truth and this makes the development easier. If you are going to take one thing from this book I would prefer to be this chapter. The one-direction data flow drastically changed the way of how I think when designing a feature so I believe it will have the same effect on you.
+The benefit that comes with this pattern is that our components become dummy representation of the store's data. There is only one source of truth and this makes the development easier. If you are going to take one thing from this book, I would prefer it to be this chapter. The one-direction data flow drastically changed how I think when designing a feature so I believe it will have the same effect on you.
