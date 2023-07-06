@@ -2,7 +2,7 @@
 
 Every React component is like a small system that operates on its own. It has its own state, input and output. In the following section we will explore these characteristics.
 
-![Input-Output](./communication.jpg)
+![Input-Output](./communication.png)
 
 ## Input
 
