@@ -13,12 +13,6 @@ The input of a React component is its props. That's how we pass data to it:
 function Title(props) {
   return <h1>{ props.text }</h1>;
 }
-Title.propTypes = {
-  text: PropTypes.string
-};
-Title.defaultProps = {
-  text: 'Hello world'
-};
 
 // App.jsx
 function App() {
