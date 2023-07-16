@@ -23,8 +23,14 @@ function compileJS(callback = () => {}) {
     callback
   );
 }
+function compileMarkdown(callback = () => {}) {
+  const input = `${dir}/README.md`;
+  const output = `${dir}/README.html`;
+  const cmd = `${__dirname}/node_modules/.bin/marked --output="${output}" --input="${input}"`;
+  command(cmd, dir, callback);
+}
 function runServer() {
-  command(`${__dirname}/node_modules/.bin/serve -l 3001`);
+  command(`${__dirname}/node_modules/.bin/serve ${dir} -l 3001`);
 }
 function command(cmd, cwd, onExit = () => {}) {
   const proc = spawn(cmd, {
@@ -62,5 +68,9 @@ process.on("uncaughtException", exitHandler);
 chokidar.watch(`${dir}/code/src/**/*.*`, { ignoreInitial: true }).on("all", () => {
   compileJS();
 });
+chokidar.watch(`${dir}/README.md`, { ignoreInitial: true }).on("all", () => {
+  compileMarkdown();
+});
 compileJS();
+compileMarkdown();
 runServer();

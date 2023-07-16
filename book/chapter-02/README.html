@@ -1,0 +1,85 @@
+<h1 id="communication">Communication</h1>
+<p>Every React component is like a small system that operates on its own. It has its own state, input and output. In the following section, we will explore these characteristics.</p>
+<p><img src="./communication.png" alt="Input-Output"></p>
+<h2 id="input">Input</h2>
+<p>The input of a React component is its props. That&#39;s how we pass data to it:</p>
+<pre><code class="language-js">// Title.jsx
+function Title(props) {
+  return &lt;h1&gt;{ props.text }&lt;/h1&gt;;
+}
+
+// App.jsx
+function App() {
+  return &lt;Title text=&#39;Hello React&#39; /&gt;;
+}
+</code></pre>
+<p>The <code>Title</code> component has only one input (prop) - <code>text</code>. The parent component (<code>App</code>) should provide it as an attribute when using the <code>&lt;Title&gt;</code> tag. React does not strictly define what should be passed as a prop. It can be different things, even another component.</p>
+<pre><code class="language-js">function SomethingElse({ answer }) {
+  return &lt;div&gt;The answer is { answer }&lt;/div&gt;;
+}
+function Answer() {
+  return &lt;span&gt;42&lt;/span&gt;;
+}
+
+// later somewhere in our application
+&lt;SomethingElse answer={ &lt;Answer /&gt; } /&gt;
+</code></pre>
+<p>There is also a <code>props.children</code> property that gives us access to the child components passed by the owner of the component. For example:</p>
+<pre><code class="language-js">function Title({ text, children }) {
+  return (
+    &lt;h1&gt;
+      { text }
+      { children }
+    &lt;/h1&gt;
+  );
+}
+function App() {
+  return (
+    &lt;Title text=&#39;Hello React&#39;&gt;
+      &lt;span&gt;community&lt;/span&gt;
+    &lt;/Title&gt;
+  );
+}
+</code></pre>
+<p>In this example <code>&lt;span&gt;community&lt;/span&gt;</code> in <code>App</code> component is <code>children</code> in <code>Title</code> component. Notice that if we don&#39;t return <code>{ children }</code> as part of the <code>Title</code>&#39;s body the <code>&lt;span&gt;</code> tag will not be rendered.</p>
+<p>(prior to v16.3) An indirect input to a component may also be referred to as the &quot;context.&quot; The entire React tree may have a &quot;context&quot; object that is accessible to every component. More information about this can be found in the <a href="../chapter-10/README.md">dependency injection</a> section.</p>
+<h2 id="output">Output</h2>
+<p>The first obvious output of a React component is the rendered HTML. Visually that is what we get. However, because the prop may be everything including a function we could also send out data or trigger a process.</p>
+<p>In the following example we have a component that accepts the user&#39;s input and sends it out (<code>&lt;NameField /&gt;</code>).</p>
+<p><span class="new-page"></span></p>
+<pre><code class="language-js">function NameField({ valueUpdated }) {
+  return (
+    &lt;input onChange={ event =&gt; valueUpdated(event.target.value) } /&gt;
+  );
+};
+function App() {
+  const [ name, setName ] = useState(&#39;&#39;);
+  return (
+    &lt;div&gt;
+      &lt;NameField valueUpdated={ name =&gt; setName(name) } /&gt;
+      Name: { name }
+    &lt;/div&gt;
+  );
+};
+</code></pre>
+<p>Frequently, we need to perform initialization processes when a component is mounted. React provides the <code>useEffect</code> hook that can be utilized for this purpose. For instance, if we have an external resource that needs to be retrieved on a particular page.</p>
+<pre><code class="language-js">function App() {
+  const [ data, setData ] = useState(null);
+
+  useEffect(() =&gt; {
+    (async function getData() {
+      // requesting the server
+      setData(result);
+    })();
+  }, []);
+
+  if (this.props.results) {
+    return &lt;List results={ data } /&gt;;
+  } else {
+    return &lt;LoadingScreen /&gt;
+  }
+}
+</code></pre>
+<p>Imagine that we are constructing a search-results encounter. We possess a search page where we input our requirements. After submitting, the user is directed to <code>/results</code>, where we must exhibit the search outcome. Upon arriving at the results page, we present a loading screen and initiate a request to retrieve the results in the <code>useEffect</code> hook. As soon as the data is received, we send it to a <code>&lt;List&gt;</code> component.</p>
+<hr>
+<p>It is a positive aspect that we can view each React component as an independent entity with its own input, lifecycle, and output. It is our responsibility to combine and arrange these components. This is one of the benefits that React provides - it is straightforward to encapsulate and assemble them.</p>
