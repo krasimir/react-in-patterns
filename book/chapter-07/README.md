@@ -1,8 +1,8 @@
-# One-way direction data flow
+# One-way data flow
 
-One-way direction data flow is a pattern that works nicely with React. It is around the idea that the components do not modify the data that they receive. They only listen for changes of this data and maybe provide the new value but they do not update the actual data. This update happens following another mechanism in another place and the component just gets re-rendered with the new value.
+One-way data flow is a pattern that works nicely with React. The idea is that components do not modify the data they receive. They only listen for changes to the data and maybe provide a new value, but they do not update the actual data. This update happens following another mechanism in another place, and the component is just re-rendered with the new value.
 
-Let's for example get a simple `Switcher` component that contains a button. If we click it we have to enable a flag in the system.
+Let's, for example, examine a simple `Switcher` component that contains a button. If we click it, then we have to set a flag in the system.
 
 ```js
 class Switcher extends React.Component {
