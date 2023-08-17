@@ -29,7 +29,7 @@
 ### Good to know
 
 * [Dependency injection](chapter-10/README.md)
-  * [Using React's context (prior v. 16.3)](chapter-10/README.md#using-reacts-context-prior-v-163)
+  * [Using React's context (prior to v. 16.3)](chapter-10/README.md#using-reacts-context-prior-v-163)
   * [Using React's context (v. 16.3 and above)](chapter-10/README.md#using-reacts-context-v-163-and-above)
   * [Using the module system](chapter-10/README.md#using-the-module-system)
 * [Styling](chapter-11/README.md)
