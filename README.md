@@ -4,11 +4,10 @@
 
 ## Book
 
-* [GitBook](https://www.gitbook.com/book/krasimir/react-in-patterns/details)
-* [Web](https://krasimir.gitbooks.io/react-in-patterns/content/)
-* [PDF](https://www.gitbook.com/download/pdf/book/krasimir/react-in-patterns)
-* [Mobi](https://www.gitbook.com/download/mobi/book/krasimir/react-in-patterns)
-* [ePub](https://www.gitbook.com/download/epub/book/krasimir/react-in-patterns)
+* [Web](./book)
+* [PDF](./book.pdf)
+* [Mobi](./book.mobi)
+* [ePub](./book.epub)
 
 ![React in patterns cover](./book/cover_small.jpg)
 
